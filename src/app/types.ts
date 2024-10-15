@@ -18,10 +18,7 @@ export type Enemy = {
   attributes: Attributes,
   activePotion: null,
   equipment: Equipment,
-  commonLoot: number[] | null,
-  uncommonLoot: number[] | null,
-  rareLoot: number[] | null,
-  epicLoot: number[] | null
+  loot: Loot
 }
 
 export type Items = Weapon | Armor | Potion | Material
@@ -30,6 +27,7 @@ export type Weapon = {
   id: number,
   name: string,
   description: string,
+  level: number,
   classes: string[],
   slot: string | string[],
   damage: {
@@ -49,6 +47,7 @@ export type Armor = {
   id: number,
   name: string,
   description: string,
+  level: number,
   classes: string[],
   slot: string,
   armor: number,
@@ -105,9 +104,18 @@ export type LogEntry = {
   title: string | null,
   target: string,
   damage: number,
+  isCrit: boolean,
   targetHP: number,
   attackType: {
     weapon1: string | null,
     weapon2: string | null
   }
+}
+
+export type Loot = {
+  gold: number | null,
+  common: number[],
+  uncommon: number[] | null,
+  rare: number[] | null,
+  epic: number[] | null
 }

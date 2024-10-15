@@ -22,11 +22,11 @@ export const parseCombatLog = (combatLog: LogEntry[]) => {
   const parsedCombatLog: string[] = []
 
   for (const entry of combatLog) {
-    const { attacker, target, damage, targetHP, attackType } = entry
+    const { attacker, target, damage, isCrit, targetHP, attackType } = entry
 
     const attackTypeChoice = attackType.weapon1 && !attackType.weapon2 ? attackType.weapon1 : !attackType.weapon1 && attackType.weapon2 ? attackType.weapon2 : Math.floor(Math.random() * 2) === 0 ? attackType.weapon1 : attackType.weapon2
 
-    const attackDescription = `${attacker} ${parseWeaponText(attackTypeChoice)} and deals ${damage} points of damage to ${target}. ${target} now has ${targetHP} hit points left.`
+    const attackDescription = `${isCrit ? 'Critical Hit! ' : ''}${attacker} ${parseWeaponText(attackTypeChoice)} and deals ${damage} points of damage to ${target}. ${target} now has ${targetHP} hit points left.`
 
     parsedCombatLog.push(attackDescription)
   }

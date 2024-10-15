@@ -87,4 +87,12 @@ export const attackDescriptions: { [key: string]: string[] } = {
     'quickly reloads and fires another bolt',
     'sets a trap with a crossbow for a surprise attack',
   ],
+  shield: [
+    'smashes the opponent with the shield',
+    'strikes the enemy with a powerful shield bash',
+    'charges forward, using the shield to knock back the target',
+    'swings the shield like a weapon, hitting the foe',
+    'delivers a stunning blow with the edge of the shield',
+    'launches a shield attack that disrupts the enemy’s balance',
+  ],
 };

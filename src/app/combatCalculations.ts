@@ -1,5 +1,5 @@
 import { item_list } from "./itemList"
-import { ActivePotion, Attributes, Enemy, Equipment, Player } from "./types"
+import { ActivePotion, Attributes, Enemy, Equipment, Loot, Player } from "./types"
 
 export const calculateTotalStats = (equipment: Equipment, attributes: Attributes, activePotion: ActivePotion) => {
   // Copy character's statistics
@@ -98,6 +98,24 @@ export const calculateTotalDamage = (equipment: Equipment, profession: string, a
   return 1
 }
 
+export const calculateTotalArmor = (equipment: Equipment) => {
+  let armorValue = 0
+
+  if (equipment) {
+    for (const itemId of Object.values(equipment)) {
+      if (itemId) {
+        const equippedItem = item_list[itemId]
+
+        if (equippedItem && 'armor' in equippedItem) {
+          armorValue += equippedItem.armor
+        }
+      }
+    }
+  }
+
+  return armorValue
+}
+
 export const calculateCritChance = (equipment: Equipment, level: number, attributes: Attributes, activePotion: ActivePotion) => {
   const totalStats = calculateTotalStats(equipment, attributes, activePotion)
 
@@ -154,7 +172,7 @@ export const retrieveCharacterInformation = (character: Player | Enemy) => {
   const CRIT = calculateCritChance(character.equipment, character.level, character.attributes, character.activePotion)
   const STATS = calculateTotalStats(character.equipment, character.attributes, character.activePotion)
 
-  return {
+  const baseInfo = {
     name: character.name,
     title: character.title,
     level: character.level,
@@ -165,6 +183,61 @@ export const retrieveCharacterInformation = (character: Player | Enemy) => {
     flat_attributes: character.attributes,
     total_attributes: STATS,
     potion: character.activePotion,
-    equipment: character.equipment
+    equipment: character.equipment,
+  }
+
+  if ('loot' in character) return { ...baseInfo, loot: character.loot }
+
+  return baseInfo
+}
+
+const calculateItemQuantity = (chance: number) => {
+  const fullChances = Math.floor(chance / 100)
+  const remainder = chance % 100
+  const randomRoll = Math.floor(Math.random() * 100) + 1
+  const finalChances = remainder >= randomRoll ? fullChances + 1 : fullChances
+
+  return finalChances
+}
+
+const calculateItemQuality = (loot: Loot) => {
+  const roll = Math.random() * 100
+
+  if (roll > 94 && roll <= 98.9 && loot.uncommon?.length) {
+    const length = loot.uncommon.length
+    return loot.uncommon[Math.floor(Math.random() * length)]
+  } else if (roll > 98.9 && roll <= 99.9 && loot.rare?.length) {
+    const length = loot.rare.length
+    return loot.rare[Math.floor(Math.random() * length)]
+  } else if (roll > 99.9 && loot.epic?.length) {
+    const length = loot.epic.length
+    return loot.epic[Math.floor(Math.random() * length)]
+  } else {
+    const length = loot.common.length
+    return loot.common[Math.floor(Math.random() * length)]
+  }
+}
+
+export const calculateLoot = (loot: Loot, chance: number) => {
+  const finalLoot: number[] = []
+  let finalGold = 0
+  const lootQuantity = calculateItemQuantity(chance)
+
+  for (let i = 0; i < lootQuantity; i++) {
+    const foundLoot = calculateItemQuality(loot)
+    finalLoot.push(foundLoot)
+  }
+
+  if (loot.gold) {
+    finalGold += loot.gold * (chance / 100)
+  }
+
+  console.log('Given loot:', loot)
+  console.log('Loot chance:', chance)
+  console.log('finalLoot:', finalLoot)
+
+  return {
+    gold: finalGold,
+    loot: finalLoot,
   }
 }

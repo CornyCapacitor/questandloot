@@ -1,15 +1,17 @@
 'use client'
 
 import { combat } from "./combat";
-import { parseCombatLog } from "./combatLogParser";
+import { calculateLoot } from "./combatCalculations";
 import { dummyEnemy, dummyPlayer } from "./dummies";
 
 export default function Home() {
-  const combatLog = combat(dummyPlayer, dummyEnemy).combatLog
-  const parsedCombatLog = parseCombatLog(combatLog)
-  parsedCombatLog.forEach(entry => {
-    console.log(entry)
-  })
+  const finishedCombat = combat(dummyPlayer, dummyEnemy, 530)
+  // const parsedCombatLog = parseCombatLog(finishedCombat.combatLog)
+  // parsedCombatLog.forEach(entry => {
+  //   console.log(entry)
+  // })
+  console.log('Loot:', finishedCombat.loot)
+  console.log(calculateLoot(dummyEnemy.loot, 530))
 
   return (
     <div className="flex items-center justify-center h-screen">
