@@ -232,10 +232,6 @@ export const calculateLoot = (loot: Loot, chance: number) => {
     finalGold += loot.gold * (chance / 100)
   }
 
-  console.log('Given loot:', loot)
-  console.log('Loot chance:', chance)
-  console.log('finalLoot:', finalLoot)
-
   return {
     gold: finalGold,
     loot: finalLoot,

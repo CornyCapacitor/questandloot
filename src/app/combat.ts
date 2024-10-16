@@ -65,9 +65,9 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
     }
 
     if (turn % 2 === 0) {
-      HP1 -= damage
+      HP1 = Math.max(HP1 - damage, 0)
     } else {
-      HP2 -= damage
+      HP2 = Math.max(HP2 - damage, 0)
     }
 
     // Log the entry
@@ -85,11 +85,6 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
     }
 
     combatLog.push(logEntry)
-  }
-
-  // Coding purpose
-  if ('loot' in character2) {
-    console.log(character2.loot)
   }
 
   return {

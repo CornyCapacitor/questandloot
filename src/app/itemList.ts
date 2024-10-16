@@ -9,8 +9,8 @@ export const item_list: { [key: number]: Weapon | Armor | Potion | Material } = 
     classes: ["warrior", "rogue"],
     slot: ["mainHand"],
     damage: {
-      min: 20,
-      max: 45
+      min: 5,
+      max: 10
     },
     armor: 0,
     image: "rusty_sword.png",
@@ -209,8 +209,8 @@ export const item_list: { [key: number]: Weapon | Armor | Potion | Material } = 
     classes: ["mage"],
     slot: ["mainHand"],
     damage: {
-      min: 5,
-      max: 10
+      min: 10,
+      max: 20
     },
     armor: 0,
     image: "apprentices_fire_staff.png",

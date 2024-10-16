@@ -9,7 +9,7 @@ export const dummyPlayer: Player = {
     strength: 10,
     agility: 10,
     intellect: 10,
-    stamina: 100,
+    stamina: 10,
     luck: 10
   },
   activeJourney: null,
@@ -37,7 +37,7 @@ export const dummyEnemy: Enemy = {
     strength: 2,
     agility: 2,
     intellect: 2,
-    stamina: 100,
+    stamina: 10,
     luck: 2
   },
   activePotion: null,
