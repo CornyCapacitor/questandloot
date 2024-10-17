@@ -13,7 +13,9 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
 
   // Initialize HP
   let HP1 = character1.hp
+  const maxHP1 = character1.hp
   let HP2 = character2.hp
+  const maxHP2 = character2.hp
 
   // Start fight
   let turn = 0
@@ -48,17 +50,23 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
     if (HP1 <= 0 || HP2 <= 0) {
       // Last entry before loop breaks
       const logEntry = {
+        turn: turn,
         attacker: attacker.name,
         title: attacker.title,
         target: defender.name,
         damage: damage,
         isCrit: isCrit,
         targetHP: turn % 2 === 0 ? HP1 : HP2,
+        HP1: HP1,
+        maxHP1: maxHP1,
+        HP2: HP2,
+        maxHP2: maxHP2,
         attackType: {
           weapon1: attacker.equipment.weapon1 && item_list[attacker.equipment.weapon1] !== undefined ? (item_list[attacker.equipment.weapon1] as Weapon).family : null,
           weapon2: attacker.equipment.weapon2 && item_list[attacker.equipment.weapon2] !== undefined ? (item_list[attacker.equipment.weapon2] as Weapon).family : null
         }
       }
+
       combatLog.push(logEntry)
 
       break
@@ -72,12 +80,17 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
 
     // Log the entry
     const logEntry = {
+      turn: turn,
       attacker: attacker.name,
       title: attacker.title,
       target: defender.name,
       damage: damage,
       isCrit: isCrit,
       targetHP: turn % 2 === 0 ? HP1 : HP2,
+      HP1: HP1,
+      maxHP1: maxHP1,
+      HP2: HP2,
+      maxHP2: maxHP2,
       attackType: {
         weapon1: attacker.equipment.weapon1 && item_list[attacker.equipment.weapon1] !== undefined ? (item_list[attacker.equipment.weapon1] as Weapon).family : null,
         weapon2: attacker.equipment.weapon2 && item_list[attacker.equipment.weapon2] !== undefined ? (item_list[attacker.equipment.weapon2] as Weapon).family : null
@@ -88,7 +101,7 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
   }
 
   return {
-    winner: HP1 > 0 ? character1.name : character2.name,
+    isWin: HP1 > 0 ? true : false,
     combatLog: combatLog,
     loot: HP1 > 0 && 'loot' in character2 ? calculateLoot(character2.loot, journeyLootChance) : null
   }

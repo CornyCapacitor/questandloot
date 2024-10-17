@@ -7,6 +7,7 @@ export type Player = {
   activeJourney: Journey | null,
   activePotion: ActivePotion | null,
   equipment: Equipment,
+  image: string,
   items: Items[],
 }
 
@@ -18,6 +19,7 @@ export type Enemy = {
   attributes: Attributes,
   activePotion: null,
   equipment: Equipment,
+  image: string,
   loot: Loot
 }
 
@@ -100,12 +102,17 @@ export type Journey = {
 }
 
 export type LogEntry = {
+  turn: number,
   attacker: string,
   title: string | null,
   target: string,
   damage: number,
   isCrit: boolean,
   targetHP: number,
+  HP1: number,
+  maxHP1: number,
+  HP2: number,
+  maxHP2: number,
   attackType: {
     weapon1: string | null,
     weapon2: string | null

@@ -25,6 +25,7 @@ export const dummyPlayer: Player = {
     feet: null,
     ring: null
   },
+  image: "player.jpg",
   items: []
 };
 
@@ -52,6 +53,7 @@ export const dummyEnemy: Enemy = {
     feet: null,
     ring: null
   },
+  image: "bandit.jpg",
   loot: {
     gold: null,
     common: [1, 5],
