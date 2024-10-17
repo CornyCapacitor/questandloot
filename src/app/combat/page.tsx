@@ -41,9 +41,6 @@ const CombatPage = () => {
   const [character1Attributes] = useState(calculateTotalStats(character1.equipment, character1.attributes, character1.activePotion))
   const [character2Attributes] = useState(calculateTotalStats(character2.equipment, character2.attributes, character2.activePotion))
 
-
-  console.log(combatLog)
-
   const handleChangeTurn = (action: string) => {
     if (action === 'increase') {
       if (combatLog && turn < combatLog.length - 1) {
