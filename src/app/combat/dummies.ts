@@ -1,7 +1,7 @@
-import { Enemy, Player } from "./types";
+import { Enemy, Player } from "../types";
 
 export const dummyPlayer: Player = {
-  name: "DummyPlayer",
+  name: "Dummy Undead",
   title: "Tester",
   profession: "mage",
   level: 1,
@@ -25,14 +25,14 @@ export const dummyPlayer: Player = {
     feet: null,
     ring: null
   },
-  image: "player.jpg",
+  image: "skull.png",
   items: []
 };
 
 export const dummyEnemy: Enemy = {
-  name: "Bandit",
+  name: "Frost golem",
   title: null,
-  profession: "rogue",
+  profession: "warrior",
   level: 1,
   attributes: {
     strength: 2,
@@ -53,7 +53,7 @@ export const dummyEnemy: Enemy = {
     feet: null,
     ring: null
   },
-  image: "bandit.jpg",
+  image: "frost_golem.png",
   loot: {
     gold: null,
     common: [1, 5],

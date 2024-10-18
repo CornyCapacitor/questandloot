@@ -6,7 +6,7 @@ export const Tailspin = ({ size }: { size: number }) => {
       visible={true}
       height={size}
       width={size}
-      color="#000000"
+      color="#ffffff"
       ariaLabel="tail-spin-loading"
       radius="1"
       wrapperStyle={{}}

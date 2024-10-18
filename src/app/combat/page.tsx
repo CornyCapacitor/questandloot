@@ -81,7 +81,7 @@ const CombatPage = () => {
 
         {/* Attacker section */}
         <section id="attacker-section" className="w-full max-w-[250px] flex flex-col gap-1 items-center text-center border-r p-2">
-          <Image width={128} height={128} src={`/assets/portraits/${character1?.image}`} alt="Character 1 image" />
+          <Image width={128} height={128} src={`/assets/portraits/${character1?.image}`} alt="Character 1 image" className="bg-white rounded-sm" />
           <h1>{character1?.name}</h1>
           <HealthBar currentHP={combatLog ? combatLog[turn].HP1 : 0} maxHP={combatLog ? combatLog[turn].maxHP1 : 0} />
           {character1Attributes && Object.entries(character1Attributes).map(([key, value]) => (
@@ -119,7 +119,7 @@ const CombatPage = () => {
 
         {/* Defender section */}
         <section id="defender-section" className="w-full max-w-[250px] flex flex-col gap-1 items-center text-center border-l p-2">
-          <Image width={128} height={128} src={`/assets/portraits/${character2?.image}`} alt="Character 2 image" />
+          <Image width={128} height={128} src={`/assets/portraits/${character2?.image}`} alt="Character 2 image" className="bg-white rounded-sm" />
           <h1>{character2?.name}</h1>
           <HealthBar currentHP={combatLog ? combatLog[turn].HP2 : 0} maxHP={combatLog ? combatLog[turn].maxHP2 : 0} />
           {character2Attributes && Object.entries(character2Attributes).map(([key, value]) => (
