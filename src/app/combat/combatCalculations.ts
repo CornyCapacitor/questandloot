@@ -1,5 +1,5 @@
-import { item_list } from "./itemList"
-import { ActivePotion, Attributes, Enemy, Equipment, Loot, Player } from "./types"
+import { item_list } from "../itemLists/itemList"
+import { ActivePotion, Attributes, Enemy, Equipment, Loot, Player } from "../types"
 
 export const calculateTotalStats = (equipment: Equipment, attributes: Attributes, activePotion: ActivePotion) => {
   // Copy character's statistics

@@ -1,6 +1,6 @@
+import { item_list } from "../itemLists/itemList";
+import { Enemy, LogEntry, Player, Weapon } from "../types";
 import { calculateLoot, calculateTotalArmor, calculateTotalDamage, retrieveCharacterInformation } from "./combatCalculations";
-import { item_list } from "./itemList";
-import { Enemy, LogEntry, Player, Weapon } from "./types";
 
 export const combat = (participient1: Player, participient2: Player | Enemy, journeyLootChance: number) => {
   // Preparation
