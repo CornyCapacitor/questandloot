@@ -68,7 +68,8 @@ export type Potion = {
     value: number
   }
   image: string,
-  type: "potion"
+  type: "potion",
+  quality: "common" | "uncommon" | "rare" | "epic"
 }
 
 export type Material = {

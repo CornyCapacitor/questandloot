@@ -57,7 +57,7 @@ export const dummyEnemy: Enemy = {
   loot: {
     gold: null,
     common: [1, 5],
-    uncommon: null,
+    uncommon: [31, 32, 33, 34, 35],
     rare: null,
     epic: null
   }

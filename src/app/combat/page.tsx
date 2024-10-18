@@ -36,7 +36,7 @@ const CombatPage = () => {
   useEffect(() => {
     if (!character1 || !character2) return
 
-    const combatResult = combat(dummyPlayer, dummyEnemy, 530)
+    const combatResult = combat(dummyPlayer, dummyEnemy, 10000)
     const log = combatResult.combatLog
     const parsedLog = parseCombatLog(log)
     const char1Attributes = calculateTotalStats(character1.equipment, character1.attributes, character1.activePotion)
@@ -93,18 +93,47 @@ const CombatPage = () => {
         <section id="information-section" className="w-full flex flex-col">
 
           {/* Messages section */}
-          <section id="messages-section" className="flex-grow p-2 text-wrap text-center">
-            <h1>Turn: {turn + 1}</h1>
-            <span>{parsedCombatLog && parsedCombatLog[turn]}</span>
+          <section id="messages-section" className="flex-grow max-h-64 p-2 text-wrap text-center overflow-y-auto overflow-hidden">
+            {/* <span>{parsedCombatLog && parsedCombatLog[turn]}</span> */}
+            <div className="flex flex-col">
+              {parsedCombatLog?.slice(0, turn + 1).map((entry, index) => (
+                <>
+                  <h1>Turn: {index + 1}</h1>
+                  <span key={index} className="border-b p-1">{entry}</span>
+                </>
+              ))}
+            </div>
             {combatLog && turn === combatLog.length - 1 &&
               <div className="flex flex-col">
                 <h1>Loot:</h1>
                 <span>Gold: {finishedCombat && finishedCombat.loot && finishedCombat.loot.gold}</span>
-                <div className="flex gap-1 items-center justify-center">
+                {/* <div className="flex flex-col">
                   {finishedCombat && finishedCombat.loot && finishedCombat.loot.loot.map((loot, index) => (
                     <span key={index}>{item_list[loot].name}</span>
                   ))}
-                </div>
+                </div> */}
+                {finishedCombat && finishedCombat.loot && (() => {
+                  const lootCount: { [key: string]: number } = {}
+
+                  finishedCombat.loot.loot.forEach(lootItem => {
+                    if (lootCount[lootItem]) {
+                      lootCount[lootItem] += 1
+                    } else {
+                      lootCount[lootItem] = 1
+                    }
+                  });
+
+                  return (
+                    <div className="flex flex-col">
+                      {Object.keys(lootCount).map((lootItem, index) => {
+                        const itemId = Number(lootItem)
+                        return (
+                          <span key={index} className={item_list[itemId]?.quality === 'epic' ? 'text-violet-500' : item_list[itemId]?.quality === 'rare' ? 'text-blue-500' : item_list[itemId]?.quality === 'uncommon' ? 'text-green-500' : ''}>{item_list[itemId]?.name} x{lootCount[itemId]}</span>
+                        );
+                      })}
+                    </div>
+                  )
+                })()}
               </div>
             }
           </section>

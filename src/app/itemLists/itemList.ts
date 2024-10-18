@@ -1,4 +1,4 @@
-import { Armor, Material, Potion, Weapon } from "./types";
+import { Armor, Material, Potion, Weapon } from "../types";
 
 export const item_list: { [key: number]: Weapon | Armor | Potion | Material } = {
   1: {
@@ -658,18 +658,19 @@ export const item_list: { [key: number]: Weapon | Armor | Potion | Material } = 
       luck: 0
     },
     image: "apprentices_chainmail_boots.png",
-    quality: "common",
+    quality: "uncommon",
     type: "armor"
   },
   31: {
     id: 31,
-    name: "Lesser Strength Potion",
+    name: "Lesser Agility Potion",
     description: "Gives a slight boost to agility",
     enchancing: {
       attribute: "agility",
       value: 10
     },
     image: "lesser_strength_potion.png",
+    quality: "uncommon",
     type: "potion"
   },
   32: {
@@ -681,6 +682,7 @@ export const item_list: { [key: number]: Weapon | Armor | Potion | Material } = 
       value: 10
     },
     image: "lesser_strength_potion.png",
+    quality: "uncommon",
     type: "potion"
   },
   33: {
@@ -692,6 +694,7 @@ export const item_list: { [key: number]: Weapon | Armor | Potion | Material } = 
       value: 10
     },
     image: "lesser_intellect_potion.png",
+    quality: "uncommon",
     type: "potion"
   },
   34: {
@@ -703,6 +706,7 @@ export const item_list: { [key: number]: Weapon | Armor | Potion | Material } = 
       value: 10
     },
     image: "lesser_stamina_potion.png",
+    quality: "uncommon",
     type: "potion"
   },
   35: {
@@ -714,6 +718,7 @@ export const item_list: { [key: number]: Weapon | Armor | Potion | Material } = 
       value: 10
     },
     image: "lesser_luck_elixir.png",
+    quality: "uncommon",
     type: "potion"
   }
 };
