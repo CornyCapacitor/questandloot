@@ -1,15 +1,10 @@
-import { item_list } from "../itemLists/itemList";
-import { Enemy, LogEntry, Player, Weapon } from "../types";
-import { calculateLoot, calculateTotalArmor, calculateTotalDamage, retrieveCharacterInformation } from "./combatCalculations";
+import { LogEntry, Player } from "../types";
+import { calculateCritChance, calculateDamage, calculateLoot, random, retrievePlayerInformation } from "./combatCalculations";
 
-export const combat = (participient1: Player, participient2: Player | Enemy, journeyLootChance: number) => {
+export const combat = (participient1: Player, participient2: any, journeyLootChance: number) => {
   // Preparation
-  const character1 = retrieveCharacterInformation(participient1)
-  const character2 = retrieveCharacterInformation(participient2)
-
-  // Testing purpose
-  // console.log('Character1:', character1)
-  // console.log('Character2:', character2)
+  const character1 = retrievePlayerInformation(participient1)
+  const character2 = participient2
 
   // Initialize HP
   let HP1 = character1.hp
@@ -28,23 +23,28 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
     const attacker = turn % 2 === 0 ? character2 : character1;
     const defender = turn % 2 === 0 ? character1 : character2;
 
-    // Calculate damage and enemy armor
-    const isCrit = Math.round(Math.random() * 100) <= attacker.critChance
-
-    // Calculating base damage from equipment, attributes and potion
-    const flatDamage = calculateTotalDamage(attacker.equipment, attacker.profession, attacker.flat_attributes, attacker.potion)
+    // Calculating crit chance
+    const critChance = calculateCritChance(defender.level, attacker.attributes)
+    const critDamageMultiplier = 2
+    const isCrit = Math.round(Math.random() * 100) <= critChance
 
     // Calculating defender's damage reduction from armor. Maximum of 25% damage reduction
-    const damageReduction = Math.floor(calculateTotalArmor(defender.equipment) / attacker.level) / 100 > 0.25 ? 0.25 : Math.floor(calculateTotalArmor(defender.equipment) / attacker.level) / 100
+    const armorReduction = (defender.armor / attacker.level) > 25 ? 25 : (defender.armor / attacker.level)
 
-    // Optionally applying critical damage multiplier
-    const baseDamage = isCrit ? Math.floor(flatDamage * 1.5) : flatDamage
+    // Calculating defender's class resistances
+    const classResistance = attacker.profession === 'warrior' ? Math.floor(defender.classResistances.warriorResistance) : attacker.profession === 'hunter' ? Math.floor(defender.classResistances.hunterResistance) : attacker.profession === 'mage' ? Math.floor(defender.classResistances.mageResistance) : 0
 
-    // Calculating final damage result minus defender's damage reduction
-    const damage = Math.floor(baseDamage - (damageReduction * baseDamage)) < 1 ? 1 : Math.floor(baseDamage - (damageReduction * baseDamage))
+    // Calculating base attacker's damage
+    const baseDamage = random(calculateDamage(attacker.attributes, attacker.profession, attacker.damage.min), calculateDamage(attacker.attributes, attacker.profession, attacker.damage.max))
 
-    // Testing purpose
-    // console.log(`${attacker.name} isCrit: ${isCrit}, flatDamage: ${flatDamage}, damageReduction: ${damageReduction}, baseDamage: ${baseDamage}, damage: ${damage}`)
+    // Calculating final damage result and applying armor & class resistances
+    const flatDamage = baseDamage * (isCrit ? critDamageMultiplier : 1)
+    const damage = flatDamage - Math.floor((flatDamage * (armorReduction / 100))) - classResistance < 1 ? 1 : flatDamage - Math.floor((flatDamage * (armorReduction / 100))) - classResistance
+
+    console.log('Flat damage:', flatDamage)
+    console.log('Armor reduction:', armorReduction)
+    console.log('Class resistance:', classResistance)
+    console.log('Damage:', damage)
 
     // Apply damage
     if (HP1 <= 0 || HP2 <= 0) {
@@ -52,7 +52,6 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
       const logEntry = {
         turn: turn,
         attacker: attacker.name,
-        title: attacker.title,
         target: defender.name,
         damage: damage,
         isCrit: isCrit,
@@ -61,10 +60,7 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
         maxHP1: maxHP1,
         HP2: HP2,
         maxHP2: maxHP2,
-        attackType: {
-          weapon1: attacker.equipment.weapon1 && item_list[attacker.equipment.weapon1] !== undefined ? (item_list[attacker.equipment.weapon1] as Weapon).family : null,
-          weapon2: attacker.equipment.weapon2 && item_list[attacker.equipment.weapon2] !== undefined ? (item_list[attacker.equipment.weapon2] as Weapon).family : null
-        }
+        attackType: attacker.damageType
       }
 
       combatLog.push(logEntry)
@@ -82,7 +78,6 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
     const logEntry = {
       turn: turn,
       attacker: attacker.name,
-      title: attacker.title,
       target: defender.name,
       damage: damage,
       isCrit: isCrit,
@@ -91,10 +86,7 @@ export const combat = (participient1: Player, participient2: Player | Enemy, jou
       maxHP1: maxHP1,
       HP2: HP2,
       maxHP2: maxHP2,
-      attackType: {
-        weapon1: attacker.equipment.weapon1 && item_list[attacker.equipment.weapon1] !== undefined ? (item_list[attacker.equipment.weapon1] as Weapon).family : null,
-        weapon2: attacker.equipment.weapon2 && item_list[attacker.equipment.weapon2] !== undefined ? (item_list[attacker.equipment.weapon2] as Weapon).family : null
-      }
+      attackType: attacker.damageType
     }
 
     combatLog.push(logEntry)

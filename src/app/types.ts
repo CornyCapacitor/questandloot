@@ -1,7 +1,7 @@
 export type Player = {
   name: string,
   title: string | null,
-  profession: "warrior" | "rogue" | "mage" | "hunter",
+  profession: Profession,
   level: number,
   attributes: Attributes,
   activeJourney: Journey | null,
@@ -11,46 +11,32 @@ export type Player = {
   items: Items[],
 }
 
-export type Enemy = {
-  name: string,
-  title: string | null,
-  profession: "warrior" | "rogue" | "mage" | "hunter",
-  level: number,
-  attributes: Attributes,
-  activePotion: null,
-  equipment: Equipment,
-  image: string,
-  loot: Loot
-}
+export type Profession = "warrior" | "mage" | "hunter"
 
 export type Items = Weapon | Armor | Potion | Material
 
 export type Weapon = {
-  id: number,
   name: string,
   description: string,
   level: number,
-  classes: string[],
-  slot: string | string[],
+  class: Profession,
+  slot: string,
   damage: {
     min: number,
     max: number
   },
-  armor: number,
   attributes: Attributes,
   image: string,
-  isTwoHanded: boolean
   quality: "common" | "uncommon" | "rare" | "epic",
   type: "weapon",
   family: string,
 }
 
 export type Armor = {
-  id: number,
   name: string,
   description: string,
   level: number,
-  classes: string[],
+  class: Profession,
   slot: string,
   armor: number,
   attributes: Attributes,
@@ -89,7 +75,15 @@ export type Attributes = {
 }
 
 export type Equipment = {
-  [slot: string]: number | null
+  weapon: Weapon | null,
+  shield?: Armor | null,
+  head: Armor | null,
+  chest: Armor | null,
+  hands: Armor | null,
+  legs: Armor | null,
+  feet: Armor | null,
+  neck: Armor | null,
+  ring: Armor | null
 }
 
 export type ActivePotion = {
@@ -105,7 +99,6 @@ export type Journey = {
 export type LogEntry = {
   turn: number,
   attacker: string,
-  title: string | null,
   target: string,
   damage: number,
   isCrit: boolean,
@@ -114,10 +107,7 @@ export type LogEntry = {
   maxHP1: number,
   HP2: number,
   maxHP2: number,
-  attackType: {
-    weapon1: string | null,
-    weapon2: string | null
-  }
+  attackType: string | null
 }
 
 export type Loot = {
@@ -126,4 +116,22 @@ export type Loot = {
   uncommon: number[] | null,
   rare: number[] | null,
   epic: number[] | null
+}
+
+export type Monster = {
+  name: string,
+  image: string,
+  family: string,
+  loot: Loot
+}
+
+export type DamageType = {
+  min: number,
+  max: number
+}
+
+export type Resistances = {
+  warriorResistance: number,
+  hunterResistance: number,
+  mageResistance: number
 }

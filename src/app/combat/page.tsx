@@ -4,13 +4,13 @@ import { useAtom } from "jotai"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import PageLoader from "../../../PageLoader"
-import { item_list } from "../itemLists/itemList"
+import { item_list } from "../db/itemList"
 import { enemyAtom, playerAtom } from "../state/atoms"
-import { Attributes, Enemy, LogEntry, Player } from "../types"
+import { Attributes, LogEntry, Player } from "../types"
 import { combat } from "./combat"
-import { calculateTotalStats } from "./combatCalculations"
 import { parseCombatLog } from "./combatLogParser"
-import { dummyEnemy, dummyPlayer } from "./dummies"
+import { dummyPlayer } from "./dummies"
+import { generateMonster } from "./generateMonster"
 import { HealthBar } from "./HealthBar"
 
 type FinishedCombatType = {
@@ -30,17 +30,17 @@ const CombatPage = () => {
   const [character1Attributes, setCharacter1Attributes] = useState<Attributes | null>(null)
   const [character2Attributes, setCharacter2Attributes] = useState<Attributes | null>(null)
   const [character1, setCharacter1] = useAtom<Player | null>(playerAtom)
-  const [character2, setCharacter2] = useAtom<Player | Enemy | null>(enemyAtom)
+  const [character2, setCharacter2] = useAtom<any>(enemyAtom)
 
   // Page preparation & perform combat
   useEffect(() => {
     if (!character1 || !character2) return
 
-    const combatResult = combat(dummyPlayer, dummyEnemy, 10000)
+    const combatResult = combat(character1, character2, 530)
     const log = combatResult.combatLog
     const parsedLog = parseCombatLog(log)
-    const char1Attributes = calculateTotalStats(character1.equipment, character1.attributes, character1.activePotion)
-    const char2Attributes = calculateTotalStats(character2.equipment, character2.attributes, character2.activePotion)
+    const char1Attributes = character1.attributes
+    const char2Attributes = character2.attributes
 
     setFinishedCombat(combatResult)
     setCombatLog(log)
@@ -69,7 +69,7 @@ const CombatPage = () => {
     return (
       <div className="flex flex-col gap-5 items-center justify-center h-screen">
         <PageLoader information="Loading combat page..." />
-        <button onClick={() => { setCharacter1(dummyPlayer); setCharacter2(dummyEnemy) }}>Click this to change character1 and character2</button>
+        <button onClick={() => { setCharacter1(dummyPlayer); setCharacter2(generateMonster(dummyPlayer.level)) }}>Click this to change character1 and character2</button>
       </div>
     )
   }
@@ -97,21 +97,16 @@ const CombatPage = () => {
             {/* <span>{parsedCombatLog && parsedCombatLog[turn]}</span> */}
             <div className="flex flex-col">
               {parsedCombatLog?.slice(0, turn + 1).map((entry, index) => (
-                <>
+                <div key={index}>
                   <h1>Turn: {index + 1}</h1>
-                  <span key={index} className="border-b p-1">{entry}</span>
-                </>
+                  <span className="border-b p-1">{entry}</span>
+                </div>
               ))}
             </div>
             {combatLog && turn === combatLog.length - 1 &&
               <div className="flex flex-col">
                 <h1>Loot:</h1>
                 <span>Gold: {finishedCombat && finishedCombat.loot && finishedCombat.loot.gold}</span>
-                {/* <div className="flex flex-col">
-                  {finishedCombat && finishedCombat.loot && finishedCombat.loot.loot.map((loot, index) => (
-                    <span key={index}>{item_list[loot].name}</span>
-                  ))}
-                </div> */}
                 {finishedCombat && finishedCombat.loot && (() => {
                   const lootCount: { [key: string]: number } = {}
 
@@ -148,7 +143,7 @@ const CombatPage = () => {
 
         {/* Defender section */}
         <section id="defender-section" className="w-full max-w-[250px] flex flex-col gap-1 items-center text-center border-l p-2">
-          <Image width={128} height={128} src={`/assets/portraits/${character2?.image}`} alt="Character 2 image" className="bg-white rounded-sm" />
+          <Image width={128} height={128} src={`/assets/portraits/${character2?.image}`} alt="Character 2 image" className="bg-white rounded-sm invertX" />
           <h1>{character2?.name}</h1>
           <HealthBar currentHP={combatLog ? combatLog[turn].HP2 : 0} maxHP={combatLog ? combatLog[turn].maxHP2 : 0} />
           {character2Attributes && Object.entries(character2Attributes).map(([key, value]) => (

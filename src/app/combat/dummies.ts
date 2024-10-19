@@ -1,4 +1,4 @@
-import { Enemy, Player } from "../types";
+import { Player } from "../types";
 
 export const dummyPlayer: Player = {
   name: "Dummy Undead",
@@ -15,8 +15,29 @@ export const dummyPlayer: Player = {
   activeJourney: null,
   activePotion: null,
   equipment: {
-    weapon1: 9,
-    weapon2: null,
+    weapon: {
+      name: 'Test Weapon',
+      description: 'Insta-kills all enemies',
+      level: 1,
+      class: 'mage',
+      slot: 'weapon',
+      damage: {
+        min: 5,
+        max: 10
+      },
+      attributes: {
+        strength: 0,
+        agility: 0,
+        intellect: 1,
+        stamina: 0,
+        luck: 0
+      },
+      image: '',
+      quality: 'common',
+      type: 'weapon',
+      family: 'fire'
+    },
+    shield: null,
     head: null,
     neck: null,
     chest: null,
@@ -27,38 +48,4 @@ export const dummyPlayer: Player = {
   },
   image: "skull.png",
   items: []
-};
-
-export const dummyEnemy: Enemy = {
-  name: "Frost golem",
-  title: null,
-  profession: "warrior",
-  level: 1,
-  attributes: {
-    strength: 2,
-    agility: 2,
-    intellect: 2,
-    stamina: 10,
-    luck: 2
-  },
-  activePotion: null,
-  equipment: {
-    weapon1: 1,
-    weapon2: null,
-    head: null,
-    neck: null,
-    chest: null,
-    hands: null,
-    legs: null,
-    feet: null,
-    ring: null
-  },
-  image: "frost_golem.png",
-  loot: {
-    gold: null,
-    common: [1, 5],
-    uncommon: [31, 32, 33, 34, 35],
-    rare: null,
-    epic: null
-  }
 };

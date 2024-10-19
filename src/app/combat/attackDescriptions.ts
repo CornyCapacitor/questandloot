@@ -95,4 +95,7 @@ export const attackDescriptions: { [key: string]: string[] } = {
     'delivers a stunning blow with the edge of the shield',
     'launches a shield attack that disrupts the enemy’s balance',
   ],
+  default: [
+    'hits the target'
+  ]
 };

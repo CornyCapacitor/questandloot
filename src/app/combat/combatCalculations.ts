@@ -1,85 +1,64 @@
-import { item_list } from "../itemLists/itemList"
-import { ActivePotion, Attributes, Enemy, Equipment, Loot, Player } from "../types"
+import { item_list } from "../db/itemList"
+import { ActivePotion, Attributes, DamageType, Equipment, Loot, Player, Profession, Resistances, Weapon } from "../types"
 
-export const calculateTotalStats = (equipment: Equipment, attributes: Attributes, activePotion: ActivePotion) => {
-  // Copy character's statistics
-  const totalStats: Attributes = { ...attributes }
+export const random = (number1: number, number2: number) => {
+  return Math.floor(Math.random() * (number2 - number1 + 1) + number1)
+}
 
-  // Apply equipment statistics
+export const calculatePlayerAttributes = (equipment: Equipment, attributes: Attributes, activePotion: ActivePotion) => {
+  const playerAttributes: Attributes = { ...attributes }
+
   if (equipment) {
-    for (const itemId of Object.values(equipment)) {
-      if (itemId) {
-        const equippedItem = item_list[itemId]
-
-        if (equippedItem && 'attributes' in equippedItem) {
-          for (const stat in equippedItem.attributes) {
-            if (stat in totalStats) {
-              const _stat = stat as keyof Attributes
-              totalStats[_stat] += equippedItem.attributes[_stat]
-            }
+    for (const item of Object.values(equipment)) {
+      if (item && 'attributes' in item) {
+        for (const stat in item.attributes) {
+          if (stat in playerAttributes) {
+            const _stat = stat as keyof Attributes
+            playerAttributes[_stat] += item.attributes[_stat]
           }
         }
       }
     }
   }
 
-  // Apply potion effect
   if (activePotion) {
     const potionId = activePotion.potionId
     const potion = item_list[potionId]
 
     if (potion.type !== "potion") {
-      console.error('Something went wrong applying a potion buff.')
-      return
+      alert('Something went wrong applying a potion buff.')
+      return playerAttributes
     }
 
     if (activePotion.expiringDate < new Date()) {
-      console.error('Potion expired, running nullifying function.')
-      return
+      alert('Potion expried, running nullifying function..')
+      return playerAttributes
     }
 
     const potionStat = potion.enchancing.attribute as keyof Attributes
     const potionStrength = potion.enchancing.value
-    const potionValue = (potionStrength / 100) * totalStats[potionStat]
+    const potionValue = (potionStrength / 100) * playerAttributes[potionStat]
 
-    totalStats[potionStat] = (totalStats[potionStat] ?? 0) + potionValue
+    playerAttributes[potionStat] = (playerAttributes[potionStat] ?? 0) + potionValue
   }
 
-  return totalStats
+  return playerAttributes
 }
 
-export const calculateWeaponDamage = (weapon1Id: number | null, weapon2Id: number | null) => {
-  const weapon1 = weapon1Id ? item_list[weapon1Id] : null
-  const weapon2 = weapon2Id ? item_list[weapon2Id] : null
+export const calculateWeaponDamage = (weapon: Weapon | null) => {
+  if (weapon) return weapon.damage
 
-  const calculateSingleWeapon = (min: number, max: number) => {
-    return min + Math.floor(Math.random() * (max - min + 1))
-  }
-
-  // Calculating dual wielding damage
-  if (weapon1 && 'damage' in weapon1 && !weapon1.isTwoHanded && weapon2 && 'damage' in weapon2) {
-    const weapon1Damage = calculateSingleWeapon(weapon1.damage.min, weapon1.damage.max)
-    const weapon2Damage = calculateSingleWeapon(weapon2.damage.min, weapon2.damage.max)
-
-    return weapon1Damage + weapon2Damage
-  }
-  // Calculating single weapon damage
-  else if (weapon1 && 'damage' in weapon1 && !weapon2) {
-    return calculateSingleWeapon(weapon1.damage.min, weapon1.damage.max)
-  }
-  // Calculating bare hand damage
-  return calculateSingleWeapon(1, 2)
+  return { min: 1, max: 2 }
 }
 
-export const calculateTotalDamage = (equipment: Equipment, profession: string, attributes: Attributes, activePotion: ActivePotion) => {
-  const totalStats = calculateTotalStats(equipment, attributes, activePotion)
+export const calculateDamage = (attributes: Attributes, profession: Profession, weaponDamage: number) => {
   let mainDamageStat: keyof Attributes | null = null
 
   switch (profession) {
     case "warrior":
       mainDamageStat = "strength"
       break
-    case "rogue":
+    // case "rogue":
     case "hunter":
       mainDamageStat = "agility"
       break
@@ -90,25 +69,21 @@ export const calculateTotalDamage = (equipment: Equipment, profession: string, a
       mainDamageStat = null
   }
 
-  if (mainDamageStat && totalStats) {
-    const weaponDamage = calculateWeaponDamage(equipment.weapon1, equipment.weapon2)
-    return weaponDamage + (totalStats[mainDamageStat] || 0)
+  if (mainDamageStat) {
+    const statDamageMultiplier = 1 + (attributes[mainDamageStat] / 10)
+    return weaponDamage * statDamageMultiplier
   }
 
-  return 1
+  return weaponDamage
 }
 
-export const calculateTotalArmor = (equipment: Equipment) => {
+export const calculatePlayerArmor = (equipment: Equipment) => {
   let armorValue = 0
 
   if (equipment) {
-    for (const itemId of Object.values(equipment)) {
-      if (itemId) {
-        const equippedItem = item_list[itemId]
-
-        if (equippedItem && 'armor' in equippedItem) {
-          armorValue += equippedItem.armor
-        }
+    for (const item of Object.values(equipment)) {
+      if (item && 'armor' in item) {
+        armorValue += item.armor
       }
     }
   }
@@ -116,16 +91,22 @@ export const calculateTotalArmor = (equipment: Equipment) => {
   return armorValue
 }
 
-export const calculateCritChance = (equipment: Equipment, level: number, attributes: Attributes, activePotion: ActivePotion) => {
-  const totalStats = calculateTotalStats(equipment, attributes, activePotion)
+export const calculateResistances = (attributes: Attributes) => {
+  return {
+    warriorResistance: attributes['strength'] / 2,
+    hunterResistance: attributes['agility'] / 2,
+    mageResistance: attributes['intellect'] / 2
+  }
+}
 
-  if (!totalStats) {
-    console.error('Something went wrong fetching totalStats. Setting critChance to 5%')
+export const calculateCritChance = (enemyLevel: number, attributes: Attributes) => {
+  if (!attributes) {
+    alert('Something went wrong fetching attributes. Setting critChance to 5%')
     return 5
   }
 
-  const characterLuck = totalStats['luck']
-  let totalCritChance = (Math.round(characterLuck / level) * 100) / 100
+  const luck = attributes['luck']
+  let totalCritChance = Math.round((luck * 5) / (enemyLevel * 2))
 
   // Minimum of 5% crit chance and maximum of 50% crit chance
   if (totalCritChance < 5.00) {
@@ -137,58 +118,36 @@ export const calculateCritChance = (equipment: Equipment, level: number, attribu
   return totalCritChance
 }
 
-export const calculateCharacterHP = (equipment: Equipment, attributes: Attributes, activePotion: ActivePotion) => {
-  const totalStats = calculateTotalStats(equipment, attributes, activePotion)
-
-  if (!totalStats) {
-    console.error('Something went wrong fetching totalStats. Setting base HP to 10')
-    return 10
+export const calculateTotalHP = (level: number, attributes: Attributes) => {
+  if (!attributes) {
+    alert('Something went wrong fetching attributes. Setting base HP to 100')
+    return 100
   }
 
-  return totalStats['stamina'] * 5
+  return attributes['stamina'] * 4 * (level + 1)
 }
 
-export const calculateCharacterArmor = (equipment: Equipment) => {
-  let totalArmor = 0
+export const retrievePlayerInformation = (character: Player) => {
+  const attributes: Attributes = calculatePlayerAttributes(character.equipment, character.attributes, character.activePotion)
+  const damage: DamageType = calculateWeaponDamage(character.equipment.weapon)
+  const armor: number = calculatePlayerArmor(character.equipment)
+  const hp: number = calculateTotalHP(character.level, attributes)
+  const classResistances: Resistances = calculateResistances(attributes)
 
-  if (equipment) {
-    for (const itemId of Object.values(equipment)) {
-      if (itemId) {
-        const equippedItem = item_list[itemId]
-
-        if (equippedItem && 'armor' in equippedItem) {
-          totalArmor += equippedItem.armor
-        }
-      }
-    }
-  }
-
-  return totalArmor
-}
-
-export const retrieveCharacterInformation = (character: Player | Enemy) => {
-  const HP = calculateCharacterHP(character.equipment, character.attributes, character.activePotion)
-  const ARM = calculateCharacterArmor(character.equipment)
-  const CRIT = calculateCritChance(character.equipment, character.level, character.attributes, character.activePotion)
-  const STATS = calculateTotalStats(character.equipment, character.attributes, character.activePotion)
-
-  const baseInfo = {
+  const playerData = {
     name: character.name,
-    title: character.title,
     level: character.level,
     profession: character.profession,
-    hp: HP,
-    armor: ARM,
-    critChance: CRIT,
-    flat_attributes: character.attributes,
-    total_attributes: STATS,
-    potion: character.activePotion,
-    equipment: character.equipment,
+    attributes,
+    damage,
+    damageType: character.equipment.weapon ? character.equipment.weapon.family : null,
+    hp,
+    armor,
+    classResistances,
+    image: character.image
   }
 
-  if ('loot' in character) return { ...baseInfo, loot: character.loot }
-
-  return baseInfo
+  return playerData
 }
 
 const calculateItemQuantity = (chance: number) => {
