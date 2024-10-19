@@ -1,6 +1,6 @@
-import { Monster } from "../types";
+import { MonsterArray } from "../types";
 
-export const monsterList: Monster[] = [
+export const monsterList: MonsterArray[] = [
   {
     name: 'Frost Golem',
     image: 'frost_golem.png',

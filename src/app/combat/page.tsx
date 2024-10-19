@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import PageLoader from "../../../PageLoader"
 import { item_list } from "../db/itemList"
 import { enemyAtom, playerAtom } from "../state/atoms"
-import { Attributes, LogEntry, Player } from "../types"
+import { Attributes, LogEntry, Monster, Player } from "../types"
 import { combat } from "./combat"
 import { parseCombatLog } from "./combatLogParser"
 import { dummyPlayer } from "./dummies"
@@ -30,7 +30,7 @@ const CombatPage = () => {
   const [character1Attributes, setCharacter1Attributes] = useState<Attributes | null>(null)
   const [character2Attributes, setCharacter2Attributes] = useState<Attributes | null>(null)
   const [character1, setCharacter1] = useAtom<Player | null>(playerAtom)
-  const [character2, setCharacter2] = useAtom<any>(enemyAtom)
+  const [character2, setCharacter2] = useAtom<Monster | null>(enemyAtom)
 
   // Page preparation & perform combat
   useEffect(() => {
@@ -69,7 +69,7 @@ const CombatPage = () => {
     return (
       <div className="flex flex-col gap-5 items-center justify-center h-screen">
         <PageLoader information="Loading combat page..." />
-        <button onClick={() => { setCharacter1(dummyPlayer); setCharacter2(generateMonster(dummyPlayer.level)) }}>Click this to change character1 and character2</button>
+        <button onClick={() => { setCharacter1(dummyPlayer); setCharacter2(generateMonster(dummyPlayer.level)) }}>Click this to fight random enemy</button>
       </div>
     )
   }

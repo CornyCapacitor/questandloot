@@ -1,5 +1,5 @@
 import { monsterList } from "../db/monsterList"
-import { Attributes, DamageType, Monster, Profession, Resistances } from "../types"
+import { Attributes, Damage, MonsterArray, Profession, Resistances } from "../types"
 import { calculateResistances, calculateTotalHP, random } from "./combatCalculations"
 
 const calculateMonsterStats = (level: number) => {
@@ -36,12 +36,12 @@ const randomizeProfession = () => {
 }
 
 export const generateMonster = (_level: number) => {
-  const chosenMonster: Monster = randomizeMonster()
+  const chosenMonster: MonsterArray = randomizeMonster()
 
   const level: number = _level
   const profession: Profession = randomizeProfession()
   const attributes: Attributes = calculateMonsterStats(level).attributes
-  const damage: DamageType = calculateMonsterStats(level).damage
+  const damage: Damage = calculateMonsterStats(level).damage
   const armor: number = calculateMonsterStats(level).armor
   const hp: number = calculateTotalHP(level, attributes)
   const classResistances: Resistances = calculateResistances(attributes)

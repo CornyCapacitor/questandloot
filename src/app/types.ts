@@ -13,6 +13,8 @@ export type Player = {
 
 export type Profession = "warrior" | "mage" | "hunter"
 
+export type DamageType = "sword" | "axe" | "mace" | "dagger" | "fire" | "frost" | "arcane" | "earth" | "air" | "bow" | "crossbow" | "shield" | null
+
 export type Items = Weapon | Armor | Potion | Material
 
 export type Weapon = {
@@ -118,14 +120,28 @@ export type Loot = {
   epic: number[] | null
 }
 
-export type Monster = {
+export type MonsterArray = {
   name: string,
   image: string,
   family: string,
   loot: Loot
 }
 
-export type DamageType = {
+export type Monster = {
+  name: string,
+  level: number,
+  profession: Profession,
+  attributes: Attributes,
+  damage: Damage,
+  damageType: DamageType,
+  hp: number,
+  armor: number,
+  classResistances: Resistances,
+  image: string,
+  loot: Loot
+}
+
+export type Damage = {
   min: number,
   max: number
 }

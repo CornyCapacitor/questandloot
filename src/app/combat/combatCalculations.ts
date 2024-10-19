@@ -1,5 +1,5 @@
 import { item_list } from "../db/itemList"
-import { ActivePotion, Attributes, DamageType, Equipment, Loot, Player, Profession, Resistances, Weapon } from "../types"
+import { ActivePotion, Attributes, Damage, Equipment, Loot, Player, Profession, Resistances, Weapon } from "../types"
 
 export const random = (number1: number, number2: number) => {
   return Math.floor(Math.random() * (number2 - number1 + 1) + number1)
@@ -129,7 +129,7 @@ export const calculateTotalHP = (level: number, attributes: Attributes) => {
 
 export const retrievePlayerInformation = (character: Player) => {
   const attributes: Attributes = calculatePlayerAttributes(character.equipment, character.attributes, character.activePotion)
-  const damage: DamageType = calculateWeaponDamage(character.equipment.weapon)
+  const damage: Damage = calculateWeaponDamage(character.equipment.weapon)
   const armor: number = calculatePlayerArmor(character.equipment)
   const hp: number = calculateTotalHP(character.level, attributes)
   const classResistances: Resistances = calculateResistances(attributes)

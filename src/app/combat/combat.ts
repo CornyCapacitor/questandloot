@@ -1,7 +1,7 @@
-import { LogEntry, Player } from "../types";
+import { LogEntry, Monster, Player } from "../types";
 import { calculateCritChance, calculateDamage, calculateLoot, random, retrievePlayerInformation } from "./combatCalculations";
 
-export const combat = (participient1: Player, participient2: any, journeyLootChance: number) => {
+export const combat = (participient1: Player, participient2: Monster, journeyLootChance: number) => {
   // Preparation
   const character1 = retrievePlayerInformation(participient1)
   const character2 = participient2
@@ -41,6 +41,7 @@ export const combat = (participient1: Player, participient2: any, journeyLootCha
     const flatDamage = baseDamage * (isCrit ? critDamageMultiplier : 1)
     const damage = flatDamage - Math.floor((flatDamage * (armorReduction / 100))) - classResistance < 1 ? 1 : flatDamage - Math.floor((flatDamage * (armorReduction / 100))) - classResistance
 
+    console.log('Attacker:', attacker.name)
     console.log('Flat damage:', flatDamage)
     console.log('Armor reduction:', armorReduction)
     console.log('Class resistance:', classResistance)
