@@ -41,11 +41,11 @@ export const combat = (participient1: Player, participient2: Monster, journeyLoo
     const flatDamage = baseDamage * (isCrit ? critDamageMultiplier : 1)
     const damage = flatDamage - Math.floor((flatDamage * (armorReduction / 100))) - classResistance < 1 ? 1 : flatDamage - Math.floor((flatDamage * (armorReduction / 100))) - classResistance
 
-    console.log('Attacker:', attacker.name)
-    console.log('Flat damage:', flatDamage)
-    console.log('Armor reduction:', armorReduction)
-    console.log('Class resistance:', classResistance)
-    console.log('Damage:', damage)
+    // console.log('Attacker:', attacker.name)
+    // console.log('Flat damage:', flatDamage)
+    // console.log('Armor reduction:', armorReduction)
+    // console.log('Class resistance:', classResistance)
+    // console.log('Damage:', damage)
 
     // Apply damage
     if (HP1 <= 0 || HP2 <= 0) {

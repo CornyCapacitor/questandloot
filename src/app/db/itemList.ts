@@ -60,5 +60,13 @@ export const item_list: { [key: number]: Potion | Material } = {
     image: "lesser_luck_elixir.png",
     quality: "uncommon",
     type: "potion"
+  },
+  6: {
+    id: 6,
+    name: "Ice Shard",
+    description: "Blue shard glowing with strange energy. Could be useful in crafting.",
+    image: "ice_crystal.png",
+    quality: "common",
+    type: "material"
   }
 };

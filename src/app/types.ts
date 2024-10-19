@@ -65,6 +65,7 @@ export type Material = {
   name: string,
   description: string,
   quality: "common" | "uncommon" | "rare" | "epic",
+  image: string,
   type: "material"
 }
 

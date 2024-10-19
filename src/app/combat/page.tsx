@@ -123,7 +123,10 @@ const CombatPage = () => {
                       {Object.keys(lootCount).map((lootItem, index) => {
                         const itemId = Number(lootItem)
                         return (
-                          <span key={index} className={item_list[itemId]?.quality === 'epic' ? 'text-violet-500' : item_list[itemId]?.quality === 'rare' ? 'text-blue-500' : item_list[itemId]?.quality === 'uncommon' ? 'text-green-500' : ''}>{item_list[itemId]?.name} x{lootCount[itemId]}</span>
+                          <div key={index} className="flex gap-2 self-center items-center justify-center">
+                            <Image height={32} width={32} alt="" src={`/assets/materials/${item_list[itemId]?.image}`} />
+                            <span className={item_list[itemId]?.quality === 'epic' ? 'text-violet-500' : item_list[itemId]?.quality === 'rare' ? 'text-blue-500' : item_list[itemId]?.quality === 'uncommon' ? 'text-green-500' : ''}>{item_list[itemId]?.name} x{lootCount[itemId]}</span>
+                          </div>
                         );
                       })}
                     </div>

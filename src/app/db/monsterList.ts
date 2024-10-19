@@ -7,8 +7,8 @@ export const monsterList: MonsterArray[] = [
     family: 'mountains',
     loot: {
       gold: 0,
-      common: [],
-      uncommon: [],
+      common: [6],
+      uncommon: [1, 2, 3, 4, 5],
       rare: [],
       epic: []
     }
