@@ -11,11 +11,29 @@ export type Player = {
   items: Items[],
 }
 
+export type CombatInformation = {
+  name: string,
+  level: number,
+  profession: "warrior" | "hunter" | "mage",
+  attributes: Attributes,
+  damage: Damage,
+  damageType: DamageType,
+  hp: number,
+  armor: number,
+  classResistances: Resistances,
+  image: string,
+  loot: Loot | null
+}
+
 export type Profession = "warrior" | "mage" | "hunter"
 
-export type DamageType = "sword" | "axe" | "mace" | "dagger" | "fire" | "frost" | "arcane" | "earth" | "air" | "bow" | "crossbow" | "shield" | null
+export type WeaponFamily = "sword" | "axe" | "mace" | "fire" | "frost" | "arcane" | "earth" | "air" | "bow" | "crossbow"
+
+export type DamageType = WeaponFamily | null
 
 export type Items = Weapon | Armor | Potion | Material
+
+export type Quality = "common" | "uncommon" | "rare" | "epic"
 
 export type Weapon = {
   name: string,
@@ -29,7 +47,7 @@ export type Weapon = {
   },
   attributes: Attributes,
   image: string,
-  quality: "common" | "uncommon" | "rare" | "epic",
+  quality: Quality,
   type: "weapon",
   family: string,
 }
@@ -43,7 +61,7 @@ export type Armor = {
   armor: number,
   attributes: Attributes,
   image: string,
-  quality: "common" | "uncommon" | "rare" | "epic",
+  quality: Quality,
   type: "armor"
 }
 
@@ -57,14 +75,14 @@ export type Potion = {
   }
   image: string,
   type: "potion",
-  quality: "common" | "uncommon" | "rare" | "epic"
+  quality: Quality
 }
 
 export type Material = {
   id: number,
   name: string,
   description: string,
-  quality: "common" | "uncommon" | "rare" | "epic",
+  quality: Quality,
   image: string,
   type: "material"
 }
@@ -139,7 +157,7 @@ export type Monster = {
   armor: number,
   classResistances: Resistances,
   image: string,
-  loot: Loot
+  loot: Loot | null
 }
 
 export type Damage = {

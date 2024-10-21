@@ -5,7 +5,7 @@ const randomize = (textArray: string[]) => {
   return textArray[Math.floor(Math.random() * textArray.length)]
 }
 
-const parseWeaponText = (attackType: string | null) => {
+const parseWeaponText = (attackType: string | null): string => {
   let damageDescription
 
   if (attackType && attackType in attackDescriptions) {
@@ -18,7 +18,7 @@ const parseWeaponText = (attackType: string | null) => {
   return damageDescription
 }
 
-export const parseCombatLog = (combatLog: LogEntry[]) => {
+export const parseCombatLog = (combatLog: LogEntry[]): string[] => {
   const parsedCombatLog: string[] = []
 
   for (const entry of combatLog) {

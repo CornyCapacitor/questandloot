@@ -1,11 +1,11 @@
 import { item_list } from "../db/itemList"
-import { ActivePotion, Attributes, Damage, Equipment, Loot, Player, Profession, Resistances, Weapon } from "../types"
+import { ActivePotion, Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Player, Profession, Resistances, Weapon } from "../types"
 
-export const random = (number1: number, number2: number) => {
+export const random = (number1: number, number2: number): number => {
   return Math.floor(Math.random() * (number2 - number1 + 1) + number1)
 }
 
-export const calculatePlayerAttributes = (equipment: Equipment, attributes: Attributes, activePotion: ActivePotion) => {
+export const calculatePlayerAttributes = (equipment: Equipment, attributes: Attributes, activePotion: ActivePotion): Attributes => {
   const playerAttributes: Attributes = { ...attributes }
 
   if (equipment) {
@@ -45,20 +45,19 @@ export const calculatePlayerAttributes = (equipment: Equipment, attributes: Attr
   return playerAttributes
 }
 
-export const calculateWeaponDamage = (weapon: Weapon | null) => {
+export const calculateWeaponDamage = (weapon: Weapon | null): Damage => {
   if (weapon) return weapon.damage
 
   return { min: 1, max: 2 }
 }
 
-export const calculateDamage = (attributes: Attributes, profession: Profession, weaponDamage: number) => {
+export const calculateDamage = (attributes: Attributes, profession: Profession, weaponDamage: number): number => {
   let mainDamageStat: keyof Attributes | null = null
 
   switch (profession) {
     case "warrior":
       mainDamageStat = "strength"
       break
-    // case "rogue":
     case "hunter":
       mainDamageStat = "agility"
       break
@@ -77,7 +76,7 @@ export const calculateDamage = (attributes: Attributes, profession: Profession, 
   return weaponDamage
 }
 
-export const calculatePlayerArmor = (equipment: Equipment) => {
+export const calculatePlayerArmor = (equipment: Equipment): number => {
   let armorValue = 0
 
   if (equipment) {
@@ -91,7 +90,7 @@ export const calculatePlayerArmor = (equipment: Equipment) => {
   return armorValue
 }
 
-export const calculateResistances = (attributes: Attributes) => {
+export const calculateResistances = (attributes: Attributes): Resistances => {
   return {
     warriorResistance: attributes['strength'] / 2,
     hunterResistance: attributes['agility'] / 2,
@@ -99,7 +98,7 @@ export const calculateResistances = (attributes: Attributes) => {
   }
 }
 
-export const calculateCritChance = (enemyLevel: number, attributes: Attributes) => {
+export const calculateCritChance = (enemyLevel: number, attributes: Attributes): number => {
   if (!attributes) {
     alert('Something went wrong fetching attributes. Setting critChance to 5%')
     return 5
@@ -118,7 +117,7 @@ export const calculateCritChance = (enemyLevel: number, attributes: Attributes) 
   return totalCritChance
 }
 
-export const calculateTotalHP = (level: number, attributes: Attributes) => {
+export const calculateTotalHP = (level: number, attributes: Attributes): number => {
   if (!attributes) {
     alert('Something went wrong fetching attributes. Setting base HP to 100')
     return 100
@@ -127,7 +126,12 @@ export const calculateTotalHP = (level: number, attributes: Attributes) => {
   return attributes['stamina'] * 4 * (level + 1)
 }
 
-export const retrievePlayerInformation = (character: Player) => {
+const mapWeaponFamilyToDamageType = (family: string): DamageType => {
+  const weaponFamilies: DamageType[] = ["sword", "axe", "mace", "dagger", "fire", "frost", "arcane", "earth", "air", "bow", "crossbow", "shield", null];
+  return weaponFamilies.includes(family as DamageType) ? (family as DamageType) : null
+}
+
+export const retrievePlayerInformation = (character: Player): CombatInformation => {
   const attributes: Attributes = calculatePlayerAttributes(character.equipment, character.attributes, character.activePotion)
   const damage: Damage = calculateWeaponDamage(character.equipment.weapon)
   const armor: number = calculatePlayerArmor(character.equipment)
@@ -140,17 +144,18 @@ export const retrievePlayerInformation = (character: Player) => {
     profession: character.profession,
     attributes,
     damage,
-    damageType: character.equipment.weapon ? character.equipment.weapon.family : null,
+    damageType: character.equipment.weapon ? mapWeaponFamilyToDamageType(character.equipment.weapon.family) : null,
     hp,
     armor,
     classResistances,
-    image: character.image
+    image: character.image,
+    loot: null
   }
 
   return playerData
 }
 
-const calculateItemQuantity = (chance: number) => {
+const calculateItemQuantity = (chance: number): number => {
   const fullChances = Math.floor(chance / 100)
   const remainder = chance % 100
   const randomRoll = Math.floor(Math.random() * 100) + 1
@@ -159,7 +164,7 @@ const calculateItemQuantity = (chance: number) => {
   return finalChances
 }
 
-const calculateItemQuality = (loot: Loot) => {
+const calculateItemQuality = (loot: Loot): number => {
   const roll = Math.random() * 100
 
   if (roll > 94 && roll <= 98.9 && loot.uncommon?.length) {
@@ -177,7 +182,7 @@ const calculateItemQuality = (loot: Loot) => {
   }
 }
 
-export const calculateLoot = (loot: Loot, chance: number) => {
+export const calculateLoot = (loot: Loot, chance: number): { gold: number, loot: number[] } => {
   const finalLoot: number[] = []
   let finalGold = 0
   const lootQuantity = calculateItemQuantity(chance)

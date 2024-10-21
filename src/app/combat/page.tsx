@@ -5,12 +5,12 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import PageLoader from "../../../PageLoader"
 import { item_list } from "../db/itemList"
+import { generateMonster } from "../generators/generateMonster"
 import { enemyAtom, playerAtom } from "../state/atoms"
 import { Attributes, LogEntry, Monster, Player } from "../types"
 import { combat } from "./combat"
 import { parseCombatLog } from "./combatLogParser"
 import { dummyPlayer } from "./dummies"
-import { generateMonster } from "./generateMonster"
 import { HealthBar } from "./HealthBar"
 
 type FinishedCombatType = {
@@ -18,7 +18,7 @@ type FinishedCombatType = {
   combatLog: LogEntry[],
   loot: {
     gold: number,
-    loot: number[]
+    loot: number[] | null
   } | null
 }
 
@@ -110,7 +110,7 @@ const CombatPage = () => {
                 {finishedCombat && finishedCombat.loot && (() => {
                   const lootCount: { [key: string]: number } = {}
 
-                  finishedCombat.loot.loot.forEach(lootItem => {
+                  finishedCombat.loot?.loot?.forEach(lootItem => {
                     if (lootCount[lootItem]) {
                       lootCount[lootItem] += 1
                     } else {

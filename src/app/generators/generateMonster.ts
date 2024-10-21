@@ -1,6 +1,6 @@
-import { monsterList } from "../db/monsterList"
-import { Attributes, Damage, MonsterArray, Profession, Resistances } from "../types"
-import { calculateResistances, calculateTotalHP, random } from "./combatCalculations"
+import { calculateResistances, calculateTotalHP, random } from "../combat/combatCalculations"
+import { Attributes, CombatInformation, Damage, MonsterArray, Profession, Resistances } from "../types"
+import { monsterList } from "./monsterList"
 
 const calculateMonsterStats = (level: number) => {
   const attributes: Attributes = {
@@ -35,7 +35,7 @@ const randomizeProfession = () => {
   return professions[Math.floor(Math.random() * professions.length)]
 }
 
-export const generateMonster = (_level: number) => {
+export const generateMonster = (_level: number): CombatInformation => {
   const chosenMonster: MonsterArray = randomizeMonster()
 
   const level: number = _level
