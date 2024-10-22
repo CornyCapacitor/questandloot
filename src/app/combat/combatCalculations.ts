@@ -127,7 +127,7 @@ export const calculateTotalHP = (level: number, attributes: Attributes): number 
 }
 
 const mapWeaponFamilyToDamageType = (family: string): DamageType => {
-  const weaponFamilies: DamageType[] = ["sword", "axe", "mace", "dagger", "fire", "frost", "arcane", "earth", "air", "bow", "crossbow", "shield", null];
+  const weaponFamilies: DamageType[] = ["sword", "axe", "mace", "fire", "frost", "arcane", "earth", "air", "bow", "crossbow", null];
   return weaponFamilies.includes(family as DamageType) ? (family as DamageType) : null
 }
 

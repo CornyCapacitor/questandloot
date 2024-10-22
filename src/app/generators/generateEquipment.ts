@@ -18,12 +18,12 @@ const availableItems: { [key in Profession]: string[] } = {
 
 const randomizeWeaponFamily = (profession: Profession): WeaponFamily => {
   const array = weaponFamilies[profession]
-  return array[random(0, array.length)]
+  return array[random(0, array.length - 1)]
 }
 
 const randomizeItemType = (profession: Profession): string => {
   const array = availableItems[profession]
-  return array[random(0, array.length)]
+  return array[random(0, array.length - 1)]
 }
 
 const getRandomAttributes = (count: number) => {
@@ -74,6 +74,10 @@ export const generateWeapon = (level: number, profession: Profession, quality: Q
       attributes[attribute] = Math.floor(((1 * level) * qualityMultiplier) / chosenAttributes.length)
     }
   })
+
+  console.log('Randomized family:', family)
+  console.log('Family array:', familyArray)
+  console.log('Random item:', randomItem)
 
   return {
     name,
