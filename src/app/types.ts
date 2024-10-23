@@ -188,7 +188,7 @@ export type Monster = {
   armor: number,
   classResistances: Resistances,
   image: string,
-  loot: Loot | null
+  loot: Loot
 }
 
 export type Damage = {
