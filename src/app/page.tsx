@@ -1,17 +1,17 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { generateWeapon } from "./generators/generateEquipment";
-import { Weapon } from "./types";
+import { generateRandomEquipment } from "./generators/generateEquipment";
+import { Armor, Jewelery, Shield, Weapon } from "./types";
 
 
 export default function Home() {
-  const [generatedWeapon, setGeneratedWeapon] = useState<Weapon | null>(null)
+  const [item, setItem] = useState<Weapon | Jewelery | Armor | Shield | null>(null)
 
   useEffect(() => {
-    const weapon = generateWeapon(10, 'warrior', 'common')
-    console.log('Weapon:', weapon)
-    setGeneratedWeapon(weapon)
+    const item = generateRandomEquipment(22, 'warrior', 'common')
+    setItem(item)
+    console.log(item)
   }, [])
 
   return (

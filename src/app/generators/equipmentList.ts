@@ -1,12 +1,12 @@
-import { WeaponFamily } from "../types"
+import { ArmorSlot, JewelerySlot, WeaponFamily } from "../types"
 
-type SingleWeapon = {
+type Item = {
   name: string,
   description: string,
   image: string,
 }
 
-export const weapons: { [key in WeaponFamily]: SingleWeapon[] } = {
+export const weapons: { [key in WeaponFamily]: Item[] } = {
   'sword': [
     {
       name: 'Training Sword',
@@ -75,6 +75,146 @@ export const weapons: { [key in WeaponFamily]: SingleWeapon[] } = {
       name: 'Heavy Crossbow',
       description: 'A powerful crossbow that delivers devastating shots.',
       image: 'heavy_crossbow.png'
+    }
+  ]
+}
+
+export const lightArmors: { [key in ArmorSlot]: Item[] } = {
+  'head': [
+    {
+      name: "Apprentice's Hood",
+      description: 'A simple hood worn by novice mages.',
+      image: 'apprentices_hood.png'
+    }
+  ],
+  'chest': [
+    {
+      name: "Apprentice's Robe",
+      description: 'A lightweight robe providing minimal protection, designed for apprentice spellcasters.',
+      image: 'apprentices_robe.png'
+    }
+  ],
+  'legs': [
+    {
+      name: "Apprentice's Pants",
+      description: 'Comfortable pants that allow for easy movement during spell practice.',
+      image: 'apprentices_pants.png'
+    }
+  ],
+  'feet': [
+    {
+      name: "Apprentice's Boots",
+      description: 'Simple boots that offer modest protection and comfort for new mages.',
+      image: 'apprentices_boots.png'
+    }
+  ],
+  'hands': [
+    {
+      name: "Apprentice's Gloves",
+      description: 'Gloves that provide basic protection while handling magical items.',
+      image: 'apprentices_gloves.png'
+    }
+  ]
+}
+
+export const mediumArmors: { [key in ArmorSlot]: Item[] } = {
+  'head': [
+    {
+      name: "Scout's Hood",
+      description: 'A durable hood designed to offer protection without sacrificing stealth.',
+      image: 'scouts_hood.png'
+    }
+  ],
+  'chest': [
+    {
+      name: "Scout's Jacket",
+      description: 'A lightweight, reinforced jacket ideal for long expeditions and quick movements.',
+      image: 'scouts_jacket.png'
+    }
+  ],
+  'legs': [
+    {
+      name: "Scout's Pants",
+      description: 'Pants tailored for agility and endurance, suitable for traversing rough terrain.',
+      image: 'scouts_pants.png'
+    }
+  ],
+  'feet': [
+    {
+      name: "Scout's Boots",
+      description: 'Sturdy boots providing excellent traction and support for scouting missions.',
+      image: 'scouts_boots.png'
+    }
+  ],
+  'hands': [
+    {
+      name: "Scout's Gloves",
+      description: 'Gloves offering both grip and protection, ideal for handling tools and climbing.',
+      image: 'scouts_gloves.png'
+    }
+  ]
+}
+
+
+export const heavyArmors: { [key in ArmorSlot]: Item[] } = {
+  'head': [
+    {
+      name: "Cadet's Helm",
+      description: 'A sturdy helm worn by cadets during their combat training.',
+      image: 'cadets_helm.png'
+    }
+  ],
+  'chest': [
+    {
+      name: "Cadet's Breastplate",
+      description: 'A solid breastplate offering enhanced protection for cadets in the field.',
+      image: 'cadets_breastplate.png'
+    }
+  ],
+  'legs': [
+    {
+      name: "Cadet's Legguards",
+      description: 'Heavy legguards providing substantial defense without sacrificing mobility.',
+      image: 'cadets_legguards.png'
+    }
+  ],
+  'feet': [
+    {
+      name: "Cadet's Greaves",
+      description: 'Reinforced greaves designed to protect cadets during intense combat training.',
+      image: 'cadets_greaves.png'
+    }
+  ],
+  'hands': [
+    {
+      name: "Cadet's Gauntlets",
+      description: 'Gauntlets offering excellent hand protection while maintaining dexterity.',
+      image: 'cadets_gauntlets.png'
+    }
+  ]
+}
+
+export const shields: Item[] = [
+  {
+    name: "Defender's Shield",
+    description: 'A sturdy shield used by seasoned warriors to block even the strongest attacks.',
+    image: 'defenders_shield.png'
+  }
+]
+
+export const jewelery: { [key in JewelerySlot]: Item[] } = {
+  'neck': [
+    {
+      name: "Amulet of Clarity",
+      description: 'An enchanted amulet that clears the mind, enhancing focus and mental clarity.',
+      image: 'amulet_of_clarity.png'
+    }
+  ],
+  'ring': [
+    {
+      name: "Ring of Fortitude",
+      description: 'A ring that grants its wearer increased endurance and resilience.',
+      image: 'ring_of_fortitude.png'
     }
   ]
 }

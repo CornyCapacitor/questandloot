@@ -39,8 +39,8 @@ export type Weapon = {
   name: string,
   description: string,
   level: number,
-  class: Profession,
-  slot: string,
+  profession: Profession,
+  slot: "weapon",
   damage: {
     min: number,
     max: number
@@ -52,17 +52,48 @@ export type Weapon = {
   family: string,
 }
 
+export type ArmorProficiency = "heavy" | "medium" | "light"
+
+export type ArmorSlot = "head" | "chest" | "hands" | "legs" | "feet"
+
 export type Armor = {
   name: string,
   description: string,
   level: number,
-  class: Profession,
-  slot: string,
+  profession: Profession,
+  slot: ArmorSlot,
   armor: number,
   attributes: Attributes,
   image: string,
   quality: Quality,
+  proficiency: ArmorProficiency,
   type: "armor"
+}
+
+export type Shield = {
+  name: string,
+  description: string,
+  level: number,
+  profession: "warrior",
+  slot: "shield",
+  armor: number,
+  attributes: Attributes,
+  image: string,
+  quality: Quality,
+  type: "shield"
+}
+
+export type JewelerySlot = "neck" | "ring"
+
+export type Jewelery = {
+  name: string,
+  description: string,
+  level: number,
+  slot: JewelerySlot,
+  attributes: Attributes,
+  image: string,
+  quality: Quality,
+  type: "jewelery"
 }
 
 export type Potion = {
