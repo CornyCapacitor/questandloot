@@ -3,11 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Home() {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
+  const router = useRouter()
 
   const dummyLogin = 'login'
   const dummyPassword = 'password'
@@ -15,6 +17,7 @@ export default function Home() {
   const handleLogin = (login: string, password: string) => {
     if (login === dummyLogin && password === dummyPassword) {
       alert('Authenticated. Logging in...')
+      router.push('/game')
       return
     } else {
       alert('Invalid credentials.')
@@ -24,9 +27,9 @@ export default function Home() {
 
   return (
     <div className="flex items-center justify-start h-screen">
-      <section className="h-full p-4 min-w-[350px] max-w-[500px] flex flex-col gap-2 items-center justify-center border-r bg-slate-900 border-slate-800">
+      <section className="h-full p-10 min-w-[350px] max-w-[600px] flex flex-col gap-2 items-center justify-center border-r bg-slate-800 border-slate-700">
         <h1>Welcome to Quest & Loot!</h1>
-        <span>In order to access the game you need to be logged in.</span>
+        <span>In order to access the game you need to be logged in. (login and password are credentials)</span>
         <label htmlFor="nickname" className="self-start text-sm text-slate-200">Login</label>
         <Input id="Login" placeholder="Login" className="w-full p-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value={login} onChange={(e) => setLogin(e.target.value)} />
         <label htmlFor="nickname" className="self-start text-sm text-slate-200">Password</label>

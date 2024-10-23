@@ -14,6 +14,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className="antialiased dark w-full h-screen max-h-screen max-w-screen">
