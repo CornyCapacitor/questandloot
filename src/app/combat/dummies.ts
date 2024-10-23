@@ -19,7 +19,7 @@ export const dummyPlayer: Player = {
       name: 'Test Weapon',
       description: 'Insta-kills all enemies',
       level: 1,
-      class: 'mage',
+      profession: 'mage',
       slot: 'weapon',
       damage: {
         min: 5,
