@@ -1,5 +1,6 @@
 'use client'
 
+import AvatarFrame from "@/components/layout/AvatarFrame"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -81,8 +82,9 @@ const CombatPage = () => {
 
         {/* Attacker section */}
         <section id="attacker-section" className="w-full max-w-[250px] flex flex-col gap-1 items-center text-center border-r p-2">
-          <Image width={128} height={128} src={`/assets/portraits/${character1?.image}`} alt="Character 1 image" className="bg-white rounded-sm" />
+          <AvatarFrame size={128} image={`/assets/portraits/${character1?.image}`} inverted={false} />
           <h1>{character1?.name}</h1>
+          <h1>Level: {character1?.level}</h1>
           <HealthBar currentHP={combatLog ? combatLog[turn].HP1 : 0} maxHP={combatLog ? combatLog[turn].maxHP1 : 0} />
           {character1Attributes && Object.entries(character1Attributes).map(([key, value]) => (
             <span key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}: {value}</span>
@@ -93,7 +95,7 @@ const CombatPage = () => {
         <section id="information-section" className="w-full flex flex-col">
 
           {/* Messages section */}
-          <section id="messages-section" className="flex-grow max-h-64 p-2 text-wrap text-center overflow-y-auto overflow-hidden">
+          <section id="messages-section" className="flex-grow h-full p-2 text-wrap text-center overflow-y-auto overflow-hidden">
             {/* <span>{parsedCombatLog && parsedCombatLog[turn]}</span> */}
             <div className="flex flex-col">
               {parsedCombatLog?.slice(0, turn + 1).map((entry, index) => (
@@ -137,7 +139,7 @@ const CombatPage = () => {
           </section>
 
           {/* Actions section */}
-          <section id="actions-section" className="h-20 border-t flex gap-3 items-center justify-center p-2">
+          <section id="actions-section" className="max-h-[100px] border-t flex gap-3 items-center justify-center p-2">
             <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('decrease')}>Previous turn</button>
             <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('increase')}>Next turn</button>
             <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('skip')}>Skip to the end</button>
@@ -146,8 +148,9 @@ const CombatPage = () => {
 
         {/* Defender section */}
         <section id="defender-section" className="w-full max-w-[250px] flex flex-col gap-1 items-center text-center border-l p-2">
-          <Image width={128} height={128} src={`/assets/portraits/${character2?.image}`} alt="Character 2 image" className="bg-white rounded-sm invertX" />
+          <AvatarFrame size={128} image={`/assets/portraits/${character2?.image}`} inverted={true} />
           <h1>{character2?.name}</h1>
+          <h1>Level: {character2?.level}</h1>
           <HealthBar currentHP={combatLog ? combatLog[turn].HP2 : 0} maxHP={combatLog ? combatLog[turn].maxHP2 : 0} />
           {character2Attributes && Object.entries(character2Attributes).map(([key, value]) => (
             <span key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}: {value}</span>
