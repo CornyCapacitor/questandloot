@@ -1,4 +1,4 @@
-import { Player } from "../types";
+import { Player } from "./types";
 
 export const dummyPlayer: Player = {
   name: "Dummy Undead",

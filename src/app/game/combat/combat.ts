@@ -1,4 +1,4 @@
-import { LogEntry, Monster, Player } from "../types";
+import { LogEntry, Monster, Player } from "@/app/types";
 import { calculateCritChance, calculateDamage, calculateLoot, random, retrievePlayerInformation } from "./combatCalculations";
 
 export const combat = (participient1: Player, participient2: Monster, journeyLootChance: number): { isWin: boolean, combatLog: LogEntry[], loot: { gold: number, loot: number[] | null } | null } => {

@@ -1,18 +1,18 @@
 'use client'
 
+import { item_list } from "@/app/db/itemList"
+import { generateMonster } from "@/app/generators/generateMonster"
+import { enemyAtom, playerAtom } from "@/app/state/atoms"
+import { Attributes, LogEntry, Monster, Player } from "@/app/types"
 import AvatarFrame from "@/components/layout/AvatarFrame"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import PageLoader from "../../../PageLoader"
-import { item_list } from "../db/itemList"
-import { generateMonster } from "../generators/generateMonster"
-import { enemyAtom, playerAtom } from "../state/atoms"
-import { Attributes, LogEntry, Monster, Player } from "../types"
+import PageLoader from "../../../../PageLoader"
+import { HealthBar } from "../../../components/layout/HealthBar"
+import { dummyPlayer } from "../../dummies"
 import { combat } from "./combat"
 import { parseCombatLog } from "./combatLogParser"
-import { dummyPlayer } from "./dummies"
-import { HealthBar } from "./HealthBar"
 
 type FinishedCombatType = {
   isWin: boolean,
@@ -68,7 +68,7 @@ const CombatPage = () => {
 
   if (!finishedCombat && !combatLog && !parsedCombatLog && !character1 && !character1Attributes && !character2 && !character2Attributes) {
     return (
-      <div className="flex flex-col gap-5 items-center justify-center h-screen">
+      <div className="flex flex-col gap-5 items-center justify-center h-full w-full">
         <PageLoader information="Loading combat page..." />
         <button onClick={() => { setCharacter1(dummyPlayer); setCharacter2(generateMonster(dummyPlayer.level)) }}>Click this to fight random enemy</button>
       </div>
@@ -76,7 +76,7 @@ const CombatPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5 items-center justify-center h-screen">
+    <div className="flex flex-col gap-5 items-center justify-center h-full w-full">
       <h1>Combat page</h1>
       <div className="flex w-full max-w-[1200px] min-h-[350px] border space-between">
 

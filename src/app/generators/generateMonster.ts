@@ -1,4 +1,4 @@
-import { calculateResistances, calculateTotalHP, random } from "../combat/combatCalculations"
+import { calculateResistances, calculateTotalHP, random } from "@/app/game/combat/combatCalculations"
 import { Attributes, Damage, Monster, MonsterArray, Profession, Resistances } from "../types"
 import { monsterList } from "./monsterList"
 

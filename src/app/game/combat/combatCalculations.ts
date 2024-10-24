@@ -1,5 +1,5 @@
-import { item_list } from "../db/itemList"
-import { ActivePotion, Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Player, Profession, Resistances, Weapon } from "../types"
+import { item_list } from "../../db/itemList"
+import { ActivePotion, Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Player, Profession, Resistances, Weapon } from "../../types"
 
 export const random = (number1: number, number2: number): number => {
   return Math.floor(Math.random() * (number2 - number1 + 1) + number1)

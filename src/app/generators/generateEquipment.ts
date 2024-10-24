@@ -1,4 +1,4 @@
-import { random } from "../combat/combatCalculations"
+import { random } from "../game/combat/combatCalculations"
 import { Armor, ArmorProficiency, ArmorSlot, Attributes, Jewelery, JewelerySlot, Profession, Quality, Shield, Weapon, WeaponFamily } from "../types"
 import { heavyArmors, jewelery, lightArmors, mediumArmors, shields, weapons } from "./equipmentList"
 
