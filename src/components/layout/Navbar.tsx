@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "../ui/button"
 import AvatarFrame from "./AvatarFrame"
 import { Logo } from "./Logo"
+import LogoutButton from "./LogoutButton"
 
 const Navbar = () => {
   return (
@@ -19,9 +20,7 @@ const Navbar = () => {
       </section>
       <section className="flex flex-1 gap-5 justify-start items-center">
         <Button className="w-48 h-16">Example button</Button>
-        <Link href="/">
-          <Button className="w-48 h-16">Logout</Button>
-        </Link>
+        <LogoutButton />
       </section>
     </nav>
   )
