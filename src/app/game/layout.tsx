@@ -1,8 +1,8 @@
 'use client'
 
-import Navbar from "@/components/layout/Navbar"
-import Sidebar from "@/components/layout/Sidebar"
-import RequireAuth from "../RequireAuth"
+import Navbar from "@/components/layout/Navbar";
+import Sidebar from "@/components/layout/Sidebar";
+import RequireAuth from "../RequireAuth";
 
 const GameLayout = ({ children }: { children: React.ReactNode }) => {
   return (
