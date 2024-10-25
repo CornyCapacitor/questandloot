@@ -5,8 +5,8 @@ const Sidebar = () => {
   return (
     <aside className="w-full max-w-[300px] h-full flex flex-col gap-4 px-2 py-4 items-center border-r bg-slate-800 border-slate-700">
       <Button className="w-full h-16">Character</Button>
-      <Link href="/game/combat">
-        <Button className="w-full h-16">Journey (temporarily a combat page)</Button>
+      <Link href="/game/journey" className="w-full h-16">
+        <Button className="w-full h-16">Journey</Button>
       </Link>
       <Button className="w-full h-16">Marketplace</Button>
       <Button className="w-full h-16">Crafting</Button>

@@ -2,13 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { dummyPlayer } from "./dummies";
+import { playerAtom } from "./state/atoms";
 
 export default function Home() {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
+  const [, setPlayer] = useAtom(playerAtom)
   const router = useRouter()
 
   const dummyLogin = 'login'
@@ -17,6 +21,7 @@ export default function Home() {
   const handleLogin = (login: string, password: string) => {
     if (login === dummyLogin && password === dummyPassword) {
       alert('Authenticated. Logging in...')
+      setPlayer(dummyPlayer)
       router.push('/game')
       return
     } else {
