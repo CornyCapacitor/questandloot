@@ -84,3 +84,42 @@ body {
 .invertX {
   transform: scaleX(-1)
 }
+
+@keyframes spin-scale {
+  0% {
+    transform: rotate(0deg) scale(1)
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.5)
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1)
+  }
+}
+
+.spinner-icon-spin {
+  animation: spin-scale 3s linear infinite;
+}
+
+@keyframes slow-appear {
+  0% {
+    opacity: 0;
+    transform: translateX(500px)
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(-20px)
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px)
+  }
+}
+
+.message-slow-appear {
+  animation: slow-appear 0.5s ease-in-out;
+}
