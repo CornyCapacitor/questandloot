@@ -145,6 +145,7 @@ export type ActivePotion = {
 
 export type Journey = {
   location: string,
+  valueMultiplier: number,
   returnDate: Date
 }
 

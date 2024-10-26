@@ -2,15 +2,14 @@
 
 import { item_list } from "@/app/db/itemList"
 import { generateMonster } from "@/app/generators/generateMonster"
-import { enemyAtom, playerAtom } from "@/app/state/atoms"
+import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
 import { Attributes, LogEntry, Monster, Player } from "@/app/types"
 import AvatarFrame from "@/components/layout/AvatarFrame"
+import { HealthBar } from "@/components/layout/HealthBar"
+import IconSpinner from "@/components/layout/IconSpinner"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import PageLoader from "../../../../PageLoader"
-import { HealthBar } from "../../../components/layout/HealthBar"
-import { dummyPlayer } from "../../dummies"
 import { combat } from "./combat"
 import { parseCombatLog } from "./combatLogParser"
 
@@ -31,11 +30,15 @@ const CombatPage = () => {
   const [character1Attributes, setCharacter1Attributes] = useState<Attributes | null>(null)
   const [character2Attributes, setCharacter2Attributes] = useState<Attributes | null>(null)
   const [character1, setCharacter1] = useAtom<Player | null>(playerAtom)
-  const [character2, setCharacter2] = useAtom<Monster | null>(enemyAtom)
+  const [character2, setCharacter2] = useState<Monster | null>(null)
+
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
+  const [isCombatReady, setIsCombatReady] = useAtom(combatReadyAtom)
 
   // Page preparation & perform combat
   useEffect(() => {
-    if (!character1 || !character2) return
+    if (!character1 || !character1.activeJourney || !isCombatReady || !character2 || isInitialized) return
 
     const combatResult = combat(character1, character2, 530)
     const log = combatResult.combatLog
@@ -48,8 +51,39 @@ const CombatPage = () => {
     setParsedCombatLog(parsedLog)
     setCharacter1Attributes(char1Attributes ? char1Attributes : null)
     setCharacter2Attributes(char2Attributes ? char2Attributes : null)
-  }, [character1, character2])
 
+    setIsInitialized(true)
+    setIsCombatReady(false)
+    setCharacter1({ ...character1, activeJourney: null })
+  }, [character1, setCharacter1, isCombatReady, setIsCombatReady, character2, isInitialized,])
+
+  // Apply monster for a combat
+  useEffect(() => {
+    if (!character1 || !isCombatReady || character2 || isInitialized) return
+    setCharacter2(generateMonster(character1.level))
+  }, [character1, character2, isCombatReady, isInitialized])
+
+  // Message for player when page isnt initialized
+  useEffect(() => {
+    let timeout: NodeJS.Timeout | undefined
+
+    if (isInitialized) {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+      return
+    } else {
+      timeout = setTimeout(() => {
+        setShowMessage(true)
+      }, 3000)
+    }
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [isInitialized])
+
+  // Handler for manual turn changing
   const handleChangeTurn = (action: string) => {
     if (combatLog && action === 'increase') {
       if (turn < combatLog.length - 1) {
@@ -66,11 +100,13 @@ const CombatPage = () => {
     }
   }
 
-  if (!finishedCombat && !combatLog && !parsedCombatLog && !character1 && !character1Attributes && !character2 && !character2Attributes) {
+  if (!isInitialized && !isCombatReady) {
     return (
-      <div className="flex flex-col gap-5 items-center justify-center h-full w-full">
-        <PageLoader information="Loading combat page..." />
-        <button onClick={() => { setCharacter1(dummyPlayer); setCharacter2(generateMonster(dummyPlayer.level)) }}>Click this to fight random enemy</button>
+      <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+        <IconSpinner icon="/assets/portraits/gnome.png" size={150} />
+        {showMessage && (
+          <h1 className="mt-10 max-w-[350px] text-wrap text-center message-slow-appear">Probably you do not have an active journey combat to perform. Please go for a journey and wait for a combat.</h1>
+        )}
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { Monster, Player } from "../types";
+import { Player } from "../types";
 
 export const playerAtom = atomWithStorage<Player | null>('playerAtom', null)
-export const enemyAtom = atom<Monster | null>(null)
+export const combatReadyAtom = atom<boolean>(false)

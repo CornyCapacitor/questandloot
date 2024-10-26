@@ -1,4 +1,4 @@
-import { calculateResistances, calculateTotalHP, random } from "@/app/game/combat/combatCalculations"
+import { calculateResistances, calculateTotalHP, random } from "../game/journey/combat/combatCalculations"
 import { Attributes, Damage, Monster, MonsterArray, Profession, Resistances } from "../types"
 import { monsterList } from "./monsterList"
 
@@ -36,6 +36,7 @@ const randomizeProfession = () => {
 }
 
 export const generateMonster = (_level: number): Monster => {
+  console.log('Generating monster at level: ', 1)
   const chosenMonster: MonsterArray = randomizeMonster()
 
   const level: number = _level

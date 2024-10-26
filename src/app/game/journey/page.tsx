@@ -1,14 +1,16 @@
 'use client'
 
-import { playerAtom } from "@/app/state/atoms"
+import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
 import { Journey, Player } from "@/app/types"
 import { Button } from "@/components/ui/button"
 import { useAtom } from "jotai"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const JourneyPage = () => {
   const [player, setPlayer] = useAtom<Player | null>(playerAtom)
+  const [, setIsCombatReady] = useAtom(combatReadyAtom)
   const [time, setTime] = useState(30)
   const [remainingTime, setRemainingTime] = useState<number | null>(null)
   const journeyOptions = [30, 60, 120, 240, 360, 480, 600, 720]
@@ -19,13 +21,15 @@ const JourneyPage = () => {
     }
   ]
 
+  const router = useRouter()
+
   useEffect(() => {
     if (!player) return
 
     const timer: NodeJS.Timeout | null = null;
 
-    if (player.activeJourney) {
-      const endTime = player.activeJourney.returnDate.getTime();
+    if (player.activeJourney && player.activeJourney.returnDate) {
+      const endTime = new Date(player.activeJourney.returnDate).getTime();
       const interval = setInterval(() => {
         const currentTime = Date.now();
         const timeLeft = Math.max(0, Math.floor((endTime - currentTime) / 1000));
@@ -33,12 +37,10 @@ const JourneyPage = () => {
         if (timeLeft === 0) {
           clearInterval(interval);
           setRemainingTime(null);
+          setIsCombatReady(true)
           // Testing alert
           alert('Journey ended, entering combat...')
-          setPlayer({
-            ...player,
-            activeJourney: null
-          })
+          router.push('/game/journey/combat')
         } else {
           setRemainingTime(timeLeft);
         }
@@ -50,13 +52,38 @@ const JourneyPage = () => {
     return () => {
       if (timer) clearInterval(timer);
     }
-  }, [player, setPlayer]);
+  }, [player, setPlayer, router, setIsCombatReady]);
 
   const startJourney = (location: string, time: number) => {
     if (!player) return
 
+    let valueMultiplier = 50
+
+    switch (time) {
+      case 30:
+        valueMultiplier = 50
+      case 60:
+        valueMultiplier = 100
+      case 120:
+        valueMultiplier = 190
+      case 240:
+        valueMultiplier = 360
+      case 360:
+        valueMultiplier = 510
+      case 480:
+        valueMultiplier = 640
+      case 600:
+        valueMultiplier = 750
+      case 720:
+        valueMultiplier = 840
+      default:
+        valueMultiplier = 50
+    }
+
+
     const journey: Journey = {
       location,
+      valueMultiplier,
       // Temporary returnDate function (testing)
       returnDate: new Date(Date.now() + time * 1000)
       // Actually good returnDate function (build)

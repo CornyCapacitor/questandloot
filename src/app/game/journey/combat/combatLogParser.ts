@@ -1,5 +1,5 @@
+import { attackDescriptions } from "@/app/db/attackDescriptions";
 import { LogEntry } from "@/app/types";
-import { attackDescriptions } from "../../db/attackDescriptions";
 
 const randomize = (textArray: string[]) => {
   return textArray[Math.floor(Math.random() * textArray.length)]
