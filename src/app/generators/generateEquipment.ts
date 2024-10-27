@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { random } from "../game/journey/combat/combatCalculations"
 import { Armor, ArmorProficiency, ArmorSlot, Attributes, Jewelery, JewelerySlot, Profession, Quality, Shield, Weapon, WeaponFamily } from "../types"
 import { heavyArmors, jewelery, lightArmors, mediumArmors, shields, weapons } from "./equipmentList"
@@ -65,6 +66,7 @@ const generateWeapon = (level: number, profession: Profession, quality: Quality)
   }
 
   return {
+    id: uuidv4(),
     name,
     description,
     level,
@@ -90,6 +92,7 @@ const generateArmor = (level: number, profession: Profession, quality: Quality, 
   const { name, description, image } = randomItem
 
   return {
+    id: uuidv4(),
     name,
     description,
     level,
@@ -113,6 +116,7 @@ const generateShield = (level: number, profession: Profession, quality: Quality)
   const { name, description, image } = randomItem
 
   return {
+    id: uuidv4(),
     name,
     description,
     level,
@@ -134,6 +138,7 @@ const generateJewelery = (level: number, quality: Quality, slot: JewelerySlot): 
   const { name, description, image } = randomItem
 
   return {
+    id: uuidv4(),
     name,
     description,
     level,

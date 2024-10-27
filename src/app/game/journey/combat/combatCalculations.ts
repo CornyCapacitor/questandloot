@@ -1,5 +1,5 @@
 import { item_list } from "@/app/db/itemList"
-import { ActivePotion, Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Player, Profession, Resistances, Weapon } from "@/app/types"
+import { ActivePotion, Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Material, Player, Potion, Profession, Resistances, Weapon } from "@/app/types"
 
 export const random = (number1: number, number2: number): number => {
   return Math.floor(Math.random() * (number2 - number1 + 1) + number1)
@@ -21,11 +21,15 @@ export const calculatePlayerAttributes = (equipment: Equipment, attributes: Attr
     }
   }
 
+  const isPotion = (item: Potion | Material | string): item is Potion => {
+    return typeof item === 'object' && 'type' in item && item.type === 'potion'
+  }
+
   if (activePotion) {
     const potionId = activePotion.potionId
     const potion = item_list[potionId]
 
-    if (potion.type !== "potion") {
+    if (!isPotion(potion)) {
       alert('Something went wrong applying a potion buff.')
       return playerAttributes
     }
@@ -182,9 +186,12 @@ const calculateItemQuality = (loot: Loot): number => {
   }
 }
 
-export const calculateLoot = (loot: Loot, chance: number): { gold: number, loot: number[] } => {
+export const calculateGold = (level: number, multiplier: number): number => {
+  return Math.floor(random(10 + (10 * (level / 2) * (multiplier / 100)), 20 * 20 * ((level / 2) * (multiplier / 100))))
+}
+
+export const calculateLoot = (loot: Loot, chance: number): number[] => {
   const finalLoot: number[] = []
-  let finalGold = 0
   const lootQuantity = calculateItemQuantity(chance)
 
   for (let i = 0; i < lootQuantity; i++) {
@@ -192,12 +199,5 @@ export const calculateLoot = (loot: Loot, chance: number): { gold: number, loot:
     finalLoot.push(foundLoot)
   }
 
-  if (loot.gold) {
-    finalGold += loot.gold * (chance / 100)
-  }
-
-  return {
-    gold: finalGold,
-    loot: finalLoot,
-  }
+  return finalLoot
 }

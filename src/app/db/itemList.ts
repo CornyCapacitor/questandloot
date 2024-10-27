@@ -1,8 +1,14 @@
 import { Material, Potion } from "../types";
 
-export const item_list: { [key: number]: Potion | Material } = {
-  1: {
-    id: 1,
+type StringRepresentatives = "RANDOM_COMMON_ITEM" | "RANDOM_UNCOMMON_ITEM" | "RANDOM_RARE_ITEM" | "RANDOM_EPIC_ITEM"
+
+export const item_list: { [key: number]: Potion | Material | StringRepresentatives } = {
+  1: "RANDOM_COMMON_ITEM",
+  2: "RANDOM_UNCOMMON_ITEM",
+  3: "RANDOM_RARE_ITEM",
+  4: "RANDOM_EPIC_ITEM",
+  101: {
+    id: 102,
     name: "Lesser Agility Potion",
     description: "Gives a slight boost to agility",
     enchancing: {
@@ -13,8 +19,8 @@ export const item_list: { [key: number]: Potion | Material } = {
     quality: "uncommon",
     type: "potion"
   },
-  2: {
-    id: 2,
+  102: {
+    id: 102,
     name: "Lesser Potion of Strength",
     description: "Grants a small boost to strength.",
     enchancing: {
@@ -25,8 +31,8 @@ export const item_list: { [key: number]: Potion | Material } = {
     quality: "uncommon",
     type: "potion"
   },
-  3: {
-    id: 3,
+  103: {
+    id: 103,
     name: "Lesser Intellect Potion",
     description: "Grants a small boost to intellect.",
     enchancing: {
@@ -37,8 +43,8 @@ export const item_list: { [key: number]: Potion | Material } = {
     quality: "uncommon",
     type: "potion"
   },
-  4: {
-    id: 4,
+  104: {
+    id: 104,
     name: "Lesser Stamina Potion",
     description: "Increases stamina slightly for a short duration.",
     enchancing: {
@@ -49,8 +55,8 @@ export const item_list: { [key: number]: Potion | Material } = {
     quality: "uncommon",
     type: "potion"
   },
-  5: {
-    id: 5,
+  105: {
+    id: 105,
     name: "Lesser Luck Elixir",
     description: "Grants a small boost to luck.",
     enchancing: {
@@ -61,11 +67,19 @@ export const item_list: { [key: number]: Potion | Material } = {
     quality: "uncommon",
     type: "potion"
   },
-  6: {
-    id: 6,
+  201: {
+    id: 201,
     name: "Ice Shard",
     description: "Blue shard glowing with strange energy. Could be useful in crafting.",
     image: "ice_crystal.png",
+    quality: "common",
+    type: "material"
+  },
+  202: {
+    id: 202,
+    name: "Test Material",
+    description: "Test Material Description",
+    image: "no_image.png",
     quality: "common",
     type: "material"
   }

@@ -1,31 +1,31 @@
 'use client'
 
-import { item_list } from "@/app/db/itemList"
+import { applyLoot } from "@/app/functions/manageItems"
+import { generateLoot } from "@/app/generators/generateLoot"
 import { generateMonster } from "@/app/generators/generateMonster"
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
-import { Attributes, LogEntry, Monster, Player } from "@/app/types"
+import { Attributes, Items, LogEntry, Monster, Player } from "@/app/types"
 import AvatarFrame from "@/components/layout/AvatarFrame"
 import { HealthBar } from "@/components/layout/HealthBar"
 import IconSpinner from "@/components/layout/IconSpinner"
 import { useAtom } from "jotai"
-import Image from "next/image"
 import { useEffect, useState } from "react"
 import { combat } from "./combat"
+import { calculateGold } from "./combatCalculations"
 import { parseCombatLog } from "./combatLogParser"
 
 type FinishedCombatType = {
   isWin: boolean,
   combatLog: LogEntry[],
-  loot: {
-    gold: number,
-    loot: number[] | null
-  } | null
+  loot: number[] | null
 }
 
 const CombatPage = () => {
   const [turn, setTurn] = useState(0)
   const [finishedCombat, setFinishedCombat] = useState<FinishedCombatType | null>(null)
   const [combatLog, setCombatLog] = useState<LogEntry[] | null>(null)
+  const [gold, setGold] = useState<number | null>(null)
+  const [loot, setLoot] = useState<Items[]>([])
   const [parsedCombatLog, setParsedCombatLog] = useState<string[] | null>(null)
   const [character1Attributes, setCharacter1Attributes] = useState<Attributes | null>(null)
   const [character2Attributes, setCharacter2Attributes] = useState<Attributes | null>(null)
@@ -40,7 +40,7 @@ const CombatPage = () => {
   useEffect(() => {
     if (!character1 || !character1.activeJourney || !isCombatReady || !character2 || isInitialized) return
 
-    const combatResult = combat(character1, character2, 530)
+    const combatResult = combat(character1, character2, character1.activeJourney.valueMultiplier)
     const log = combatResult.combatLog
     const parsedLog = parseCombatLog(log)
     const char1Attributes = character1.attributes
@@ -52,10 +52,30 @@ const CombatPage = () => {
     setCharacter1Attributes(char1Attributes ? char1Attributes : null)
     setCharacter2Attributes(char2Attributes ? char2Attributes : null)
 
+    const earnedLoot = combatResult.loot ? generateLoot(combatResult.loot, character1.profession, character1.level) : []
+    const earnedGold = combatResult.loot ? calculateGold(character1.level, character1.activeJourney.valueMultiplier) : null
+
+    setLoot(earnedLoot)
+    setGold(earnedGold)
+
+    const lootToApply = applyLoot(earnedLoot, character1)
+
+    console.log('combatResult:', combatResult)
+    console.log('earnedLoot:', earnedLoot)
+    console.log('earnedGold:', earnedGold)
+
+    setCharacter1({
+      ...character1,
+      activeJourney: null,
+      gold: character1.gold + (earnedGold ?? 0),
+      items: lootToApply.items,
+      materials: lootToApply.materials
+    })
+
     setIsInitialized(true)
     setIsCombatReady(false)
-    setCharacter1({ ...character1, activeJourney: null })
-  }, [character1, setCharacter1, isCombatReady, setIsCombatReady, character2, isInitialized,])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [character1, character2])
 
   // Apply monster for a combat
   useEffect(() => {
@@ -144,32 +164,9 @@ const CombatPage = () => {
             {combatLog && turn === combatLog.length - 1 &&
               <div className="flex flex-col">
                 <h1>Loot:</h1>
-                <span>Gold: {finishedCombat && finishedCombat.loot && finishedCombat.loot.gold}</span>
-                {finishedCombat && finishedCombat.loot && (() => {
-                  const lootCount: { [key: string]: number } = {}
+                <span>Gold: {gold}</span>
+                <span>Loot: {loot.toString()}</span>
 
-                  finishedCombat.loot?.loot?.forEach(lootItem => {
-                    if (lootCount[lootItem]) {
-                      lootCount[lootItem] += 1
-                    } else {
-                      lootCount[lootItem] = 1
-                    }
-                  });
-
-                  return (
-                    <div className="flex flex-col">
-                      {Object.keys(lootCount).map((lootItem, index) => {
-                        const itemId = Number(lootItem)
-                        return (
-                          <div key={index} className="flex gap-2 self-center items-center justify-center">
-                            <Image height={32} width={32} alt="" src={`/assets/materials/${item_list[itemId]?.image}`} />
-                            <span className={item_list[itemId]?.quality === 'epic' ? 'text-violet-500' : item_list[itemId]?.quality === 'rare' ? 'text-blue-500' : item_list[itemId]?.quality === 'uncommon' ? 'text-green-500' : ''}>{item_list[itemId]?.name} x{lootCount[itemId]}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )
-                })()}
               </div>
             }
           </section>

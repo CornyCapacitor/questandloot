@@ -1,4 +1,5 @@
 export type Player = {
+  id: string,
   name: string,
   title: string | null,
   profession: Profession,
@@ -8,7 +9,15 @@ export type Player = {
   activePotion: ActivePotion | null,
   equipment: Equipment,
   image: string,
-  items: Items[],
+  items: {
+    item: Items,
+    quantity: number
+  }[],
+  materials: {
+    material: Material,
+    quantity: number,
+  }[],
+  gold: number
 }
 
 export type CombatInformation = {
@@ -31,11 +40,12 @@ export type WeaponFamily = "sword" | "axe" | "mace" | "fire" | "frost" | "arcane
 
 export type DamageType = WeaponFamily | null
 
-export type Items = Weapon | Armor | Potion | Material
+export type Items = Weapon | Shield | Jewelery | Armor | Potion | Material
 
 export type Quality = "common" | "uncommon" | "rare" | "epic"
 
 export type Weapon = {
+  id: string,
   name: string,
   description: string,
   level: number,
@@ -57,6 +67,7 @@ export type ArmorProficiency = "heavy" | "medium" | "light"
 export type ArmorSlot = "head" | "chest" | "hands" | "legs" | "feet"
 
 export type Armor = {
+  id: string,
   name: string,
   description: string,
   level: number,
@@ -71,6 +82,7 @@ export type Armor = {
 }
 
 export type Shield = {
+  id: string,
   name: string,
   description: string,
   level: number,
@@ -86,6 +98,7 @@ export type Shield = {
 export type JewelerySlot = "neck" | "ring"
 
 export type Jewelery = {
+  id: string,
   name: string,
   description: string,
   level: number,
@@ -164,7 +177,6 @@ export type LogEntry = {
 }
 
 export type Loot = {
-  gold: number | null,
   common: number[],
   uncommon: number[] | null,
   rare: number[] | null,

@@ -1,6 +1,7 @@
 import { Player } from "./types";
 
 export const dummyPlayer: Player = {
+  id: "dummyPlayerId",
   name: "Dummy Undead",
   title: "Tester",
   profession: "mage",
@@ -16,6 +17,7 @@ export const dummyPlayer: Player = {
   activePotion: null,
   equipment: {
     weapon: {
+      id: 'testweaponId',
       name: 'Test Weapon',
       description: 'Insta-kills all enemies',
       level: 1,
@@ -47,5 +49,7 @@ export const dummyPlayer: Player = {
     ring: null
   },
   image: "skull.png",
-  items: []
+  items: [],
+  materials: [],
+  gold: 0,
 };

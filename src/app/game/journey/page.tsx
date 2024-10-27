@@ -85,7 +85,7 @@ const JourneyPage = () => {
       location,
       valueMultiplier,
       // Temporary returnDate function (testing)
-      returnDate: new Date(Date.now() + time * 1000)
+      returnDate: new Date(Date.now() + time * 1000 / 10)
       // Actually good returnDate function (build)
       // returnDate: new Date(Date.now() + time * 1000 * 60) // date now + time * minutes
     }
