@@ -114,6 +114,13 @@ export const lightArmors: { [key in ArmorSlot]: Item[] } = {
       description: 'Gloves that provide basic protection while handling magical items.',
       image: 'apprentices_gloves.png'
     }
+  ],
+  'belt': [
+    {
+      name: "",
+      description: '',
+      image: ''
+    }
   ]
 }
 
@@ -151,6 +158,13 @@ export const mediumArmors: { [key in ArmorSlot]: Item[] } = {
       name: "Scout's Gloves",
       description: 'Gloves offering both grip and protection, ideal for handling tools and climbing.',
       image: 'scouts_gloves.png'
+    }
+  ],
+  'belt': [
+    {
+      name: "",
+      description: '',
+      image: ''
     }
   ]
 }
@@ -190,6 +204,13 @@ export const heavyArmors: { [key in ArmorSlot]: Item[] } = {
       name: "Cadet's Gauntlets",
       description: 'Gauntlets offering excellent hand protection while maintaining dexterity.',
       image: 'cadets_gauntlets.png'
+    }
+  ],
+  'belt': [
+    {
+      name: "",
+      description: '',
+      image: ''
     }
   ]
 }

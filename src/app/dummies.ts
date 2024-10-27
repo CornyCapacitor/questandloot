@@ -44,6 +44,7 @@ export const dummyPlayer: Player = {
     neck: null,
     chest: null,
     hands: null,
+    belt: null,
     legs: null,
     feet: null,
     ring: null

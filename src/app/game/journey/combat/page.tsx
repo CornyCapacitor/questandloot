@@ -101,6 +101,8 @@ const CombatPage = () => {
 
   // Handler for manual turn changing
   const handleChangeTurn = (action: string) => {
+    // Test case
+    console.log(loot)
     if (combatLog && action === 'increase') {
       if (turn < combatLog.length - 1) {
         setTurn(turn + 1)
@@ -160,9 +162,13 @@ const CombatPage = () => {
             {combatLog && turn === combatLog.length - 1 &&
               <div className="flex flex-col">
                 <h1>Loot:</h1>
-                <span>Gold: {gold}</span>
-                <span>Loot: {loot.toString()}</span>
-
+                <h1>Gold: {gold}</h1>
+                <h1>Loot:</h1>
+                <div>
+                  {loot.map((item, index) => (
+                    <span key={index}>Name: {item.name}</span>
+                  ))}
+                </div>
               </div>
             }
           </section>

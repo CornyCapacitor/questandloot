@@ -64,7 +64,7 @@ export type Weapon = {
 
 export type ArmorProficiency = "heavy" | "medium" | "light"
 
-export type ArmorSlot = "head" | "chest" | "hands" | "legs" | "feet"
+export type ArmorSlot = "head" | "chest" | "hands" | "legs" | "feet" | "belt"
 
 export type Armor = {
   id: string,
@@ -145,6 +145,7 @@ export type Equipment = {
   head: Armor | null,
   chest: Armor | null,
   hands: Armor | null,
+  belt: Armor | null,
   legs: Armor | null,
   feet: Armor | null,
   neck: Armor | null,
