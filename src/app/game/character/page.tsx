@@ -4,14 +4,9 @@ import { playerAtom } from "@/app/state/atoms"
 import { Player } from "@/app/types"
 import IconSpinner from "@/components/layout/IconSpinner"
 import { useAtom } from "jotai"
-import { useEffect } from "react"
 
 const CharacterPage = () => {
   const [player] = useAtom<Player | null>(playerAtom)
-
-  useEffect(() => {
-    console.log(player)
-  }, [player])
 
   if (!player) {
     return (

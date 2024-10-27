@@ -62,24 +62,32 @@ const JourneyPage = () => {
     switch (time) {
       case 30:
         valueMultiplier = 50
+        break
       case 60:
         valueMultiplier = 100
+        break
       case 120:
         valueMultiplier = 190
+        break
       case 240:
         valueMultiplier = 360
+        break
       case 360:
         valueMultiplier = 510
+        break
       case 480:
         valueMultiplier = 640
+        break
       case 600:
         valueMultiplier = 750
+        break
       case 720:
         valueMultiplier = 840
+        break
       default:
         valueMultiplier = 50
+        break
     }
-
 
     const journey: Journey = {
       location,

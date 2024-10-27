@@ -36,7 +36,6 @@ const randomizeProfession = () => {
 }
 
 export const generateMonster = (_level: number): Monster => {
-  console.log('Generating monster at level: ', 1)
   const chosenMonster: MonsterArray = randomizeMonster()
 
   const level: number = _level

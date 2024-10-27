@@ -60,10 +60,6 @@ const CombatPage = () => {
 
     const lootToApply = applyLoot(earnedLoot, character1)
 
-    console.log('combatResult:', combatResult)
-    console.log('earnedLoot:', earnedLoot)
-    console.log('earnedGold:', earnedGold)
-
     setCharacter1({
       ...character1,
       activeJourney: null,
