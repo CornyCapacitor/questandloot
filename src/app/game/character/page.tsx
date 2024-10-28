@@ -29,24 +29,26 @@ const CharacterPage = () => {
             <div className="flex">
               {/* Left items section */}
               <div className="flex flex-col justify-between items-center p-2">
-                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                  Head
+                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                  <Image src="/assets/equipment/slots/headslot.svg" layout="fill" alt="Head slot" objectFit="cover" className="grayscale" />
                 </div>
-                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                  Neck
+                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                  <Image src="/assets/equipment/slots/neckslot.svg" layout="fill" alt="Neck slot" objectFit="cover" className="grayscale" />
                 </div>
-                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                  Chest
+                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                  <Image src="/assets/equipment/slots/chestslot.svg" layout="fill" alt="Chest slot" objectFit="cover" className="grayscale" />
                 </div>
-                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                  Ring
+                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                  <Image src="/assets/equipment/slots/ringslot.svg" layout="fill" alt="Ring slot" objectFit="cover" className="grayscale" />
                 </div>
               </div>
 
               {/* Middle portrait + weapon section */}
               <div className="flex flex-col border-l border-r border-slate-700">
                 {/* Portrait */}
-                <Image src={`/assets/portraits/${player.image}`} width={500} height={500} alt="Player portrait" className="border-b border-slate-700" />
+                <div className="w-[400px] h-[400px] relative">
+                  <Image src={`/assets/portraits/${player.image}`} layout="fill" objectFit="cover" alt="Player portrait" className="border-b border-slate-700" />
+                </div>
 
                 {/* Experience & level section */}
                 <div className="border-b border-slate-700">
@@ -57,11 +59,11 @@ const CharacterPage = () => {
 
                 {/* Weapons section */}
                 <div className="flex justify-evenly p-2">
-                  <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                    Weapon
+                  <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                    <Image src="/assets/equipment/slots/primaryslot.svg" layout="fill" alt="Primary slot" objectFit="cover" className="grayscale" />
                   </div>
-                  <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                    Shield (if warrior)
+                  <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                    <Image src="/assets/equipment/slots/secondaryslot.svg" layout="fill" alt="Secondary slot" objectFit="cover" className="grayscale" />
                   </div>
                 </div>
 
@@ -69,17 +71,17 @@ const CharacterPage = () => {
 
               {/* Right items section */}
               <div className="flex flex-col justify-between items-center p-2">
-                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                  Hands
+                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                  <Image src="/assets/equipment/slots/handsslot.svg" layout="fill" alt="Hands slot" objectFit="cover" className="grayscale" />
                 </div>
-                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                  Belt
+                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                  <Image src="/assets/equipment/slots/beltslot.svg" layout="fill" alt="Belt slot" objectFit="cover" className="grayscale" />
                 </div>
-                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                  Legs
+                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                  <Image src="/assets/equipment/slots/legsslot.svg" layout="fill" alt="Legs slot" objectFit="cover" className="grayscale" />
                 </div>
-                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md">
-                  Feet
+                <div className="w-[128px] h-[128px] border border-slate-700 rounded-md relative">
+                  <Image src="/assets/equipment/slots/feetslot.svg" layout="fill" alt="Feet slot" objectFit="cover" className="grayscale" />
                 </div>
               </div>
             </div>
