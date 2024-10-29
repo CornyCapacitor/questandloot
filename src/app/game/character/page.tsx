@@ -2,6 +2,7 @@
 
 import { playerAtom } from "@/app/state/atoms"
 import { Player } from "@/app/types"
+import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import IconSpinner from "@/components/layout/IconSpinner"
 import ItemFrame from "@/components/layout/ItemFrame"
 import { useAtom } from "jotai"
@@ -126,16 +127,18 @@ const CharacterPage = () => {
           {/* Middle */}
           <div className="flex flex-col flex-grow border-r border-l border-slate-700">
             <div className="flex flex-col flex-grow">
-              <div className="w-full flex flex-shrink-0 border-b py-1 justify-center">{player.name}</div>
+              <div className="w-full flex flex-shrink-0 border-b h-8 py-1 justify-center">{player.name}</div>
               <div className="flex flex-grow">
                 <div className="w-full relative">
                   <Image src={`/assets/portraits/${player.image}`} layout="fill" objectFit="cover" alt="Player portrait" className="border-b border-slate-700" />
                 </div>
               </div>
-              <div className="w-full flex flex-shrink-0 py-1 justify-center">Experience</div>
+              <div className="w-full items-center h-8 flex flex-shrink-0 justify-center">
+                <ExperienceBar experience={50} level={1} />
+              </div>
             </div>
 
-            <div className="flex items-center justify-around gap-2 p-2 flex-shrink-0">
+            <div className="flex items-center justify-around gap-2 p-2 flex-shrink-0 border-t border-slate-700">
               <div className="w-[100px] h-[100px] border border-slate-700 rounded-md relative">
                 <Image src="/assets/equipment/slots/primaryslot.svg" layout="fill" alt="Primary slot" objectFit="cover" className="grayscale" />
               </div>
