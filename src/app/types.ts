@@ -4,6 +4,7 @@ export type Player = {
   title: string | null,
   profession: Profession,
   level: number,
+  experience: number,
   attributes: Attributes,
   activeJourney: Journey | null,
   activePotion: ActivePotion | null,

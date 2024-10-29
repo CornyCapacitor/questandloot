@@ -84,42 +84,42 @@ export const lightArmors: { [key in ArmorSlot]: Item[] } = {
     {
       name: "Apprentice's Hood",
       description: 'A simple hood worn by novice mages.',
-      image: 'apprentices_hood.png'
+      image: 'placeholderItem.svg'
     }
   ],
   'chest': [
     {
       name: "Apprentice's Robe",
       description: 'A lightweight robe providing minimal protection, designed for apprentice spellcasters.',
-      image: 'apprentices_robe.png'
+      image: 'placeholderItem.svg'
     }
   ],
   'legs': [
     {
       name: "Apprentice's Pants",
       description: 'Comfortable pants that allow for easy movement during spell practice.',
-      image: 'apprentices_pants.png'
+      image: 'placeholderItem.svg'
     }
   ],
   'feet': [
     {
       name: "Apprentice's Boots",
       description: 'Simple boots that offer modest protection and comfort for new mages.',
-      image: 'apprentices_boots.png'
+      image: 'placeholderItem.svg'
     }
   ],
   'hands': [
     {
       name: "Apprentice's Gloves",
       description: 'Gloves that provide basic protection while handling magical items.',
-      image: 'apprentices_gloves.png'
+      image: 'placeholderItem.svg'
     }
   ],
   'belt': [
     {
-      name: "",
-      description: '',
-      image: ''
+      name: "Apprentice's Belt",
+      description: 'No description yet',
+      image: 'placeholderItem.svg'
     }
   ]
 }

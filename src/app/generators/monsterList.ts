@@ -6,7 +6,7 @@ export const monsterList: MonsterArray[] = [
     image: 'frost_golem.png',
     family: 'mountains',
     loot: {
-      common: [201],
+      common: [1],
       uncommon: [1, 101, 102, 103, 104, 105],
       rare: [202],
       epic: [202]
@@ -17,7 +17,7 @@ export const monsterList: MonsterArray[] = [
     image: 'gnome.png',
     family: 'forest',
     loot: {
-      common: [202],
+      common: [1],
       uncommon: [1, 101, 102, 103, 104, 105],
       rare: [202],
       epic: [202]
@@ -28,7 +28,7 @@ export const monsterList: MonsterArray[] = [
     image: 'skull.png',
     family: 'graveyard',
     loot: {
-      common: [202],
+      common: [1],
       uncommon: [1, 101, 102, 103, 104, 105],
       rare: [202],
       epic: [202]

@@ -1,4 +1,4 @@
-import { Player } from "./types";
+import { Player, Weapon } from "./types";
 
 export const dummyPlayer: Player = {
   id: "dummyPlayerId",
@@ -6,6 +6,7 @@ export const dummyPlayer: Player = {
   title: "Tester",
   profession: "mage",
   level: 1,
+  experience: 0,
   attributes: {
     strength: 10,
     agility: 10,
@@ -54,3 +55,27 @@ export const dummyPlayer: Player = {
   materials: [],
   gold: 0,
 };
+
+export const dummyWeapon: Weapon = {
+  id: 'dummyId',
+  name: 'Dummy Weapon',
+  description: 'Dummy Weapon Description',
+  level: 1,
+  profession: 'warrior',
+  slot: 'weapon',
+  damage: {
+    min: 5,
+    max: 10
+  },
+  attributes: {
+    strength: 0,
+    agility: 0,
+    intellect: 5,
+    stamina: 5,
+    luck: 5,
+  },
+  image: 'beltslot.svg',
+  quality: 'common',
+  type: 'weapon',
+  family: 'fire'
+}
