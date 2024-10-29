@@ -22,7 +22,7 @@ type FinishedCombatType = {
 
 const CombatPage = () => {
   const [turn, setTurn] = useState(0)
-  const [finishedCombat, setFinishedCombat] = useState<FinishedCombatType | null>(null)
+  const [, setFinishedCombat] = useState<FinishedCombatType | null>(null)
   const [combatLog, setCombatLog] = useState<LogEntry[] | null>(null)
   const [gold, setGold] = useState<number | null>(null)
   const [loot, setLoot] = useState<Items[]>([])
