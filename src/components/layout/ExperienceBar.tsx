@@ -12,7 +12,7 @@ export const ExperienceBar = ({ experience, level }: { experience: number, level
         className="rounded-none h-full"
       />
       <span className="absolute inset-0 flex items-center justify-center text-white font-medium">
-        Exp: {`${experience} / ${experienceRequired.toFixed(0)}`}
+        Exp: {`${experience ?? 0} / ${experienceRequired.toFixed(0)}`}
       </span>
     </div>
   )

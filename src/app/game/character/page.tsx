@@ -134,7 +134,7 @@ const CharacterPage = () => {
                 </div>
               </div>
               <div className="w-full items-center h-8 flex flex-shrink-0 justify-center">
-                <ExperienceBar experience={50} level={1} />
+                <ExperienceBar experience={player.experience} level={player.level} />
               </div>
             </div>
 

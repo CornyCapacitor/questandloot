@@ -1,17 +1,32 @@
 import { Items } from '@/app/types'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
 const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped }: { itemData: Items, isClickable: boolean, isDisabled: boolean, isEquipped: boolean }) => {
   const [isActiveTooltipVisible, setActiveTooltipVisible] = useState(false)
+  const itemFrameRef = useRef<HTMLDivElement | null>(null)
 
   const handleItemClick = () => {
     if (isClickable && !isDisabled) setActiveTooltipVisible(!isActiveTooltipVisible)
   }
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (itemFrameRef.current && !itemFrameRef.current.contains(event.target as Node)) {
+      setActiveTooltipVisible(false)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   return (
-    <div className="relative w-[128px] h-[128px]">
+    <div ref={itemFrameRef} className="relative w-[128px] h-[128px]">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
