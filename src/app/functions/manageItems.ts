@@ -21,13 +21,14 @@ export const addItem = (addedItem: Items, currentItems: PlayerItems): PlayerItem
     updatedItems.push({ item: addedItem, quantity: 1 })
   }
 
+  console.log('Added item to the bags:', addedItem)
   return updatedItems
 }
 
-export const removeItem = (removedItemId: number, currentItems: PlayerItems): PlayerItems => {
+export const removeItem = (removedItem: Items, currentItems: PlayerItems): PlayerItems => {
   const updatedItems = [...currentItems]
 
-  const removedItemIndex = updatedItems.findIndex((entry) => entry.item.id === removedItemId)
+  const removedItemIndex = updatedItems.findIndex((entry) => entry.item.id === removedItem.id)
 
   if (removedItemIndex !== -1) {
     const itemQuantity = updatedItems[removedItemIndex].quantity
@@ -41,6 +42,7 @@ export const removeItem = (removedItemId: number, currentItems: PlayerItems): Pl
     throw new Error('Cannot find item with given id.')
   }
 
+  console.log('Removed item from the bag:', removedItem)
   return updatedItems
 }
 
