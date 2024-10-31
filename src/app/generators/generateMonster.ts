@@ -1,6 +1,6 @@
+import { monsterList } from "../db/monsterList"
 import { calculateResistances, calculateTotalHP, random } from "../game/journey/combat/combatCalculations"
 import { Attributes, Damage, Monster, MonsterArray, Profession, Resistances } from "../types"
-import { monsterList } from "./monsterList"
 
 const calculateMonsterStats = (level: number) => {
   const attributes: Attributes = {

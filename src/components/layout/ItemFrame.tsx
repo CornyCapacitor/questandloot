@@ -1,6 +1,7 @@
+import { isArmor, isJewelery, isMaterial, isPotion, isWeapon } from '@/app/functions/itemCheckers'
 import { addItem, removeItem } from '@/app/functions/manageItems'
 import { playerAtom } from '@/app/state/atoms'
-import { ArmorSlot, Items, JewelerySlot, Material, Potion } from '@/app/types'
+import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Potion, Weapon } from '@/app/types'
 import { useAtom } from 'jotai'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -16,7 +17,6 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
     return 'slot' in item;
   };
 
-
   const handleItemClick = () => {
     if (isClickable && !isDisabled) setActiveTooltipVisible(!isActiveTooltipVisible)
   }
@@ -27,14 +27,6 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
     }
   }
 
-  const isPotion = (item: Items): item is Potion => {
-    return item.type === 'potion'
-  }
-
-  const isMaterial = (item: Items): item is Material => {
-    return item.type === 'material'
-  }
-
   const handleEquipItem = (item: Items) => {
     if (!player || !player.equipment) return
 
@@ -43,24 +35,28 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
       return
     }
 
+    setActiveTooltipVisible(false)
+
     const slot = item.slot
 
     // First, unequipping old item if exists
     handleUnequipItem(slot)
 
     // Equip new item if slot is free
-    if (!player.equipment[slot]) {
-      setPlayer({
-        ...player,
+    setPlayer((prevPlayer) => {
+      if (!prevPlayer) return null;
+
+      return {
+        ...prevPlayer,
         equipment: {
-          ...player.equipment,
-          [slot]: item
+          ...prevPlayer.equipment,
+          [slot]: item,
         },
 
-        // Remove item from the bag
-        items: removeItem(item, player.items)
-      })
-    }
+        // Remove item from player's bag
+        items: removeItem(item, prevPlayer.items),
+      };
+    });
 
     console.log('Equipped:', item)
     return
@@ -97,7 +93,7 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
   }, [])
 
   return (
-    <div ref={itemFrameRef} className="relative w-[128px] h-[128px]">
+    <div ref={itemFrameRef} className="relative">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
@@ -106,9 +102,13 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <div className="flex flex-col">
-              <h1>{itemData.name}</h1>
-            </div>
+            {isArmor(itemData) ? (
+              <ArmorDescription item={itemData} />
+            ) : isWeapon(itemData) ? (
+              <WeaponDescription item={itemData} />
+            ) : isJewelery(itemData) ? (
+              <JeweleryDescription item={itemData} />
+            ) : isPotion(itemData) && <PotionDescription item={itemData} />}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -129,13 +129,95 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
 
 export default ItemFrame
 
-// Exporting just for compiler
-export const PotionFrame = (item: Potion) => {
+const PotionDescription = ({ item }: { item: Potion }) => {
   return (
     <div className="flex flex-col gap-2">
-      <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-600' : 'text-white'}`}>{item.name}</h1>
-      <h2 className="text-gray-300 text-sm text-wrap">{item.description}</h2>
-      <h3 className="text-wrap">Increases {item.enchancing.attribute} by {item.enchancing.value}% for 24h</h3>
+      <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
+      <h2 className="text-gray-300 text-sm text-wrap max-w-[350px]">{item.description}</h2>
+      <h2 className="text-wrap">Increases {item.enchancing.attribute} by {item.enchancing.value}% for 24h</h2>
+    </div>
+  )
+}
+
+const WeaponDescription = ({ item }: { item: Weapon }) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
+      <h2 className="text-gray-300 text-sm text-wrap max-w-[300px]">{item.description}</h2>
+      <h2>{item.slot}</h2>
+      <h2>({item.damage.min} - {item.damage.max}) (~{((item.damage.max + item.damage.min) / 2)})</h2>
+      <div className="flex flex-col">
+        {item.attributes.strength > 0 && (
+          <span>Strength: {item.attributes.strength}</span>
+        )}
+        {item.attributes.agility > 0 && (
+          <span>Agility: {item.attributes.agility}</span>
+        )}
+        {item.attributes.intellect > 0 && (
+          <span>Intellect: {item.attributes.intellect}</span>
+        )}
+        {item.attributes.stamina > 0 && (
+          <span>Stamina: {item.attributes.stamina}</span>
+        )}
+        {item.attributes.luck > 0 && (
+          <span>Luck: {item.attributes.luck}</span>
+        )}
+      </div>
+    </div>
+  )
+}
+
+const ArmorDescription = ({ item }: { item: Armor }) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
+      <h2 className="text-gray-300 text-sm text-wrap max-w-[300px]">{item.description}</h2>
+      <h2>{item.slot}</h2>
+      <h2>Armor: {item.armor}</h2>
+      <div className="flex flex-col">
+        {item.attributes.strength > 0 && (
+          <span>Strength: {item.attributes.strength}</span>
+        )}
+        {item.attributes.agility > 0 && (
+          <span>Agility: {item.attributes.agility}</span>
+        )}
+        {item.attributes.intellect > 0 && (
+          <span>Intellect: {item.attributes.intellect}</span>
+        )}
+        {item.attributes.stamina > 0 && (
+          <span>Stamina: {item.attributes.stamina}</span>
+        )}
+        {item.attributes.luck > 0 && (
+          <span>Luck: {item.attributes.luck}</span>
+        )}
+      </div>
+    </div>
+  )
+}
+
+const JeweleryDescription = ({ item }: { item: Jewelery }) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
+      <h2 className="text-gray-300 text-sm text-wrap max-w-[350px]">{item.description}</h2>
+      <h2>{item.slot}</h2>
+      <div className="flex flex-col">
+        {item.attributes.strength > 0 && (
+          <span>Strength: {item.attributes.strength}</span>
+        )}
+        {item.attributes.agility > 0 && (
+          <span>Agility: {item.attributes.agility}</span>
+        )}
+        {item.attributes.intellect > 0 && (
+          <span>Intellect: {item.attributes.intellect}</span>
+        )}
+        {item.attributes.stamina > 0 && (
+          <span>Stamina: {item.attributes.stamina}</span>
+        )}
+        {item.attributes.luck > 0 && (
+          <span>Luck: {item.attributes.luck}</span>
+        )}
+      </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import { calculatePlayerAttributes } from "@/app/functions/characterCalculations"
 import { applyLoot } from "@/app/functions/manageItems"
 import { generateLoot } from "@/app/generators/generateLoot"
 import { generateMonster } from "@/app/generators/generateMonster"
@@ -8,6 +9,7 @@ import { Attributes, Items, LogEntry, Monster, Player } from "@/app/types"
 import AvatarFrame from "@/components/layout/AvatarFrame"
 import { HealthBar } from "@/components/layout/HealthBar"
 import IconSpinner from "@/components/layout/IconSpinner"
+import ItemFrame from "@/components/layout/ItemFrame"
 import { useAtom } from "jotai"
 import { useEffect, useState } from "react"
 import { combat } from "./combat"
@@ -43,7 +45,7 @@ const CombatPage = () => {
     const combatResult = combat(character1, character2, character1.activeJourney.valueMultiplier)
     const log = combatResult.combatLog
     const parsedLog = parseCombatLog(log)
-    const char1Attributes = character1.attributes
+    const char1Attributes = calculatePlayerAttributes(character1.equipment, character1.attributes, character1.activePotion)
     const char2Attributes = character2.attributes
 
     setFinishedCombat(combatResult)
@@ -163,10 +165,9 @@ const CombatPage = () => {
               <div className="flex flex-col">
                 <h1>Loot:</h1>
                 <h1>Gold: {gold}</h1>
-                <h1>Loot:</h1>
-                <div>
+                <div className="flex gap-2 w-full justify-center text-start flex-wrap">
                   {loot.map((item, index) => (
-                    <span key={index}>Name: {item.name}</span>
+                    <ItemFrame key={index} itemData={item} isClickable={false} isEquipped={false} isDisabled={false} width={100} height={100} />
                   ))}
                 </div>
               </div>

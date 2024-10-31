@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
+import { heavyArmors, jewelery, lightArmors, mediumArmors, shields, weapons } from "../db/equipmentList"
 import { random } from "../game/journey/combat/combatCalculations"
 import { Armor, ArmorProficiency, ArmorSlot, Attributes, Jewelery, JewelerySlot, Profession, Quality, Shield, Weapon, WeaponFamily } from "../types"
-import { heavyArmors, jewelery, lightArmors, mediumArmors, shields, weapons } from "./equipmentList"
 
 const randomizeAttributes = (level: number, qualityMultiplier: number): Attributes => {
   const getRandomAttributes = (count: number) => {
