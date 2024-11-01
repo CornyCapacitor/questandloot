@@ -137,17 +137,17 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
           </TooltipTrigger>
           <TooltipContent>
             {stat === 'strength' ? (
-              <StrengthAgilityIntellect stat={stat} header={true} />
+              <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
             ) : stat === 'agility' ? (
-              <StrengthAgilityIntellect stat={stat} header={true} />
+              <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
             ) : stat === 'intellect' ? (
-              <StrengthAgilityIntellect stat={stat} header={true} />
+              <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
             ) : stat === 'stamina' ? (
-              <StaminaLuckArmor stat={stat} header={true} />
+              <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
             ) : stat === 'luck' ? (
-              <StaminaLuckArmor stat={stat} header={true} />
+              <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
             ) : (
-              <StaminaLuckArmor stat={stat} header={true} />
+              <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
             )}
           </TooltipContent>
         </Tooltip>
