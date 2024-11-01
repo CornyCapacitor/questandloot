@@ -3,6 +3,7 @@
 import { calculatePlayerAttributes } from "@/app/functions/characterCalculations"
 import { calculateArmorReduction, calculateCritChance, calculateDamage, calculatePlayerArmor, calculateTotalHP, calculateWeaponDamage } from "@/app/game/journey/combat/combatCalculations"
 import { Player } from "@/app/types"
+import Image from "next/image"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 
 type Stats = 'strength' | 'agility' | 'intellect' | 'stamina' | 'luck'
@@ -14,24 +15,18 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
       profession: 'warrior',
       attributeTooltip: 'Increases defense against warriors.',
       professionTooltip: 'Increases the character attack.',
-      attributeTooltip2: '= Strength / 2',
     },
     agility: {
       name: 'Agility',
       profession: 'hunter',
       attributeTooltip: 'Increases defense against hunters.',
-      attributeTooltip2: '= Agility / 2',
       professionTooltip: 'Increases the character attack.',
     },
     intellect: {
       name: 'Intellect',
       profession: 'mage',
       attributeTooltip: 'Increases defense against mages.',
-      attributeTooltipName: 'Defense',
-      attributeTooltipDescription: '= Intellect / 2',
       professionTooltip: 'Increase the character attack.',
-      professionTooltipName: 'Damage',
-      professionTooltipDescription: '= weapon damage * (1 + Intellect / 10)'
     },
     stamina: {
       name: 'Stamina',
@@ -51,39 +46,66 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
     <span>Loading character stats...</span>
   )
 
-  const StrengthAgilityIntellectTooltip = ({ stat }: { stat: 'strength' | 'agility' | 'intellect' }) => {
+  const StrengthAgilityIntellect = ({ stat, className, header }: { stat: 'strength' | 'agility' | 'intellect', className?: string, header?: boolean }) => {
     const profession = player.profession
     const object = statDescriptions[stat]
 
     return (
       <div>
-        <h1>{profession === object.profession ? object.professionTooltip : object.attributeTooltip}</h1>
-        {profession === object.profession ? (
-          <h2>Damage: ~{calculateDamage(player.attributes, player.profession, ((calculateWeaponDamage(player.equipment.weapon)).min + calculateWeaponDamage(player.equipment.weapon).max) / 2)}</h2>
-        ) : stat === 'strength' ? (
-          <h2>Defense: ~{(calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).strength) / 2}</h2>
-        ) : stat === 'agility' ? (
-          <h2>Evasion: ~{(calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).agility) / 2}</h2>
-        ) : (
-          <h2>Resistance: ~{(calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).intellect) / 2}</h2>
+        {header && (
+          <h1>{profession === object.profession ? object.professionTooltip : object.attributeTooltip}</h1>
         )}
+        {profession === object.profession ? (
+          <div className={`${className}`}>
+            <h2>Damage:</h2>
+            <span>~{calculateDamage(player.attributes, player.profession, ((calculateWeaponDamage(player.equipment.weapon)).min + calculateWeaponDamage(player.equipment.weapon).max) / 2)}</span>
+          </div>
+        ) : stat === 'strength' ? (
+          <div className={`${className}`}>
+            <h2>Defense:</h2>
+            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).strength) / 2)}</span>
+          </div>
+        ) : stat === 'agility' ? (
+          <div className={`${className}`}>
+            <h2>Evasion:</h2>
+            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).agility) / 2)}</span>
+          </div>
+        ) : (
+          <div className={`${className}`}>
+            <h2>Resistance:</h2>
+            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).intellect) / 2)}</span>
+          </div>
+        )}
+
       </div>
     )
   }
 
-  const StaminaLuckArmorTooltip = ({ stat }: { stat: 'stamina' | 'luck' | 'armor' }) => {
+  const StaminaLuckArmor = ({ stat, className, header }: { stat: 'stamina' | 'luck' | 'armor', className?: string, header?: boolean }) => {
     const object = statDescriptions[stat]
 
     return (
       <div>
-        <h1>{object.attributeTooltip}</h1>
-        {stat === 'stamina' ? (
-          <h2>Hit points: {calculateTotalHP(player.level, player.attributes)}</h2>
-        ) : stat === 'luck' ? (
-          <h2>Crit chance: ~{calculateCritChance(player.level, player.attributes)}%</h2>
-        ) : (
-          <h2>Damage reduction: ~{calculateArmorReduction(calculatePlayerArmor(player.equipment), player.level)}%</h2>
+        {header && (
+          <h1>{object.attributeTooltip}</h1>
         )}
+        {stat === 'stamina' ? (
+          <div className={`${className}`}>
+            <h2>Hit points:</h2>
+            <span>{calculateTotalHP(player.level, player.attributes)}</span>
+          </div>
+        ) : stat === 'luck' ? (
+          <div className={`${className}`}>
+            <h2>Crit chance:</h2>
+            <span>~{calculateCritChance(player.level, player.attributes)}%</span>
+          </div>
+        ) : (
+          <div className={`${className}`}>
+            <h2>{header ? 'Damage reduction:' : 'Reduction:'}</h2>
+            <span>~{calculateArmorReduction(calculatePlayerArmor(player.equipment), player.level)}%</span>
+          </div>
+        )}
+
       </div>
     )
   }
@@ -92,30 +114,47 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
     <div className="flex w-full justify-between">
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger className="flex justify-between w-2/3">
-            <h1>{statDescriptions[stat].name}:</h1>
-            <p>{stat !== 'armor' ? calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion)[stat] : calculatePlayerArmor(player.equipment)}</p>
+          <TooltipTrigger className="flex flex-col w-2/3">
+            <div className="w-full flex justify-between text-orange-300 font-semibold">
+              <h1>{statDescriptions[stat].name}:</h1>
+              <span>{stat !== 'armor' ? calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion)[stat] : calculatePlayerArmor(player.equipment)}</span>
+            </div>
+            <div className="w-full">
+              {stat === 'strength' ? (
+                <StrengthAgilityIntellect stat={stat} className="flex w-full justify-between text-gray-300" />
+              ) : stat === 'agility' ? (
+                <StrengthAgilityIntellect stat={stat} className="flex w-full justify-between text-gray-300" />
+              ) : stat === 'intellect' ? (
+                <StrengthAgilityIntellect stat={stat} className="flex w-full justify-between text-gray-300" />
+              ) : stat === 'stamina' ? (
+                <StaminaLuckArmor stat={stat} className="flex w-full justify-between text-gray-300" />
+              ) : stat === 'luck' ? (
+                <StaminaLuckArmor stat={stat} className="flex w-full justify-between text-gray-300" />
+              ) : (
+                <StaminaLuckArmor stat={stat} className="flex w-full justify-between text-gray-300" />
+              )}
+            </div>
           </TooltipTrigger>
           <TooltipContent>
             {stat === 'strength' ? (
-              <StrengthAgilityIntellectTooltip stat='strength' />
+              <StrengthAgilityIntellect stat={stat} header={true} />
             ) : stat === 'agility' ? (
-              <div>
-                <StrengthAgilityIntellectTooltip stat='agility' />
-              </div>
+              <StrengthAgilityIntellect stat={stat} header={true} />
             ) : stat === 'intellect' ? (
-              <StrengthAgilityIntellectTooltip stat='intellect' />
+              <StrengthAgilityIntellect stat={stat} header={true} />
             ) : stat === 'stamina' ? (
-              <StaminaLuckArmorTooltip stat='stamina' />
+              <StaminaLuckArmor stat={stat} header={true} />
             ) : stat === 'luck' ? (
-              <StaminaLuckArmorTooltip stat='luck' />
+              <StaminaLuckArmor stat={stat} header={true} />
             ) : (
-              <StaminaLuckArmorTooltip stat='armor' />
+              <StaminaLuckArmor stat={stat} header={true} />
             )}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <span className="flex w-1/3 items-center justify-end">Icon</span>
+      <div className="flex w-1/3 items-center justify-center">
+        <Image width={50} height={50} src={`/${stat}.svg`} alt={`${stat} icon`} />
+      </div>
     </div>
   )
 }

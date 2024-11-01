@@ -230,14 +230,14 @@ const CharacterPage = () => {
 
         {/* Character attributes */}
         <div className="flex flex-col flex-grow border-t border-slate-700 p-2">
-          <span>Level: {player.level}</span>
-          <div className="flex gap-8 h-full w-full">
-            <div className="flex flex-col flex-1">
+          <span className="font-semibold text-orange-300 self-center py-1">Level: {player.level}</span>
+          <div className="flex h-full w-full">
+            <div className="flex flex-col gap-2 flex-1">
               <CharacterStat stat="strength" player={player} />
               <CharacterStat stat="agility" player={player} />
               <CharacterStat stat="intellect" player={player} />
             </div>
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-col gap-2 flex-1">
               <CharacterStat stat="stamina" player={player} />
               <CharacterStat stat="luck" player={player} />
               <CharacterStat stat="armor" player={player} />
