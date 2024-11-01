@@ -1,5 +1,5 @@
 import { LogEntry, Monster, Player } from "@/app/types";
-import { calculateCritChance, calculateDamage, calculateLoot, random, retrievePlayerInformation } from "./combatCalculations";
+import { calculateArmorReduction, calculateCritChance, calculateDamage, calculateLoot, random, retrievePlayerInformation } from "./combatCalculations";
 
 export const combat = (participient1: Player, participient2: Monster, journeyLootChance: number): { isWin: boolean, combatLog: LogEntry[], loot: number[] | null } => {
   // Preparation
@@ -29,7 +29,7 @@ export const combat = (participient1: Player, participient2: Monster, journeyLoo
     const isCrit = Math.round(Math.random() * 100) <= critChance
 
     // Calculating defender's damage reduction from armor. Maximum of 25% damage reduction
-    const armorReduction = (defender.armor / attacker.level) > 25 ? 25 : (defender.armor / attacker.level)
+    const armorReduction = calculateArmorReduction(defender.armor, attacker.level)
 
     // Calculating defender's class resistances
     const classResistance = attacker.profession === 'warrior' ? Math.floor(defender.classResistances.warriorResistance) : attacker.profession === 'hunter' ? Math.floor(defender.classResistances.hunterResistance) : attacker.profession === 'mage' ? Math.floor(defender.classResistances.mageResistance) : 0

@@ -1,25 +1,18 @@
 'use client'
 
-import { calculatePlayerAttributes } from "@/app/functions/characterCalculations"
 import { playerAtom } from "@/app/state/atoms"
-import { Attributes, Player } from "@/app/types"
+import { Player } from "@/app/types"
+import CharacterStat from "@/components/layout/CharacterStat"
 import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import IconSpinner from "@/components/layout/IconSpinner"
 import ItemFrame from "@/components/layout/ItemFrame"
 import { useAtom } from "jotai"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const CharacterPage = () => {
   const [player] = useAtom<Player | null>(playerAtom)
-  const [playerStats, setPlayerStats] = useState<Attributes | null>(null)
   const [old] = useState(false)
-
-  useEffect(() => {
-    if (!player) return
-    const totalStats = calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion)
-    setPlayerStats(totalStats)
-  }, [player])
 
   if (!player) {
     return (
@@ -236,17 +229,20 @@ const CharacterPage = () => {
         </div>
 
         {/* Character attributes */}
-        <div className="flex flex-col justify-between flex-grow border-t border-slate-700 p-2">
+        <div className="flex flex-col flex-grow border-t border-slate-700 p-2">
           <span>Level: {player.level}</span>
-          {playerStats && (
-            <>
-              <span>Strength: {playerStats.strength}</span>
-              <span>Agility: {playerStats.agility}</span>
-              <span>Intellect: {playerStats.intellect}</span>
-              <span>Stamina: {playerStats.stamina}</span>
-              <span>Luck: {playerStats.luck}</span>
-            </>
-          )}
+          <div className="flex gap-8 h-full w-full">
+            <div className="flex flex-col flex-1">
+              <CharacterStat stat="strength" player={player} />
+              <CharacterStat stat="agility" player={player} />
+              <CharacterStat stat="intellect" player={player} />
+            </div>
+            <div className="flex flex-col flex-1">
+              <CharacterStat stat="stamina" player={player} />
+              <CharacterStat stat="luck" player={player} />
+              <CharacterStat stat="armor" player={player} />
+            </div>
+          </div>
         </div>
       </section>
 

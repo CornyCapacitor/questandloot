@@ -50,6 +50,10 @@ export const calculatePlayerArmor = (equipment: Equipment): number => {
   return armorValue
 }
 
+export const calculateArmorReduction = (defenderArmor: number, attackerLevel: number) => {
+  return (defenderArmor / attackerLevel) > 25 ? 25 : (defenderArmor / attackerLevel)
+}
+
 export const calculateResistances = (attributes: Attributes): Resistances => {
   return {
     warriorResistance: attributes['strength'] / 2,
