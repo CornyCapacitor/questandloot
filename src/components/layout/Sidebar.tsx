@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Button } from "../ui/button"
+import LogoutButton from "./LogoutButton"
 
 const Sidebar = () => {
   return (
@@ -10,9 +11,12 @@ const Sidebar = () => {
       <Link href="/game/journey" className="w-full h-16">
         <Button className="w-full h-16">Journey</Button>
       </Link>
-      <Button className="w-full h-16">Marketplace</Button>
+      <Link href="/game/shop" className="w-full h-16">
+        <Button className="w-full h-16">Merchants</Button>
+      </Link>
       <Button className="w-full h-16">Crafting</Button>
       <Button className="w-full h-16">Dungeon</Button>
+      <LogoutButton />
     </aside>
   )
 }

@@ -1,4 +1,4 @@
-import { Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Player, Profession, Resistances, Weapon } from "@/app/types"
+import { Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Player, Profession, Quality, Resistances, Weapon } from "@/app/types"
 import { calculatePlayerAttributes } from "../../../functions/characterCalculations"
 
 export const random = (number1: number, number2: number): number => {
@@ -126,6 +126,20 @@ const calculateItemQuantity = (chance: number): number => {
   const finalChances = remainder >= randomRoll ? fullChances + 1 : fullChances
 
   return finalChances
+}
+
+export const calculateQuality = (): Quality => {
+  const roll = Math.random() * 100
+
+  if (roll > 94 && roll <= 98.9) {
+    return 'uncommon'
+  } else if (roll > 98.9 && roll <= 99.9) {
+    return 'rare'
+  } else if (roll > 99.9) {
+    return 'epic'
+  } else {
+    return 'common'
+  }
 }
 
 const calculateItemQuality = (loot: Loot): number => {

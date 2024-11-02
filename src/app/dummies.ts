@@ -38,7 +38,8 @@ export const dummyPlayer: Player = {
       image: '',
       quality: 'common',
       type: 'weapon',
-      family: 'fire'
+      family: 'fire',
+      price: 1,
     },
     shield: null,
     head: null,
@@ -54,6 +55,10 @@ export const dummyPlayer: Player = {
   items: [],
   materials: [],
   gold: 0,
+  shop: {
+    lastRefresh: null,
+    items: []
+  }
 };
 
 export const dummyWeapon: Weapon = {
@@ -77,5 +82,6 @@ export const dummyWeapon: Weapon = {
   image: 'beltslot.svg',
   quality: 'common',
   type: 'weapon',
-  family: 'fire'
+  family: 'fire',
+  price: 1,
 }

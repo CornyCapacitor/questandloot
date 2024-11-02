@@ -77,7 +77,8 @@ const generateWeapon = (level: number, profession: Profession, quality: Quality)
     image,
     quality,
     family,
-    type: 'weapon'
+    type: 'weapon',
+    price: 0
   }
 }
 
@@ -103,7 +104,8 @@ const generateArmor = (level: number, profession: Profession, quality: Quality, 
     image,
     quality,
     proficiency,
-    type: 'armor'
+    type: 'armor',
+    price: 0
   }
 }
 
@@ -126,7 +128,8 @@ const generateShield = (level: number, profession: Profession, quality: Quality)
     attributes,
     image,
     quality,
-    type: 'shield'
+    type: 'shield',
+    price: 0
   }
 }
 
@@ -146,7 +149,8 @@ const generateJewelery = (level: number, quality: Quality, slot: JewelerySlot): 
     attributes,
     image,
     quality,
-    type: 'jewelery'
+    type: 'jewelery',
+    price: 0
   }
 }
 
