@@ -11,6 +11,7 @@ import { HealthBar } from "@/components/layout/HealthBar"
 import IconSpinner from "@/components/layout/IconSpinner"
 import ItemFrame from "@/components/layout/ItemFrame"
 import { useAtom } from "jotai"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { combat } from "./combat"
 import { calculateGold } from "./combatCalculations"
@@ -27,6 +28,7 @@ const CombatPage = () => {
   const [, setFinishedCombat] = useState<FinishedCombatType | null>(null)
   const [combatLog, setCombatLog] = useState<LogEntry[] | null>(null)
   const [gold, setGold] = useState<number | null>(null)
+  const [experience, setExperience] = useState<number | null>(null)
   const [loot, setLoot] = useState<Items[]>([])
   const [parsedCombatLog, setParsedCombatLog] = useState<string[] | null>(null)
   const [character1Attributes, setCharacter1Attributes] = useState<Attributes | null>(null)
@@ -56,9 +58,11 @@ const CombatPage = () => {
 
     const earnedLoot = combatResult.loot ? generateLoot(combatResult.loot, character1.profession, character1.level) : []
     const earnedGold = combatResult.loot ? calculateGold(character1.level, character1.activeJourney.valueMultiplier) : null
+    const earnedExperience = combatResult.experience ? combatResult.experience : null
 
     setLoot(earnedLoot)
     setGold(earnedGold)
+    setExperience(earnedExperience)
 
     const lootToApply = applyLoot(earnedLoot, character1)
 
@@ -67,7 +71,8 @@ const CombatPage = () => {
       activeJourney: null,
       gold: character1.gold + (earnedGold ?? 0),
       items: lootToApply.items,
-      materials: lootToApply.materials
+      materials: lootToApply.materials,
+      experience: character1.experience + (earnedExperience ?? 0)
     })
 
     setIsInitialized(true)
@@ -164,7 +169,8 @@ const CombatPage = () => {
             {combatLog && turn === combatLog.length - 1 &&
               <div className="flex flex-col">
                 <h1>Loot:</h1>
-                <h1>Gold: {gold}</h1>
+                <h1 className="flex gap-1 justify-center">Gold: {gold} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+                <h1 className="flex gap-1 justify-center">Exp: {experience} <Image width={20} height={20} src="/experience.svg" alt="Experience" /></h1>
                 <div className="flex gap-2 w-full justify-center text-start flex-wrap">
                   {loot.map((item, index) => (
                     <ItemFrame key={index} itemData={item} isClickable={false} isEquipped={false} isDisabled={false} width={100} height={100} />

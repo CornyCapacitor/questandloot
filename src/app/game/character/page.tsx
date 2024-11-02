@@ -1,5 +1,6 @@
 'use client'
 
+import { dummyPlayer } from "@/app/dummies"
 import { playerAtom } from "@/app/state/atoms"
 import { Player } from "@/app/types"
 import CharacterStat from "@/components/layout/CharacterStat"
@@ -11,7 +12,7 @@ import Image from "next/image"
 import { useState } from "react"
 
 const CharacterPage = () => {
-  const [player] = useAtom<Player | null>(playerAtom)
+  const [player, setPlayer] = useAtom<Player | null>(playerAtom)
   const [old] = useState(false)
 
   if (!player) {
@@ -159,7 +160,7 @@ const CharacterPage = () => {
                 </div>
               </div>
               <div className="w-full items-center h-8 flex flex-shrink-0 justify-center">
-                <ExperienceBar experience={player.experience} level={player.level} />
+                <ExperienceBar />
               </div>
             </div>
 
@@ -252,6 +253,15 @@ const CharacterPage = () => {
           <ItemFrame key={index} itemData={item.item} isClickable={true} isDisabled={false} isEquipped={false} width={128} height={128} />
         ))}
         <button onClick={() => console.log(player)}>Console.log player</button>
+        <button onClick={() => setPlayer({
+          ...player,
+          experience: player.experience + 100
+        })}>Add 100 experience</button>
+        <button onClick={() => setPlayer({
+          ...player,
+          experience: player.experience + 250
+        })}>Add 250 experience</button>
+        <button onClick={() => setPlayer(dummyPlayer)}>Reset player</button>
       </section>
     </div>
   )

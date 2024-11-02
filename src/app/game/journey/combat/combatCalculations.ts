@@ -161,3 +161,7 @@ export const calculateLoot = (loot: Loot, chance: number): number[] => {
 
   return finalLoot
 }
+
+export const calculateExperience = (level: number, multiplier: number): number => {
+  return Math.floor((30 + (30 * level * (level - 1) * 0.10)) * multiplier / 100)
+}

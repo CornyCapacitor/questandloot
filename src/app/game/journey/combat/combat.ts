@@ -1,7 +1,7 @@
 import { LogEntry, Monster, Player } from "@/app/types";
-import { calculateArmorReduction, calculateCritChance, calculateDamage, calculateLoot, random, retrievePlayerInformation } from "./combatCalculations";
+import { calculateArmorReduction, calculateCritChance, calculateDamage, calculateExperience, calculateLoot, random, retrievePlayerInformation } from "./combatCalculations";
 
-export const combat = (participient1: Player, participient2: Monster, journeyLootChance: number): { isWin: boolean, combatLog: LogEntry[], loot: number[] | null } => {
+export const combat = (participient1: Player, participient2: Monster, journeyMultiplier: number): { isWin: boolean, combatLog: LogEntry[], loot: number[] | null, experience: number | null } => {
   // Preparation
   const character1 = retrievePlayerInformation(participient1)
   const character2 = participient2
@@ -90,6 +90,7 @@ export const combat = (participient1: Player, participient2: Monster, journeyLoo
   return {
     isWin: HP1 > 0 ? true : false,
     combatLog: combatLog,
-    loot: HP1 > 0 && 'loot' in character2 ? calculateLoot(character2.loot, journeyLootChance) : null
+    loot: HP1 > 0 && 'loot' in character2 ? calculateLoot(character2.loot, journeyMultiplier) : null,
+    experience: HP1 > 0 ? calculateExperience(character2.level, journeyMultiplier) : null
   }
 }

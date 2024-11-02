@@ -1,9 +1,68 @@
+import { playerAtom } from '@/app/state/atoms'
+import { Player } from '@/app/types'
+import { useAtom } from 'jotai'
+import { useEffect, useState } from 'react'
 import { Progress } from '../ui/progress'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
-export const ExperienceBar = ({ experience, level }: { experience: number, level: number }) => {
-  const experienceRequired = 100 + 100 * level * ((level - 1) * 0.12)
-  const experiencePercentage = (experience / experienceRequired) * 100
+export const ExperienceBar = () => {
+  const [player, setPlayer] = useAtom<Player | null>(playerAtom)
+  const [experienceRequired, setExperienceRequired] = useState(0)
+  const [experiencePercentage, setExperiencePercentage] = useState(0)
+
+  const calculateLevelAndExperience = (experience: number, currentLevel: number) => {
+    let level = currentLevel;
+    let experienceRequired = Math.floor(100 + 100 * level * ((level - 1) * 0.12));
+
+    while (experience >= experienceRequired) {
+      experience -= experienceRequired;
+      level += 1;
+      experienceRequired = Math.floor(100 + 100 * level * ((level - 1) * 0.12));
+      alert(`Congratulations! You've earned new level: ${level}`)
+    }
+
+    return { level, remainingExperience: experience };
+  };
+
+  const handleLevelUp = () => {
+    setPlayer((prevPlayer) => {
+      if (!prevPlayer) return null;
+
+      console.log('Player before leveling up:', prevPlayer);
+
+      const { level, remainingExperience } = calculateLevelAndExperience(prevPlayer.experience, prevPlayer.level);
+
+      const updatedPlayer = {
+        ...prevPlayer,
+        level,
+        experience: remainingExperience,
+      };
+
+      console.log('Player after level up:', updatedPlayer);
+
+      return updatedPlayer;
+    });
+  };
+
+  useEffect(() => {
+    if (!player) return;
+
+    const newExperienceRequired = Math.floor(100 + 100 * player.level * ((player.level - 1) * 0.12));
+    const newExperiencePercentage = (player.experience / newExperienceRequired) * 100;
+
+    setExperienceRequired(newExperienceRequired);
+    setExperiencePercentage(newExperiencePercentage);
+
+    if (player.experience >= newExperienceRequired) {
+      console.log(`Current experience: ${player.experience}`)
+      console.log(`Experience to level up: ${newExperienceRequired}`)
+      handleLevelUp();
+    }
+  }, [player, setPlayer]);
+
+  if (!player) return (
+    <div>Experience bar</div>
+  )
 
   return (
     <TooltipProvider>
@@ -16,12 +75,12 @@ export const ExperienceBar = ({ experience, level }: { experience: number, level
               className="rounded-none h-full bg-slate-900"
             />
             <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold">
-              Level {level}
+              Level {player.level}
             </span>
           </div>
         </TooltipTrigger>
         <TooltipContent>
-          <span>Experience: {`${experience ?? 0} / ${experienceRequired.toFixed(0)}`}</span>
+          <span>Experience: {`${player.experience ?? 0} / ${experienceRequired.toFixed(0)}`}</span>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
