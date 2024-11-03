@@ -20,6 +20,6 @@ export default function RootLayout({
       <body className="antialiased dark w-full h-screen max-h-screen max-w-screen">
         {children}
       </body>
-    </html>
+    </html >
   );
 }

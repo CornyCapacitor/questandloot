@@ -39,7 +39,7 @@ export const dummyPlayer: Player = {
       quality: 'common',
       type: 'weapon',
       family: 'fire',
-      price: 1,
+      sellPrice: 1,
     },
     shield: null,
     head: null,
@@ -83,5 +83,5 @@ export const dummyWeapon: Weapon = {
   quality: 'common',
   type: 'weapon',
   family: 'fire',
-  price: 1,
+  sellPrice: 1,
 }

@@ -6,6 +6,7 @@ import { Items } from "@/app/types"
 import IconSpinner from "@/components/layout/IconSpinner"
 import ItemFrame from "@/components/layout/ItemFrame"
 import { useAtom } from "jotai"
+import Image from "next/image"
 import { useEffect } from "react"
 import { calculateQuality } from "../journey/combat/combatCalculations"
 
@@ -74,10 +75,17 @@ const Shop = ({ className }: { className?: string }) => {
   }
 
   return (
-    <section className={`${className}`}>
-      {player.shop.items.map((item, index) => (
-        <ItemFrame key={index} itemData={item} isClickable={true} isDisabled={false} isEquipped={false} width={100} height={100} />
-      ))}
+    <section className={`flex content-start flex-grow h-full gap-2 border-slate-700 overflow-y-auto flex-col justify-center items-center p-2 ${className}`}>
+      <Image src="/assets/portraits/merchant.png" width={256} height={256} alt="Merchant" className="p-2" />
+      <div className="grid gap-5 grid-cols-3 p-2">
+        {player.shop.items.map((item, index) =>
+          item !== null ? (
+            <ItemFrame key={index} itemData={item} inShop={true} isClickable={true} isEquipped={false} width={100} height={100} />
+          ) : (
+            <Image key={index} src="/assets/equipment/slots/beltslot.svg" width={100} height={100} alt="Belt slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+          )
+        )}
+      </div>
     </section>
   )
 }

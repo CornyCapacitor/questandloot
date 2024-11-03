@@ -1,4 +1,4 @@
-import { Items, Material, Player } from "../types";
+import { Items, Material, Player, Shop } from "../types";
 
 type PlayerItems = {
   item: Items,
@@ -21,7 +21,6 @@ export const addItem = (addedItem: Items, currentItems: PlayerItems): PlayerItem
     updatedItems.push({ item: addedItem, quantity: 1 })
   }
 
-  console.log('Added item to the bags:', addedItem)
   return updatedItems
 }
 
@@ -42,8 +41,25 @@ export const removeItem = (removedItem: Items, currentItems: PlayerItems): Playe
     throw new Error('Cannot find item with given id.')
   }
 
-  console.log('Removed item from the bag:', removedItem)
   return updatedItems
+}
+
+export const removeShopItem = (removedItem: Items, currentShop: Shop): Shop => {
+  const { lastRefresh, items } = currentShop
+  const updatedShop = [...items]
+
+  const removedItemIndex = updatedShop.findIndex((entry) => entry !== null && entry.id === removedItem.id)
+
+  if (removedItemIndex !== -1) {
+    updatedShop[removedItemIndex] = null
+  } else {
+    throw new Error('Cannot find item with given id.')
+  }
+
+  return {
+    lastRefresh,
+    items: updatedShop
+  }
 }
 
 export const addMaterial = (addedMaterial: Material, currentMaterials: PlayerMaterials): PlayerMaterials => {
@@ -96,4 +112,12 @@ export const applyLoot = (loot: Items[], player: Player): { items: PlayerItems, 
     items: updatedPlayer.items,
     materials: updatedPlayer.materials
   }
+}
+
+export const addGold = (amount: number, currentGold: number) => {
+  return currentGold + amount
+}
+
+export const removeGold = (amount: number, currentGold: number) => {
+  return currentGold - amount
 }

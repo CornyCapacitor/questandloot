@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import { config } from '../config'
 import { heavyArmors, jewelery, lightArmors, mediumArmors, shields, weapons } from "../db/equipmentList"
 import { random } from "../game/journey/combat/combatCalculations"
 import { Armor, ArmorProficiency, ArmorSlot, Attributes, Jewelery, JewelerySlot, Profession, Quality, Shield, Weapon, WeaponFamily } from "../types"
@@ -47,6 +48,10 @@ const randomizeWeaponFamily = (profession: Profession): WeaponFamily => {
   return array[random(0, array.length - 1)]
 }
 
+const randomizePrice = (level: number) => {
+  return random(Math.floor(config.sellPrice.min * level), Math.floor(config.sellPrice.max * level))
+}
+
 const generateWeapon = (level: number, profession: Profession, quality: Quality): Weapon => {
   const qualityMultiplier = quality === 'common' ? 1.0 : quality === 'uncommon' ? 1.1 : quality === 'rare' ? 1.3 : quality === 'epic' ? 1.5 : 1.0
   const attributes = randomizeAttributes(level, qualityMultiplier)
@@ -55,6 +60,7 @@ const generateWeapon = (level: number, profession: Profession, quality: Quality)
   const itemArray = weapons[family]
   const randomItem = itemArray[random(0, itemArray.length - 1)]
   const { name, description, image } = randomItem
+  const sellPrice = randomizePrice(level)
 
   // Randoms item damage based on level;
   // Basics is range min: 3-5, max: 5-7,
@@ -78,7 +84,7 @@ const generateWeapon = (level: number, profession: Profession, quality: Quality)
     quality,
     family,
     type: 'weapon',
-    price: 0
+    sellPrice
   }
 }
 
@@ -91,6 +97,7 @@ const generateArmor = (level: number, profession: Profession, quality: Quality, 
   const itemArray = proficiency === 'heavy' ? heavyArmors[slot] : proficiency === 'medium' ? mediumArmors[slot] : lightArmors[slot]
   const randomItem = itemArray[random(0, itemArray.length - 1)]
   const { name, description, image } = randomItem
+  const sellPrice = randomizePrice(level)
 
   return {
     id: uuidv4(),
@@ -105,7 +112,7 @@ const generateArmor = (level: number, profession: Profession, quality: Quality, 
     quality,
     proficiency,
     type: 'armor',
-    price: 0
+    sellPrice
   }
 }
 
@@ -116,6 +123,7 @@ const generateShield = (level: number, profession: Profession, quality: Quality)
   const armor = random((1 * level * qualityMultiplier * armorMultiplier), (2 * level * qualityMultiplier * armorMultiplier))
   const randomItem = shields[random(0, shields.length - 1)]
   const { name, description, image } = randomItem
+  const sellPrice = randomizePrice(level)
 
   return {
     id: uuidv4(),
@@ -129,7 +137,7 @@ const generateShield = (level: number, profession: Profession, quality: Quality)
     image,
     quality,
     type: 'shield',
-    price: 0
+    sellPrice
   }
 }
 
@@ -139,6 +147,7 @@ const generateJewelery = (level: number, quality: Quality, slot: JewelerySlot): 
   const itemArray = jewelery[slot]
   const randomItem = itemArray[random(0, itemArray.length - 1)]
   const { name, description, image } = randomItem
+  const sellPrice = randomizePrice(level)
 
   return {
     id: uuidv4(),
@@ -150,7 +159,7 @@ const generateJewelery = (level: number, quality: Quality, slot: JewelerySlot): 
     image,
     quality,
     type: 'jewelery',
-    price: 0
+    sellPrice
   }
 }
 

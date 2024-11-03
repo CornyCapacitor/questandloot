@@ -1,15 +1,15 @@
 import { isArmor, isJewelery, isMaterial, isPotion, isWeapon } from '@/app/functions/itemCheckers'
-import { addItem, removeItem } from '@/app/functions/manageItems'
+import { addGold, addItem, removeGold, removeItem, removeShopItem } from '@/app/functions/manageItems'
 import { playerAtom } from '@/app/state/atoms'
 import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Potion, Weapon } from '@/app/types'
 import { useAtom } from 'jotai'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
-const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, height }: { itemData: Items, isClickable: boolean, isDisabled: boolean, isEquipped: boolean, width: number, height: number }) => {
+const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, inShop: boolean, width: number, height: number }) => {
   const [player, setPlayer] = useAtom(playerAtom)
-  const [isActiveTooltipVisible, setActiveTooltipVisible] = useState(false)
   const itemFrameRef = useRef<HTMLDivElement | null>(null)
 
   // Slot typeguard
@@ -17,25 +17,12 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
     return 'slot' in item;
   };
 
-  const handleItemClick = () => {
-    if (isClickable && !isDisabled) setActiveTooltipVisible(!isActiveTooltipVisible)
-  }
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (itemFrameRef.current && !itemFrameRef.current.contains(event.target as Node)) {
-      setActiveTooltipVisible(false)
-    }
-  }
-
   const handleEquipItem = (item: Items) => {
     if (!player || !player.equipment) return
 
     if (isPotion(item) || isMaterial(item)) {
-      console.log('This item is either a potion or material')
       return
     }
-
-    setActiveTooltipVisible(false)
 
     const slot = item.slot
 
@@ -58,7 +45,6 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
       };
     });
 
-    console.log('Equipped:', item)
     return
   }
 
@@ -80,66 +66,125 @@ const ItemFrame = ({ itemData, isClickable, isDisabled, isEquipped, width, heigh
       items: addItem(unequippedItem, player.items)
     })
 
-    console.log('Unequipped:', unequippedItem)
     return unequippedItem
   }
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside)
+  const handleBuyItem = (itemData: Items) => {
+    if (!player) return
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+    const buyPrice = itemData.sellPrice * 4
+    console.log(`Buying item: ${itemData.name} for ${buyPrice}`)
+    if (buyPrice > player.gold) {
+      alert('Not enough gold')
+      return
     }
-  }, [])
+
+    setPlayer((prevPlayer) => {
+      if (!prevPlayer) return null
+
+      return {
+        ...prevPlayer,
+        items: addItem(itemData, prevPlayer.items),
+        gold: removeGold(buyPrice, prevPlayer.gold),
+        shop: removeShopItem(itemData, prevPlayer.shop)
+      }
+    })
+  }
+
+  const handleSellItem = (itemData: Items) => {
+    if (!player) return
+
+    console.log(`Selling item: ${itemData.name} for ${itemData.sellPrice}`)
+    setPlayer((prevPlayer) => {
+      if (!prevPlayer) return null
+
+      return {
+        ...prevPlayer,
+        items: removeItem(itemData, prevPlayer.items),
+        gold: addGold(itemData.sellPrice, prevPlayer.gold)
+      }
+    })
+  }
+
+  const PopoverComponent = ({ inShop, itemData, isEquipped }: { inShop: boolean, itemData: Items, isEquipped: boolean }) => {
+    return (
+      <>
+        {inShop ? (
+          // Item in shop active tooltip
+          <div>
+            <button onClick={() => handleBuyItem(itemData)}>Buy</button>
+          </div>
+          // Item equipped active tooltip
+        ) : isEquipped && hasSlot(itemData) ? (
+          <div>
+            <button onClick={() => handleUnequipItem(itemData.slot)}>Unequip</button>
+          </div>
+          // Item in bag active tooltip
+        ) : (
+          <div className="flex flex-col gap-5">
+            <button onClick={() => handleEquipItem(itemData)}>Equip</button>
+            <button onClick={() => handleSellItem(itemData)}>Sell</button>
+          </div>
+        )}
+      </>
+    )
+  }
 
   return (
     <div ref={itemFrameRef} className="relative">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <div onClick={() => handleItemClick()}>
+            {isClickable ? (
+              <Popover>
+                <PopoverTrigger>
+                  <Image src={`/placeholderItem.svg`} width={width} height={height} alt={itemData.name} className={`border ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} />
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverComponent inShop={inShop} itemData={itemData} isEquipped={isEquipped} />
+                </PopoverContent>
+              </Popover>
+            ) : (
               <Image src={`/placeholderItem.svg`} width={width} height={height} alt={itemData.name} className={`border ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} />
-            </div>
+            )}
           </TooltipTrigger>
           <TooltipContent>
             {isArmor(itemData) ? (
-              <ArmorDescription item={itemData} />
+              <ArmorDescription item={itemData} inShop={inShop} />
             ) : isWeapon(itemData) ? (
-              <WeaponDescription item={itemData} />
+              <WeaponDescription item={itemData} inShop={inShop} />
             ) : isJewelery(itemData) ? (
-              <JeweleryDescription item={itemData} />
-            ) : isPotion(itemData) && <PotionDescription item={itemData} />}
+              <JeweleryDescription item={itemData} inShop={inShop} />
+            ) : isPotion(itemData) && <PotionDescription item={itemData} inShop={inShop} />}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-
-      {isActiveTooltipVisible && (
-        <div className="absolute flex flex-col gap-2 a-10 bg-black border border-slate-700 rounded-md text-sm p-2 w-[128px] tooltip-button-animation z-10">
-          {isEquipped && hasSlot(itemData) ? (
-            <button className="w-full bg-slate-800 py-1 px-2 rounded-md" onClick={() => handleUnequipItem(itemData.slot)}>Unequip</button>
-          ) : (
-            <button className="w-full bg-slate-800 py-1 px-2 rounded-md" onClick={() => handleEquipItem(itemData)}>Equip</button>
-          )}
-          <button className="w-full bg-slate-800 py-1 px-2 rounded-md">Sell</button>
-        </div>
-      )}
     </div>
   )
 }
 
 export default ItemFrame
 
-const PotionDescription = ({ item }: { item: Potion }) => {
+const PotionDescription = ({ item, inShop }: { item: Potion, inShop: boolean }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
       <h2 className="text-gray-300 text-sm text-wrap max-w-[350px]">{item.description}</h2>
       <h2 className="text-wrap">Increases {item.enchancing.attribute} by {item.enchancing.value}% for 24h</h2>
+      <div className="flex gap-1">
+        {inShop ? (
+          <>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+          </>
+        ) : (
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+        )}
+      </div>
     </div>
   )
 }
 
-const WeaponDescription = ({ item }: { item: Weapon }) => {
+const WeaponDescription = ({ item, inShop }: { item: Weapon, inShop: boolean }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
@@ -163,11 +208,20 @@ const WeaponDescription = ({ item }: { item: Weapon }) => {
           <span>Luck: {item.attributes.luck}</span>
         )}
       </div>
+      <div className="flex gap-1">
+        {inShop ? (
+          <>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+          </>
+        ) : (
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+        )}
+      </div>
     </div>
   )
 }
 
-const ArmorDescription = ({ item }: { item: Armor }) => {
+const ArmorDescription = ({ item, inShop }: { item: Armor, inShop: boolean }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
@@ -191,11 +245,20 @@ const ArmorDescription = ({ item }: { item: Armor }) => {
           <span>Luck: {item.attributes.luck}</span>
         )}
       </div>
+      <div className="flex gap-1">
+        {inShop ? (
+          <>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+          </>
+        ) : (
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+        )}
+      </div>
     </div>
   )
 }
 
-const JeweleryDescription = ({ item }: { item: Jewelery }) => {
+const JeweleryDescription = ({ item, inShop }: { item: Jewelery, inShop: boolean }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
@@ -216,6 +279,15 @@ const JeweleryDescription = ({ item }: { item: Jewelery }) => {
         )}
         {item.attributes.luck > 0 && (
           <span>Luck: {item.attributes.luck}</span>
+        )}
+      </div>
+      <div className="flex gap-1">
+        {inShop ? (
+          <>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+          </>
+        ) : (
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
         )}
       </div>
     </div>

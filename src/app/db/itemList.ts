@@ -17,7 +17,8 @@ export const item_list: { [key: number]: Potion | Material | StringRepresentativ
     },
     image: "lesser_strength_potion.png",
     quality: "uncommon",
-    type: "potion"
+    type: "potion",
+    sellPrice: 0
   },
   102: {
     id: 102,
@@ -29,7 +30,8 @@ export const item_list: { [key: number]: Potion | Material | StringRepresentativ
     },
     image: "lesser_strength_potion.png",
     quality: "uncommon",
-    type: "potion"
+    type: "potion",
+    sellPrice: 0
   },
   103: {
     id: 103,
@@ -41,7 +43,8 @@ export const item_list: { [key: number]: Potion | Material | StringRepresentativ
     },
     image: "lesser_intellect_potion.png",
     quality: "uncommon",
-    type: "potion"
+    type: "potion",
+    sellPrice: 0
   },
   104: {
     id: 104,
@@ -53,7 +56,8 @@ export const item_list: { [key: number]: Potion | Material | StringRepresentativ
     },
     image: "lesser_stamina_potion.png",
     quality: "uncommon",
-    type: "potion"
+    type: "potion",
+    sellPrice: 0
   },
   105: {
     id: 105,
@@ -65,7 +69,8 @@ export const item_list: { [key: number]: Potion | Material | StringRepresentativ
     },
     image: "lesser_luck_elixir.png",
     quality: "uncommon",
-    type: "potion"
+    type: "potion",
+    sellPrice: 0
   },
   201: {
     id: 201,
@@ -73,7 +78,8 @@ export const item_list: { [key: number]: Potion | Material | StringRepresentativ
     description: "Blue shard glowing with strange energy. Could be useful in crafting.",
     image: "ice_crystal.png",
     quality: "common",
-    type: "material"
+    type: "material",
+    sellPrice: 0
   },
   202: {
     id: 202,
@@ -81,6 +87,7 @@ export const item_list: { [key: number]: Potion | Material | StringRepresentativ
     description: "Test Material Description",
     image: "no_image.png",
     quality: "common",
-    type: "material"
+    type: "material",
+    sellPrice: 0
   }
 };

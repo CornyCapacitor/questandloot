@@ -23,7 +23,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           {/* head */}
           <div className="w-[100px] h-[100px] rounded-md relative">
             {player.equipment.head ? (
-              <ItemFrame itemData={player.equipment.head} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+              <ItemFrame itemData={player.equipment.head} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
               <Image src="/assets/equipment/slots/headslot.svg" layout="fill" alt="Head slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
             )}
@@ -32,7 +32,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           {/* Neck */}
           <div className="w-[100px] h-[100px] rounded-md relative">
             {player.equipment.neck ? (
-              <ItemFrame itemData={player.equipment.neck} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+              <ItemFrame itemData={player.equipment.neck} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
               <Image src="/assets/equipment/slots/neckslot.svg" layout="fill" alt="Neck slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
             )}
@@ -41,7 +41,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           {/* Chest */}
           <div className="w-[100px] h-[100px] rounded-md relative">
             {player.equipment.chest ? (
-              <ItemFrame itemData={player.equipment.chest} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+              <ItemFrame itemData={player.equipment.chest} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
               <Image src="/assets/equipment/slots/chestslot.svg" layout="fill" alt="Chest slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
             )}
@@ -50,7 +50,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           {/* Ring */}
           <div className="w-[100px] h-[100px] rounded-md relative">
             {player.equipment.ring ? (
-              <ItemFrame itemData={player.equipment.ring} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+              <ItemFrame itemData={player.equipment.ring} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
               <Image src="/assets/equipment/slots/ringslot.svg" layout="fill" alt="Ring slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
             )}
@@ -76,7 +76,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {/* Weapon */}
             <div className="w-[100px] h-[100px] rounded-md relative">
               {player.equipment.weapon ? (
-                <ItemFrame itemData={player.equipment.weapon} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+                <ItemFrame itemData={player.equipment.weapon} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
               ) : (
                 <Image src="/assets/equipment/slots/primaryslot.svg" layout="fill" alt="Primary slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
               )}
@@ -86,7 +86,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.profession === 'warrior' && (
               <div className="w-[100px] h-[100px] rounded-md relative">
                 {player.equipment.shield ? (
-                  <ItemFrame itemData={player.equipment.shield} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+                  <ItemFrame itemData={player.equipment.shield} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
                 ) : (
                   <Image src="/assets/equipment/slots/secondaryslot.svg" layout="fill" alt="Secondary slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
                 )}
@@ -101,7 +101,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           {/* Hands */}
           <div className="w-[100px] h-[100px] rounded-md relative">
             {player.equipment.hands ? (
-              <ItemFrame itemData={player.equipment.hands} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+              <ItemFrame itemData={player.equipment.hands} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
               <Image src="/assets/equipment/slots/handsslot.svg" layout="fill" alt="Hands slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
             )}
@@ -110,7 +110,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           {/* Belt */}
           <div className="w-[100px] h-[100px] rounded-md relative">
             {player.equipment.belt ? (
-              <ItemFrame itemData={player.equipment.belt} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+              <ItemFrame itemData={player.equipment.belt} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
               <Image src="/assets/equipment/slots/beltslot.svg" layout="fill" alt="Belt slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
             )}
@@ -119,7 +119,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           {/* Legs */}
           <div className="w-[100px] h-[100px] rounded-md relative">
             {player.equipment.legs ? (
-              <ItemFrame itemData={player.equipment.legs} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+              <ItemFrame itemData={player.equipment.legs} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
               <Image src="/assets/equipment/slots/legsslot.svg" layout="fill" alt="Legs slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
             )}
@@ -128,7 +128,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           {/* Feet */}
           <div className="w-[100px] h-[100px] rounded-md relative">
             {player.equipment.feet ? (
-              <ItemFrame itemData={player.equipment.feet} isClickable={true} isEquipped={true} isDisabled={false} width={100} height={100} />
+              <ItemFrame itemData={player.equipment.feet} inShop={false} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
               <Image src="/assets/equipment/slots/feetslot.svg" layout="fill" alt="Feet slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
             )}
@@ -162,7 +162,7 @@ export const CharacterItemsSection = ({ className }: { className?: string }) => 
   if (player) return (
     <section className={`${className}`}>
       {player.items.map((item, index) => (
-        <ItemFrame key={index} itemData={item.item} isClickable={true} isDisabled={false} isEquipped={false} width={128} height={128} />
+        <ItemFrame key={index} itemData={item.item} inShop={false} isClickable={true} isEquipped={false} width={128} height={128} />
       ))}
       <button onClick={() => console.log(player)}>Console.log player</button>
       <button onClick={() => setPlayer({

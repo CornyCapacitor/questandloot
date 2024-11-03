@@ -24,7 +24,7 @@ export type Player = {
 
 export type Shop = {
   lastRefresh: string | null,
-  items: Items[]
+  items: (Items | null)[]
 }
 
 export type CombatInformation = {
@@ -67,7 +67,7 @@ export type Weapon = {
   quality: Quality,
   type: "weapon",
   family: string,
-  price: number
+  sellPrice: number
 }
 
 export type ArmorProficiency = "heavy" | "medium" | "light"
@@ -87,7 +87,7 @@ export type Armor = {
   quality: Quality,
   proficiency: ArmorProficiency,
   type: "armor",
-  price: number
+  sellPrice: number
 }
 
 export type Shield = {
@@ -102,7 +102,7 @@ export type Shield = {
   image: string,
   quality: Quality,
   type: "shield",
-  price: number
+  sellPrice: number
 }
 
 export type JewelerySlot = "neck" | "ring"
@@ -117,7 +117,7 @@ export type Jewelery = {
   image: string,
   quality: Quality,
   type: "jewelery",
-  price: number
+  sellPrice: number
 }
 
 export type Potion = {
@@ -131,7 +131,7 @@ export type Potion = {
   image: string,
   type: "potion",
   quality: Quality,
-  price: number
+  sellPrice: number
 }
 
 export type Material = {
@@ -141,7 +141,7 @@ export type Material = {
   quality: Quality,
   image: string,
   type: "material"
-  price: number,
+  sellPrice: number,
 }
 
 export type Attributes = {

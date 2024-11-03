@@ -28,8 +28,6 @@ export const ExperienceBar = () => {
     setPlayer((prevPlayer) => {
       if (!prevPlayer) return null;
 
-      console.log('Player before leveling up:', prevPlayer);
-
       const { level, remainingExperience } = calculateLevelAndExperience(prevPlayer.experience, prevPlayer.level);
 
       const updatedPlayer = {
@@ -37,8 +35,6 @@ export const ExperienceBar = () => {
         level,
         experience: remainingExperience,
       };
-
-      console.log('Player after level up:', updatedPlayer);
 
       return updatedPlayer;
     });
@@ -54,8 +50,6 @@ export const ExperienceBar = () => {
     setExperiencePercentage(newExperiencePercentage);
 
     if (player.experience >= newExperienceRequired) {
-      console.log(`Current experience: ${player.experience}`)
-      console.log(`Experience to level up: ${newExperienceRequired}`)
       handleLevelUp();
     }
   }, [player, setPlayer]);
