@@ -173,6 +173,10 @@ export const CharacterItemsSection = ({ className }: { className?: string }) => 
         ...player,
         experience: player.experience + 250
       })}>Add 250 experience</button>
+      <button onClick={() => setPlayer({
+        ...player,
+        gold: player.gold + 500
+      })}>Add 500 gold</button>
       <button onClick={() => setPlayer(dummyPlayer)}>Reset player</button>
     </section>
   )

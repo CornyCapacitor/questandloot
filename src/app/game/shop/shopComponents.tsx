@@ -28,7 +28,7 @@ const Shop = ({ className }: { className?: string }) => {
     return today > lastRefreshDate
   }
 
-  const refreshShop = () => {
+  const refreshShop = (payment?: number) => {
     if (!player) return
 
     const newItems: Items[] = []
@@ -51,10 +51,24 @@ const Shop = ({ className }: { className?: string }) => {
 
         return {
           ...prevPlayer,
-          shop: newShop
+          shop: newShop,
+          gold: payment ? (prevPlayer.gold - payment) : prevPlayer.gold
         }
       })
     }
+  }
+
+  const purchaseShopRefreshment = () => {
+    if (!player) return
+
+    const refreshPrice = player.level * 100
+
+    if (refreshPrice > player.gold) {
+      alert('Not enough gold')
+      return
+    }
+
+    refreshShop(refreshPrice)
   }
 
   useEffect(() => {
@@ -86,6 +100,7 @@ const Shop = ({ className }: { className?: string }) => {
           )
         )}
       </div>
+      <button className="flex gap-1 items-center" onClick={() => purchaseShopRefreshment()}>Refresh shop: {player.level * 100} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></button>
     </section>
   )
 }
