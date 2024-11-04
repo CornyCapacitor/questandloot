@@ -1,4 +1,4 @@
-import { ArmorProficiency, Profession, Quality } from "./types";
+import { ArmorProficiency, Damage, Profession, Quality } from "./types";
 
 export const config = {
   // 
@@ -85,11 +85,11 @@ export const config = {
     min: {
       min: 3,
       max: 5
-    },
+    } as Damage,
     max: {
       min: 5,
       max: 7
-    }
+    } as Damage
   },
 
   // Base armor numbers to multiply based on level, quality and profession
@@ -123,8 +123,8 @@ export const config = {
     // formula: damMin: (2 + (level - 1) * 2) + min; damMax: (2 + (level - 1) * 2) + max
     damage: {
       min: -1,
-      max: +1
-    },
+      max: 1
+    } as Damage,
 
     // Armor flat scalable
     // formula: armor + (level - 1) * random((level - 1) to (level + 1))
