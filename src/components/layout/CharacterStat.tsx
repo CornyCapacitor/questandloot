@@ -97,12 +97,12 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
         ) : stat === 'luck' ? (
           <div className={`${className}`}>
             <h2>Crit chance:</h2>
-            <span>~{calculateCritChance(player.level, player.attributes)}%</span>
+            <span>~{Math.floor(calculateCritChance(player.level, player.attributes))}%</span>
           </div>
         ) : (
           <div className={`${className}`}>
             <h2>{header ? 'Damage reduction:' : 'Reduction:'}</h2>
-            <span>~{calculateArmorReduction(calculatePlayerArmor(player.equipment), player.level)}%</span>
+            <span>~{Math.floor(calculateArmorReduction(calculatePlayerArmor(player.equipment), player.level))}%</span>
           </div>
         )}
 

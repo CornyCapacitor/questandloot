@@ -2,22 +2,43 @@
 
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
 import { Journey, Player } from "@/app/types"
-import { Button } from "@/components/ui/button"
 import { useAtom } from "jotai"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { JourneyCard } from "./JourneyComponents"
 
 const JourneyPage = () => {
   const [player, setPlayer] = useAtom<Player | null>(playerAtom)
   const [, setIsCombatReady] = useAtom(combatReadyAtom)
-  const [time, setTime] = useState(30)
   const [remainingTime, setRemainingTime] = useState<number | null>(null)
-  const journeyOptions = [30, 60, 120, 240, 360, 480, 600, 720]
   const journeys: { name: string, image: string }[] = [
     {
       name: 'Dark Forest',
-      image: 'jungle.png'
+      image: 'placeholder.svg'
+    },
+    {
+      name: 'High mountains',
+      image: 'placeholder.svg'
+    },
+    {
+      name: 'Volcano',
+      image: 'placeholder.svg'
+    },
+    {
+      name: 'Something',
+      image: 'placeholder.svg'
+    },
+    {
+      name: 'Something',
+      image: 'placeholder.svg'
+    },
+    {
+      name: 'Something',
+      image: 'placeholder.svg'
+    },
+    {
+      name: 'Something',
+      image: 'placeholder.svg'
     }
   ]
 
@@ -117,18 +138,9 @@ const JourneyPage = () => {
   }
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      {journeys.map((journey) => (
-        <div key={journey.name} className="flex flex-col gap-2 items-center justify-center p-4 bg-slate-800 border rounded-md">
-          <h1>{journey.name}</h1>
-          <Image width={200} height={200} alt="Journey image" src={`/assets/journeys/${journey.image}`} className="rounded-md" />
-          <select className="text-black" value={time} onChange={(e) => setTime(Number(e.target.value))}>
-            {journeyOptions.map((option) => (
-              <option key={option} value={option}>{`${option / 60}h`}</option>
-            ))}
-          </select>
-          <Button onClick={() => startJourney(journey.name, time)}>Start journey</Button>
-        </div>
+    <div className="w-full h-full flex flex-wrap justify-center content-start p-2 gap-2 overflow-y-auto">
+      {journeys.map((journey, index) => (
+        <JourneyCard key={index} journey={journey} startJourney={startJourney} />
       ))}
     </div>
   )

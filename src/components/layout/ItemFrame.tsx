@@ -107,26 +107,22 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }:
   }
 
   const PopoverComponent = ({ inShop, itemData, isEquipped }: { inShop: boolean, itemData: Items, isEquipped: boolean }) => {
-    return (
-      <>
-        {inShop ? (
-          // Item in shop active tooltip
-          <div>
-            <button onClick={() => handleBuyItem(itemData)}>Buy</button>
-          </div>
-          // Item equipped active tooltip
-        ) : isEquipped && hasSlot(itemData) ? (
-          <div>
-            <button onClick={() => handleUnequipItem(itemData.slot)}>Unequip</button>
-          </div>
-          // Item in bag active tooltip
-        ) : (
-          <div className="flex flex-col gap-5">
-            <button onClick={() => handleEquipItem(itemData)}>Equip</button>
-            <button onClick={() => handleSellItem(itemData)}>Sell</button>
-          </div>
-        )}
-      </>
+    return inShop ? (
+      // Item in shop active tooltip
+      <div className="min-w-[100px]">
+        <button onClick={() => handleBuyItem(itemData)}>Buy</button>
+      </div>
+      // Item equipped active tooltip
+    ) : isEquipped && hasSlot(itemData) ? (
+      <div className="min-w-[100px]">
+        <button onClick={() => handleUnequipItem(itemData.slot)}>Unequip</button>
+      </div>
+      // Item in bag active tooltip
+    ) : (
+      <div className="flex flex-col gap-5 min-w-[100px]">
+        <button onClick={() => handleEquipItem(itemData)}>Equip</button>
+        <button onClick={() => handleSellItem(itemData)}>Sell</button>
+      </div>
     )
   }
 

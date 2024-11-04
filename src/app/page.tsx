@@ -36,7 +36,7 @@ export default function Home() {
         <h1>Welcome to Quest & Loot!</h1>
         <span>In order to access the game you need to be logged in. (login and password are credentials)</span>
         <label htmlFor="nickname" className="self-start text-sm text-slate-200">Login</label>
-        <Input id="Login" placeholder="Login" className="w-full p-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value={login} onChange={(e) => setLogin(e.target.value)} />
+        <Input id="Login" autoFocus placeholder="Login" className="w-full p-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value={login} onChange={(e) => setLogin(e.target.value)} />
         <label htmlFor="nickname" className="self-start text-sm text-slate-200">Password</label>
         <Input id="password" type="password" placeholder="Password" className="w-full p-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value={password} onChange={(e) => setPassword(e.target.value)} />
         <Button className="bg-blue-500 hover:bg-blue-600 text-white" onClick={() => handleLogin(login, password)}>Login</Button>

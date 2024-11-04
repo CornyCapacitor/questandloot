@@ -1,7 +1,7 @@
 import { playerAtom } from '@/app/state/atoms'
 import { useAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
-import { Button } from '../ui/button'
+import GameButton from './GameButton'
 
 const LogoutButton = () => {
   const [, setPlayer] = useAtom(playerAtom)
@@ -14,7 +14,7 @@ const LogoutButton = () => {
   }
 
   return (
-    <Button className="w-48 h-16" onClick={handleLogout}>Logout</Button>
+    <GameButton onClick={() => handleLogout()} className="py-4 w-[80%]">Logout</GameButton>
   )
 }
 
