@@ -1,5 +1,6 @@
 'use client'
 
+import { config } from "@/app/config"
 import { generateRandomEquipment } from "@/app/generators/generateEquipment"
 import { playerAtom } from "@/app/state/atoms"
 import { Items } from "@/app/types"
@@ -32,7 +33,7 @@ const Shop = ({ className }: { className?: string }) => {
     if (!player) return
 
     const newItems: Items[] = []
-    const totalShopItems = 9
+    const totalShopItems = config.itemsInShop
 
     for (let itemCount = 0; itemCount < totalShopItems; itemCount++) {
       const newItem = generateRandomEquipment(player.level, player.profession, calculateQuality())
@@ -61,7 +62,7 @@ const Shop = ({ className }: { className?: string }) => {
   const purchaseShopRefreshment = () => {
     if (!player) return
 
-    const refreshPrice = player.level * 100
+    const refreshPrice = player.level * config.refreshPriceMultiplier
 
     if (refreshPrice > player.gold) {
       alert('Not enough gold')

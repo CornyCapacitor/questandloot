@@ -1,3 +1,4 @@
+import { config } from "@/app/config"
 import { Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Player, Profession, Quality, Resistances, Weapon } from "@/app/types"
 import { calculatePlayerAttributes } from "../../../functions/characterCalculations"
 
@@ -51,14 +52,14 @@ export const calculatePlayerArmor = (equipment: Equipment): number => {
 }
 
 export const calculateArmorReduction = (defenderArmor: number, attackerLevel: number) => {
-  return (defenderArmor / attackerLevel) > 25 ? 25 : (defenderArmor / attackerLevel)
+  return (defenderArmor / attackerLevel) > config.maxArmorPercentage ? config.maxArmorPercentage : (defenderArmor / attackerLevel)
 }
 
 export const calculateResistances = (attributes: Attributes): Resistances => {
   return {
-    warriorResistance: attributes['strength'] / 2,
-    hunterResistance: attributes['agility'] / 2,
-    mageResistance: attributes['intellect'] / 2
+    warriorResistance: attributes['strength'] / config.classResistanceDivider,
+    hunterResistance: attributes['agility'] / config.classResistanceDivider,
+    mageResistance: attributes['intellect'] / config.classResistanceDivider
   }
 }
 
@@ -72,10 +73,10 @@ export const calculateCritChance = (enemyLevel: number, attributes: Attributes):
   let totalCritChance = Math.round((luck * 5) / (enemyLevel * 2))
 
   // Minimum of 5% crit chance and maximum of 50% crit chance
-  if (totalCritChance < 5.00) {
-    totalCritChance = 5.00
-  } else if (totalCritChance > 50.00) {
-    totalCritChance = 50.00
+  if (totalCritChance < config.critChance.min) {
+    totalCritChance = config.critChance.min
+  } else if (totalCritChance > config.critChance.max) {
+    totalCritChance = config.critChance.max
   }
 
   return totalCritChance
@@ -87,7 +88,7 @@ export const calculateTotalHP = (level: number, attributes: Attributes): number 
     return 100
   }
 
-  return attributes['stamina'] * 4 * (level + 1)
+  return attributes['stamina'] * config.hpMultiplier * (level + 1)
 }
 
 const mapWeaponFamilyToDamageType = (family: string): DamageType => {
@@ -131,12 +132,12 @@ const calculateItemQuantity = (chance: number): number => {
 export const calculateQuality = (): Quality => {
   const roll = Math.random() * 100
 
-  if (roll > 94 && roll <= 98.9) {
-    return 'uncommon'
-  } else if (roll > 98.9 && roll <= 99.9) {
-    return 'rare'
-  } else if (roll > 99.9) {
+  if (roll > config.qualityCalculation.epic) {
     return 'epic'
+  } else if (roll >= config.qualityCalculation.rare) {
+    return 'rare'
+  } else if (roll >= config.qualityCalculation.uncommon) {
+    return 'uncommon'
   } else {
     return 'common'
   }
@@ -145,15 +146,15 @@ export const calculateQuality = (): Quality => {
 const calculateItemQuality = (loot: Loot): number => {
   const roll = Math.random() * 100
 
-  if (roll > 94 && roll <= 98.9 && loot.uncommon?.length) {
-    const length = loot.uncommon.length
-    return loot.uncommon[Math.floor(Math.random() * length)]
-  } else if (roll > 98.9 && roll <= 99.9 && loot.rare?.length) {
-    const length = loot.rare.length
-    return loot.rare[Math.floor(Math.random() * length)]
-  } else if (roll > 99.9 && loot.epic?.length) {
+  if (roll >= config.qualityCalculation.epic && loot.epic?.length) {
     const length = loot.epic.length
     return loot.epic[Math.floor(Math.random() * length)]
+  } else if (roll >= config.qualityCalculation.rare && loot.rare?.length) {
+    const length = loot.rare.length
+    return loot.rare[Math.floor(Math.random() * length)]
+  } else if (roll >= config.qualityCalculation.uncommon && loot.uncommon?.length) {
+    const length = loot.uncommon.length
+    return loot.uncommon[Math.floor(Math.random() * length)]
   } else {
     const length = loot.common.length
     return loot.common[Math.floor(Math.random() * length)]
@@ -161,7 +162,9 @@ const calculateItemQuality = (loot: Loot): number => {
 }
 
 export const calculateGold = (level: number, multiplier: number): number => {
-  return Math.floor(random(10 + (10 * (level / 2) * (multiplier / 100)), 20 * 20 * ((level / 2) * (multiplier / 100))))
+  const min = config.gold.min + (config.gold.min * (level / 2) * (multiplier / 100))
+  const max = config.gold.max + (config.gold.max * (level / 2) * (multiplier / 100))
+  return Math.floor(random(min, max))
 }
 
 export const calculateLoot = (loot: Loot, chance: number): number[] => {
@@ -177,5 +180,7 @@ export const calculateLoot = (loot: Loot, chance: number): number[] => {
 }
 
 export const calculateExperience = (level: number, multiplier: number): number => {
-  return Math.floor((30 + (30 * level * (level - 1) * 0.10)) * multiplier / 100)
+  const min = config.experience.min + (config.experience.min * (level / 2) * (multiplier / 100) * config.experience.divider)
+  const max = config.experience.max + (config.experience.max * (level / 2) * (multiplier / 100) * config.experience.divider)
+  return Math.floor(random(min, max))
 }

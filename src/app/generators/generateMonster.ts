@@ -1,3 +1,4 @@
+import { config } from "../config"
 import { monsterList } from "../db/monsterList"
 import { calculateResistances, calculateTotalHP, random } from "../game/journey/combat/combatCalculations"
 import { Attributes, Damage, Monster, MonsterArray, Profession, Resistances } from "../types"
@@ -12,8 +13,8 @@ const calculateMonsterStats = (level: number) => {
   }
 
   const damage = {
-    min: (2 + (level - 1) * 2) - 1,
-    max: (2 + (level - 1) * 2) + 1
+    min: (2 + (level - 1) * 2) + config.monster.damage.min,
+    max: (2 + (level - 1) * 2) + config.monster.damage.max
   }
 
   const armor = 5 + (level - 1) * random((level - 1), (level + 1))

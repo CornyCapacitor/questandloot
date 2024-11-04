@@ -13,7 +13,7 @@ type Journey = {
 
 export const JourneyCard = ({ journey, startJourney }: { journey: Journey, startJourney: (journeyName: string, time: number) => void }) => {
   const [time, setTime] = useState('30')
-  const [availableTimeOptions] = useState(config.availableTimeOptions)
+  const [availableTimeOptions] = useState(config.availableTimeOptions.options)
 
   return (
     <div key={journey.name} className="flex flex-col w-[350px] h-[350px] bg-slate-800 gap-2 items-center justify-center rounded-sm">

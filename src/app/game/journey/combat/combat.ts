@@ -1,3 +1,4 @@
+import { config } from "@/app/config";
 import { LogEntry, Monster, Player } from "@/app/types";
 import { calculateArmorReduction, calculateCritChance, calculateDamage, calculateExperience, calculateLoot, random, retrievePlayerInformation } from "./combatCalculations";
 
@@ -25,7 +26,7 @@ export const combat = (participient1: Player, participient2: Monster, journeyMul
 
     // Calculating crit chance
     const critChance = calculateCritChance(defender.level, attacker.attributes)
-    const critDamageMultiplier = 2
+    const critDamageMultiplier = config.critDamageMultiplier
     const isCrit = Math.round(Math.random() * 100) <= critChance
 
     // Calculating defender's damage reduction from armor. Maximum of 25% damage reduction

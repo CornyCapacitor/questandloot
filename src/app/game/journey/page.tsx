@@ -1,5 +1,6 @@
 'use client'
 
+import { config } from "@/app/config"
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
 import { Journey, Player } from "@/app/types"
 import { useAtom } from "jotai"
@@ -78,35 +79,35 @@ const JourneyPage = () => {
   const startJourney = (location: string, time: number) => {
     if (!player) return
 
-    let valueMultiplier = 50
+    let valueMultiplier = config.availableTimeOptions.multipliers[0]
 
     switch (time) {
-      case 30:
-        valueMultiplier = 50
+      case Number(config.availableTimeOptions.options[0]):
+        valueMultiplier = config.availableTimeOptions.multipliers[0]
         break
-      case 60:
-        valueMultiplier = 100
+      case Number(config.availableTimeOptions.options[1]):
+        valueMultiplier = config.availableTimeOptions.multipliers[1]
         break
-      case 120:
-        valueMultiplier = 190
+      case Number(config.availableTimeOptions.options[2]):
+        valueMultiplier = config.availableTimeOptions.multipliers[2]
         break
-      case 240:
-        valueMultiplier = 360
+      case Number(config.availableTimeOptions.options[3]):
+        valueMultiplier = config.availableTimeOptions.multipliers[3]
         break
-      case 360:
-        valueMultiplier = 510
+      case Number(config.availableTimeOptions.options[4]):
+        valueMultiplier = config.availableTimeOptions.multipliers[4]
         break
-      case 480:
-        valueMultiplier = 640
+      case Number(config.availableTimeOptions.options[5]):
+        valueMultiplier = config.availableTimeOptions.multipliers[5]
         break
-      case 600:
-        valueMultiplier = 750
+      case Number(config.availableTimeOptions.options[6]):
+        valueMultiplier = config.availableTimeOptions.multipliers[6]
         break
-      case 720:
-        valueMultiplier = 840
+      case Number(config.availableTimeOptions.options[7]):
+        valueMultiplier = config.availableTimeOptions.multipliers[7]
         break
       default:
-        valueMultiplier = 50
+        valueMultiplier = config.availableTimeOptions.multipliers[0]
         break
     }
 
