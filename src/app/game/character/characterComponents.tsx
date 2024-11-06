@@ -7,6 +7,7 @@ import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import ItemFrame from "@/components/layout/ItemFrame"
 import { useAtom } from "jotai"
 import Image from "next/image"
+import { useState } from "react"
 
 export const CharacterEquipmentSection = ({ className }: { className?: string }) => {
   const [player] = useAtom(playerAtom)
@@ -156,7 +157,31 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
   )
 }
 
-export const CharacterItemsSection = ({ className }: { className?: string }) => {
+const TabButton = ({ tabName, currentTab, onClick }: { tabName: 'items' | 'materials', currentTab: 'items' | 'materials', onClick: () => void }) => {
+  return (
+    <button className={`rounded-t-sm py-1 px-2 border-t border-l border-r border-slate-700 transition hover:bg-slate-700 ${currentTab === tabName && 'bg-slate-600'}`} onClick={onClick}>{tabName.charAt(0).toUpperCase() + tabName.slice(1)}</button>
+  )
+}
+
+export const CharacterTabs = () => {
+  const [currentTab, setCurrentTab] = useState<'items' | 'materials'>('items')
+
+  return (
+    <div className="flex flex-col h-full flex-grow">
+      <div className="w-full flex gap-2 px-4 pt-2 border-b border-slate-700">
+        <TabButton tabName="items" currentTab={currentTab} onClick={() => setCurrentTab('items')} />
+        <TabButton tabName="materials" currentTab={currentTab} onClick={() => setCurrentTab('materials')} />
+      </div>
+      {currentTab === 'items' ? (
+        <CharacterItemsSection className="flex content-start flex-grow flex-wrap h-full gap-2 p-2 border-slate-700 overflow-y-auto" />
+      ) : (
+        <CharacterMaterialsSection className="flex content-start flex-grow flex-wrap h-full gap-2 p-2 border-slate-700 overflow-y-auto" />
+      )}
+    </div>
+  )
+}
+
+const CharacterItemsSection = ({ className }: { className?: string }) => {
   const [player, setPlayer] = useAtom(playerAtom)
 
   if (player) return (
@@ -178,6 +203,20 @@ export const CharacterItemsSection = ({ className }: { className?: string }) => 
         gold: player.gold + 500
       })}>Add 500 gold</button>
       <button onClick={() => setPlayer(dummyPlayer)}>Reset player</button>
+    </section>
+  )
+}
+
+const CharacterMaterialsSection = ({ className }: { className?: string }) => {
+  const [player] = useAtom(playerAtom)
+
+  if (player) return (
+    <section className={`${className}`}>
+      {player.materials.length ? player.materials.map((material, index) => (
+        <p key={index}>{material.material.name}: {material.quantity}</p>
+      )) : (
+        <p>You currently have no materials to browse</p>
+      )}
     </section>
   )
 }

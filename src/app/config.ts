@@ -20,7 +20,7 @@ export const config = {
   },
 
   // Items shown in shop stock
-  itemsInShop: 9,
+  itemsInShop: 6,
 
   // Price to refresh the shop
   // formula: level * multiplier
