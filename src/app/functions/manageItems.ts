@@ -1,4 +1,4 @@
-import { Items, Material, Player, Shop } from "../types";
+import { CharacterShop, Items, Material, Player, Shops } from "../types";
 
 type PlayerItems = {
   item: Items,
@@ -44,21 +44,50 @@ export const removeItem = (removedItem: Items, currentItems: PlayerItems): Playe
   return updatedItems
 }
 
-export const removeShopItem = (removedItem: Items, currentShop: Shop): Shop => {
-  const { lastRefresh, items } = currentShop
-  const updatedShop = [...items]
+export const removeShopItem = (removedItem: Items, currentShop: CharacterShop, shop: Shops): CharacterShop => {
 
-  const removedItemIndex = updatedShop.findIndex((entry) => entry !== null && entry.id === removedItem.id)
+  switch (shop) {
+    case 'blacksmith': {
+      const { lastRefresh, items } = currentShop.blacksmith
+      const updatedShop = [...items]
 
-  if (removedItemIndex !== -1) {
-    updatedShop[removedItemIndex] = null
-  } else {
-    throw new Error('Cannot find item with given id.')
-  }
+      const removedItemIndex = updatedShop.findIndex((entry) => entry !== null && entry.id === removedItem.id)
 
-  return {
-    lastRefresh,
-    items: updatedShop
+      if (removedItemIndex !== -1) {
+        updatedShop[removedItemIndex] = null
+      } else {
+        throw new Error('Cannot find item with given id.')
+      }
+
+      return {
+        blacksmith: {
+          items: updatedShop,
+          lastRefresh
+        },
+        alchemist: currentShop.alchemist
+      }
+    }
+
+    case 'alchemist': {
+      const { lastRefresh, items } = currentShop.alchemist
+      const updatedShop = [...items]
+
+      const removedItemIndex = updatedShop.findIndex((entry) => entry !== null && entry.id === removedItem.id)
+
+      if (removedItemIndex !== -1) {
+        updatedShop[removedItemIndex] = null
+      } else {
+        throw new Error('Cannot find item with given id.')
+      }
+
+      return {
+        alchemist: {
+          items: updatedShop,
+          lastRefresh
+        },
+        blacksmith: currentShop.blacksmith
+      }
+    }
   }
 }
 

@@ -19,13 +19,20 @@ export type Player = {
     quantity: number,
   }[],
   gold: number,
-  shop: Shop
+  shop: CharacterShop
 }
 
-export type Shop = {
+export type SingleShop = {
   lastRefresh: string | null,
   items: (Items | null)[]
 }
+
+export type CharacterShop = {
+  blacksmith: SingleShop,
+  alchemist: SingleShop
+}
+
+export type Shops = 'blacksmith' | 'alchemist'
 
 export type CombatInformation = {
   name: string,
@@ -121,11 +128,11 @@ export type Jewelery = {
 }
 
 export type Potion = {
-  id: number,
+  id: string,
   name: string,
   description: string,
   enchancing: {
-    attribute: string,
+    attribute: keyof Attributes,
     value: number
   }
   image: string,

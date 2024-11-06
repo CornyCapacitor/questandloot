@@ -2,10 +2,6 @@ import { item_list } from "../db/itemList"
 import { Items, Profession } from "../types"
 import { generateRandomEquipment } from "./generateEquipment"
 
-// 
-// NEED TO IMPLEMENT RANDOM POTION GENERATION DUE TO THEIR NEED TO MATCH LEVEL INCREASED PRICES
-// 
-
 export const generateLoot = (loot: number[] | null, profession: Profession, level: number): Items[] => {
   if (!loot) return []
 

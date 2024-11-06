@@ -130,7 +130,7 @@ const calculateItemQuantity = (chance: number): number => {
 }
 
 export const calculateQuality = (): Quality => {
-  const roll = Math.random() * 100
+  const roll = random(1, 100)
 
   if (roll > config.qualityCalculation.epic) {
     return 'epic'

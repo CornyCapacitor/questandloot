@@ -171,7 +171,7 @@ const CombatPage = () => {
                 <h1 className="flex gap-1 justify-center">Exp: {experience} <Image width={20} height={20} src="/experience.svg" alt="Experience" /></h1>
                 <div className="flex gap-2 w-full justify-center text-start flex-wrap">
                   {loot.map((item, index) => (
-                    <ItemFrame key={index} inShop={false} itemData={item} isClickable={false} isEquipped={false} width={100} height={100} />
+                    <ItemFrame key={index} itemData={item} isClickable={false} isEquipped={false} width={100} height={100} />
                   ))}
                 </div>
               </div>

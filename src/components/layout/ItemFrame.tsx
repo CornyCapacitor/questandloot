@@ -1,14 +1,14 @@
 import { isArmor, isJewelery, isMaterial, isPotion, isWeapon } from '@/app/functions/itemCheckers'
 import { addGold, addItem, removeGold, removeItem, removeShopItem } from '@/app/functions/manageItems'
 import { playerAtom } from '@/app/state/atoms'
-import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Potion, Weapon } from '@/app/types'
+import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Potion, Shops, Weapon } from '@/app/types'
 import { useAtom } from 'jotai'
 import Image from 'next/image'
 import { useRef } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
-const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, inShop: boolean, width: number, height: number }) => {
+const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, shop?: Shops, width: number, height: number }) => {
   const [player, setPlayer] = useAtom(playerAtom)
   const itemFrameRef = useRef<HTMLDivElement | null>(null)
 
@@ -69,7 +69,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }:
     return unequippedItem
   }
 
-  const handleBuyItem = (itemData: Items) => {
+  const handleBuyItem = (itemData: Items, shop: Shops) => {
     if (!player) return
 
     const buyPrice = itemData.sellPrice * 4
@@ -86,7 +86,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }:
         ...prevPlayer,
         items: addItem(itemData, prevPlayer.items),
         gold: removeGold(buyPrice, prevPlayer.gold),
-        shop: removeShopItem(itemData, prevPlayer.shop)
+        shop: removeShopItem(itemData, prevPlayer.shop, shop)
       }
     })
   }
@@ -106,11 +106,11 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }:
     })
   }
 
-  const PopoverComponent = ({ inShop, itemData, isEquipped }: { inShop: boolean, itemData: Items, isEquipped: boolean }) => {
-    return inShop ? (
+  const PopoverComponent = ({ itemData, isEquipped, shop }: { itemData: Items, isEquipped: boolean, shop?: Shops }) => {
+    return shop ? (
       // Item in shop active tooltip
       <div className="min-w-[100px]">
-        <button onClick={() => handleBuyItem(itemData)}>Buy</button>
+        <button onClick={() => handleBuyItem(itemData, shop)}>Buy</button>
       </div>
       // Item equipped active tooltip
     ) : isEquipped && hasSlot(itemData) ? (
@@ -137,7 +137,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }:
                   <Image src={`/placeholderItem.svg`} width={width} height={height} alt={itemData.name} className={`border ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} />
                 </PopoverTrigger>
                 <PopoverContent>
-                  <PopoverComponent inShop={inShop} itemData={itemData} isEquipped={isEquipped} />
+                  <PopoverComponent shop={shop} itemData={itemData} isEquipped={isEquipped} />
                 </PopoverContent>
               </Popover>
             ) : (
@@ -146,12 +146,12 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }:
           </TooltipTrigger>
           <TooltipContent>
             {isArmor(itemData) ? (
-              <ArmorDescription item={itemData} inShop={inShop} />
+              <ArmorDescription item={itemData} shop={shop} />
             ) : isWeapon(itemData) ? (
-              <WeaponDescription item={itemData} inShop={inShop} />
+              <WeaponDescription item={itemData} shop={shop} />
             ) : isJewelery(itemData) ? (
-              <JeweleryDescription item={itemData} inShop={inShop} />
-            ) : isPotion(itemData) && <PotionDescription item={itemData} inShop={inShop} />}
+              <JeweleryDescription item={itemData} shop={shop} />
+            ) : isPotion(itemData) && <PotionDescription item={itemData} shop={shop} />}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -161,14 +161,14 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, inShop, width, height }:
 
 export default ItemFrame
 
-const PotionDescription = ({ item, inShop }: { item: Potion, inShop: boolean }) => {
+const PotionDescription = ({ item, shop }: { item: Potion, shop?: Shops }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
       <h2 className="text-gray-300 text-sm text-wrap max-w-[350px]">{item.description}</h2>
       <h2 className="text-wrap">Increases {item.enchancing.attribute} by {item.enchancing.value}% for 24h</h2>
       <div className="flex gap-1">
-        {inShop ? (
+        {shop ? (
           <>
             <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
           </>
@@ -180,7 +180,7 @@ const PotionDescription = ({ item, inShop }: { item: Potion, inShop: boolean }) 
   )
 }
 
-const WeaponDescription = ({ item, inShop }: { item: Weapon, inShop: boolean }) => {
+const WeaponDescription = ({ item, shop }: { item: Weapon, shop?: Shops }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
@@ -205,7 +205,7 @@ const WeaponDescription = ({ item, inShop }: { item: Weapon, inShop: boolean }) 
         )}
       </div>
       <div className="flex gap-1">
-        {inShop ? (
+        {shop ? (
           <>
             <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
           </>
@@ -217,7 +217,7 @@ const WeaponDescription = ({ item, inShop }: { item: Weapon, inShop: boolean }) 
   )
 }
 
-const ArmorDescription = ({ item, inShop }: { item: Armor, inShop: boolean }) => {
+const ArmorDescription = ({ item, shop }: { item: Armor, shop?: Shops }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
@@ -242,7 +242,7 @@ const ArmorDescription = ({ item, inShop }: { item: Armor, inShop: boolean }) =>
         )}
       </div>
       <div className="flex gap-1">
-        {inShop ? (
+        {shop ? (
           <>
             <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
           </>
@@ -254,7 +254,7 @@ const ArmorDescription = ({ item, inShop }: { item: Armor, inShop: boolean }) =>
   )
 }
 
-const JeweleryDescription = ({ item, inShop }: { item: Jewelery, inShop: boolean }) => {
+const JeweleryDescription = ({ item, shop }: { item: Jewelery, shop?: Shops }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
@@ -278,7 +278,7 @@ const JeweleryDescription = ({ item, inShop }: { item: Jewelery, inShop: boolean
         )}
       </div>
       <div className="flex gap-1">
-        {inShop ? (
+        {shop ? (
           <>
             <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
           </>

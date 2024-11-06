@@ -168,9 +168,27 @@ export const config = {
     min: 30,
     max: 33,
     divider: 0.10
-  }
+  },
 
   // 
-  // Loot static variables
+  // Potion static variables
   // 
+
+  // Chances and strength of each potion quality
+  potionStrength: {
+    epic: {
+      chance: 95.0,
+      quality: 'epic' as Quality,
+      strength: 25
+    },
+    rare: {
+      chance: 80.0,
+      quality: 'rare' as Quality,
+      strength: 15
+    },
+    uncommon: {
+      quality: 'uncommon' as Quality,
+      strength: 10
+    }
+  }
 }

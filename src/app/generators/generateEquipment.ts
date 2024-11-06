@@ -48,7 +48,7 @@ const randomizeWeaponFamily = (profession: Profession): WeaponFamily => {
   return array[random(0, array.length - 1)]
 }
 
-const randomizePrice = (level: number) => {
+export const randomizePrice = (level: number) => {
   return random(Math.floor(config.sellPrice.min * level), Math.floor(config.sellPrice.max * level))
 }
 
@@ -163,21 +163,33 @@ const generateJewelery = (level: number, quality: Quality, slot: JewelerySlot): 
   }
 }
 
-const randomizeItemType = (profession: Profession): string => {
-  const genericDrop = ['weapon', 'head', 'chest', 'hands', 'legs', 'feet', 'neck', 'ring']
+const randomizeItemType = (profession: Profession, storeType?: 'blacksmith' | 'alchemist'): string => {
+  switch (storeType) {
+    case 'blacksmith': {
+      const blacksmithStore: ('weapon' | 'head' | 'chest' | 'hands' | 'legs' | 'feet' | 'shield')[] = ['weapon', 'head', 'chest', 'hands', 'legs', 'feet'];
 
-  const availableItems: { [key in Profession]: string[] } = {
-    'warrior': [...genericDrop, 'shield'],
-    'hunter': genericDrop,
-    'mage': genericDrop
+      if (profession === 'warrior') blacksmithStore.push('shield')
+
+      return blacksmithStore[random(0, blacksmithStore.length - 1)];
+    }
+
+    case 'alchemist': {
+      const alchemistStore = ['neck', 'ring'];
+      return alchemistStore[random(0, alchemistStore.length - 1)];
+    }
+
+    default: {
+      const genericDrop = ['weapon', 'head', 'chest', 'hands', 'legs', 'feet', 'neck', 'ring'];
+
+      if (profession === 'warrior') genericDrop.push('shield')
+
+      return genericDrop[random(0, genericDrop.length - 1)];
+    }
   }
+};
 
-  const array = availableItems[profession]
-  return array[random(0, array.length - 1)]
-}
-
-export const generateRandomEquipment = (level: number, profession: Profession, quality: Quality): Weapon | Shield | Armor | Jewelery => {
-  const slot = randomizeItemType(profession)
+export const generateRandomEquipment = (level: number, profession: Profession, quality: Quality, storeType?: 'blacksmith' | 'alchemist'): Weapon | Shield | Armor | Jewelery => {
+  const slot = randomizeItemType(profession, storeType)
 
   if (slot === 'weapon') {
     const weapon = generateWeapon(level, profession, quality)

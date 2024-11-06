@@ -56,8 +56,14 @@ export const dummyPlayer: Player = {
   materials: [],
   gold: 0,
   shop: {
-    lastRefresh: null,
-    items: []
+    blacksmith: {
+      lastRefresh: null,
+      items: []
+    },
+    alchemist: {
+      lastRefresh: null,
+      items: []
+    }
   }
 };
 
