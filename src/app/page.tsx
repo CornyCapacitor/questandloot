@@ -18,7 +18,6 @@ export default function Home() {
 
   const handleLogin = async (username: string, password: string) => {
     try {
-      // Wysłanie POST do serwera REST
       const response = await fetch('http://localhost:3333/login', {
         method: 'POST',
         headers: {
@@ -27,18 +26,15 @@ export default function Home() {
         body: JSON.stringify({ username, password }),
       });
 
-      // Sprawdzanie odpowiedzi serwera
       if (!response.ok) {
         throw new Error('Invalid credentials');
       }
 
-      // Jeśli odpowiedź jest OK, pobieramy token
       const data = await response.json();
       const token = data.token;
 
       console.log(token)
 
-      // Zwracamy token
       return token;
     } catch (error) {
       console.error('Error during login:', error);
