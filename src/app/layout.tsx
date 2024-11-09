@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SocketProvider } from "./SocketContext";
 
 export const metadata: Metadata = {
   title: "Quest & Loot",
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased dark w-full h-screen max-h-screen max-w-screen">
-        {children}
+        <SocketProvider>
+          {children}
+        </SocketProvider>
       </body>
     </html >
   );

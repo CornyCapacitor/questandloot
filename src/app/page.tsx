@@ -5,15 +5,16 @@ import { Input } from "@/components/ui/input";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { io, Socket } from 'socket.io-client';
+import { useEffect, useState } from "react";
+import { useSocket } from "./SocketContext";
 import { playerAtom } from "./state/atoms";
 
 export default function Home() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [, setPlayer] = useAtom(playerAtom)
-  const [socket, setSocket] = useState<Socket | null>(null)
+  const [player] = useAtom(playerAtom)
+  const { socket, connectSocket } = useSocket()
+
   const router = useRouter()
 
   const handleLogin = async (username: string, password: string) => {
@@ -43,19 +44,31 @@ export default function Home() {
   }
 
   const handleConnect = async (username: string, password: string) => {
-    console.log()
     const token = await handleLogin(username, password)
 
-    const ws = io('http://localhost:3334', {
-      query: { token }
-    })
+    if (!token) {
+      console.error('No token provided, cannot connect')
+      return
+    }
 
-    setSocket(ws)
-
-    ws.on('connect', () => {
-      console.log('Connected to websocket server:', ws.id)
-    })
+    if (!socket) {
+      connectSocket(token)
+    }
   }
+
+  useEffect(() => {
+    if (socket) {
+      console.log('Socket connected.')
+    }
+    if (player) {
+      console.log('Player set.')
+    }
+
+    if (socket && player) {
+      console.log('Congrats! You can play now!')
+      router.push('/game')
+    }
+  }, [socket, player, router])
 
   return (
     <div className="flex items-center justify-start h-screen">

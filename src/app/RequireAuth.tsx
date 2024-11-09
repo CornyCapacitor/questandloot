@@ -3,10 +3,12 @@ import { Button } from '@/components/ui/button'
 import { useAtom } from 'jotai'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { useSocket } from './SocketContext'
 import { playerAtom } from './state/atoms'
 
 const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   const [player] = useAtom(playerAtom)
+  const { socket } = useSocket()
   const [showMessage, setShowMessage] = useState(false)
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const RequireAuth = ({ children }: { children: React.ReactNode }) => {
     }
   }, [player])
 
-  if (!player) {
+  if (!player || !socket) {
     return (
       <div className="w-full h-full flex gap-2 flex-col items-center justify-center">
         <IconSpinner icon="/assets/portraits/gnome.png" size={150} />
