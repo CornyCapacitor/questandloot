@@ -1,3 +1,4 @@
+import { useSocket } from '@/app/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
 import { Player } from '@/app/types'
 import { useAtom } from 'jotai'
@@ -6,7 +7,8 @@ import { Progress } from '../ui/progress'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
 export const ExperienceBar = () => {
-  const [player, setPlayer] = useAtom<Player | null>(playerAtom)
+  const [player] = useAtom<Player | null>(playerAtom)
+  const { updatePlayer } = useSocket()
   const [experienceRequired, setExperienceRequired] = useState(0)
   const [experiencePercentage, setExperiencePercentage] = useState(0)
 
@@ -25,19 +27,15 @@ export const ExperienceBar = () => {
   };
 
   const handleLevelUp = () => {
-    setPlayer((prevPlayer) => {
-      if (!prevPlayer) return null;
+    if (!player) return
 
-      const { level, remainingExperience } = calculateLevelAndExperience(prevPlayer.experience, prevPlayer.level);
+    const { level, remainingExperience } = calculateLevelAndExperience(player.experience, player.level)
 
-      const updatedPlayer = {
-        ...prevPlayer,
-        level,
-        experience: remainingExperience,
-      };
-
-      return updatedPlayer;
-    });
+    updatePlayer({
+      ...player,
+      level,
+      experience: remainingExperience
+    })
   };
 
   useEffect(() => {
@@ -52,7 +50,7 @@ export const ExperienceBar = () => {
     if (player.experience >= newExperienceRequired) {
       handleLevelUp();
     }
-  }, [player, setPlayer]);
+  }, [player]);
 
   if (!player) return (
     <div>Experience bar</div>

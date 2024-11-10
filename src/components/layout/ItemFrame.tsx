@@ -1,5 +1,6 @@
 import { isArmor, isJewelery, isMaterial, isPotion, isWeapon } from '@/app/functions/itemCheckers'
 import { addGold, addItem, removeGold, removeItem, removeShopItem } from '@/app/functions/manageItems'
+import { useSocket } from '@/app/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
 import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Potion, Shops, Weapon } from '@/app/types'
 import { useAtom } from 'jotai'
@@ -9,7 +10,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
 const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, shop?: Shops, width: number, height: number }) => {
-  const [player, setPlayer] = useAtom(playerAtom)
+  const [player] = useAtom(playerAtom)
+  const { updatePlayer } = useSocket()
   const itemFrameRef = useRef<HTMLDivElement | null>(null)
 
   // Slot typeguard
@@ -30,20 +32,16 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
     handleUnequipItem(slot)
 
     // Equip new item if slot is free
-    setPlayer((prevPlayer) => {
-      if (!prevPlayer) return null;
+    updatePlayer({
+      ...player,
+      equipment: {
+        ...player.equipment,
+        [slot]: item
+      },
 
-      return {
-        ...prevPlayer,
-        equipment: {
-          ...prevPlayer.equipment,
-          [slot]: item,
-        },
-
-        // Remove item from player's bag
-        items: removeItem(item, prevPlayer.items),
-      };
-    });
+      // Remove item from player's bag
+      items: removeItem(item, player.items)
+    })
 
     return
   }
@@ -56,13 +54,14 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
     if (!unequippedItem) return null
 
     // Remove item from the character
-    setPlayer({
+    updatePlayer({
       ...player,
       equipment: {
         ...player.equipment,
         [slot]: null
       },
 
+      // Add unequipped item to character bag
       items: addItem(unequippedItem, player.items)
     })
 
@@ -79,15 +78,11 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
       return
     }
 
-    setPlayer((prevPlayer) => {
-      if (!prevPlayer) return null
-
-      return {
-        ...prevPlayer,
-        items: addItem(itemData, prevPlayer.items),
-        gold: removeGold(buyPrice, prevPlayer.gold),
-        shop: removeShopItem(itemData, prevPlayer.shop, shop)
-      }
+    updatePlayer({
+      ...player,
+      items: addItem(itemData, player.items),
+      gold: removeGold(buyPrice, player.gold),
+      shop: removeShopItem(itemData, player.shop, shop)
     })
   }
 
@@ -95,14 +90,11 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
     if (!player) return
 
     console.log(`Selling item: ${itemData.name} for ${itemData.sellPrice}`)
-    setPlayer((prevPlayer) => {
-      if (!prevPlayer) return null
 
-      return {
-        ...prevPlayer,
-        items: removeItem(itemData, prevPlayer.items),
-        gold: addGold(itemData.sellPrice, prevPlayer.gold)
-      }
+    updatePlayer({
+      ...player,
+      items: removeItem(itemData, player.items),
+      gold: addGold(itemData.sellPrice, player.gold)
     })
   }
 

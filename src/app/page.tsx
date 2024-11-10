@@ -60,6 +60,7 @@ export default function Home() {
     if (socket?.connected) {
       console.log('Socket connected.')
     }
+
     if (player) {
       console.log('Player set.')
     }
@@ -82,6 +83,8 @@ export default function Home() {
         <Button className="bg-blue-500 hover:bg-blue-600 text-white" onClick={() => handleConnect(username, password)}>Login</Button>
         <span>No account? Create one right now!</span>
         <Button className="bg-blue-500 hover:bg-blue-600 text-white">Signup</Button>
+        <button onClick={() => console.log(player)}>Clg player</button>
+        <button onClick={() => console.log(socket)}>Clg socket</button>
       </section>
       <section className="h-full p-2 flex flex-grow items-center justify-center">
         <Image src="/logo_enlarged.png" width={700} height={700} alt="Quest & Loot logo" />

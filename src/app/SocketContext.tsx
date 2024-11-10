@@ -9,6 +9,7 @@ import { Player } from './types';
 
 type SocketContextType = {
   socket: Socket | null,
+  updatePlayer: (playerData: Player) => void,
   connectSocket: (token: string) => void,
   disconnectSocket: () => void
 }
@@ -38,14 +39,23 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     ws.on('connect', () => {
       console.log('Connected to WebSocket with id:', ws.id);
-      // Test func
-      setPlayer(dummyPlayer)
 
-      ws.on('playerUpdate', (data: Player) => {
+      ws.on('sendPlayerId', (data) => {
+        console.log('Id:', data)
+        setPlayer(dummyPlayer)
+      })
+
+      ws.on('updatePlayer', (data: Player) => {
         setPlayer(data)
       })
     });
   };
+
+  const updatePlayer = (playerData: Player) => {
+    if (!socket) return
+
+    socket.emit('updatePlayer', playerData)
+  }
 
   const disconnectSocket = () => {
     socket?.disconnect()
@@ -54,7 +64,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <SocketContext.Provider value={{ socket, disconnectSocket, connectSocket }}>
+    <SocketContext.Provider value={{ socket, updatePlayer, disconnectSocket, connectSocket }}>
       {children}
     </SocketContext.Provider>
   );

@@ -3,7 +3,6 @@
 import { dummyPlayer } from "@/app/dummies"
 import { useSocket } from "@/app/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
-import { Player } from "@/app/types"
 import CharacterStat from "@/components/layout/CharacterStat"
 import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import ItemFrame from "@/components/layout/ItemFrame"
@@ -11,7 +10,6 @@ import { TabButton } from "@/components/layout/TabButton"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useState } from "react"
-import { Socket } from "socket.io-client"
 
 export const CharacterEquipmentSection = ({ className }: { className?: string }) => {
   const [player] = useAtom(playerAtom)
@@ -182,35 +180,28 @@ export const CharacterTabs = () => {
 }
 
 const CharacterItemsSection = ({ className }: { className?: string }) => {
-  const [player, setPlayer] = useAtom(playerAtom)
-  const { socket } = useSocket()
+  const [player] = useAtom(playerAtom)
+  const { socket, updatePlayer } = useSocket()
 
-  const messageSocket = (socket: Socket | null, player: Player) => {
-    if (!socket || !player) return
-
-    socket.emit('playerUpdate', player)
-  }
-
-  if (player) return (
+  if (player && socket) return (
     <section className={`${className}`}>
       {player.items.map((item, index) => (
         <ItemFrame key={index} itemData={item.item} isClickable={true} isEquipped={false} width={128} height={128} />
       ))}
       <button onClick={() => console.log(player)}>Console.log player</button>
-      <button onClick={() => setPlayer({
+      <button onClick={() => updatePlayer({
         ...player,
-        experience: player.experience + 100
+        experience: player.experience += 100
       })}>Add 100 experience</button>
-      <button onClick={() => setPlayer({
+      <button onClick={() => updatePlayer({
         ...player,
-        experience: player.experience + 250
+        experience: player.experience += 250
       })}>Add 250 experience</button>
-      <button onClick={() => setPlayer({
+      <button onClick={() => updatePlayer({
         ...player,
-        gold: player.gold + 500
+        gold: player.gold += 500
       })}>Add 500 gold</button>
-      <button onClick={() => setPlayer(dummyPlayer)}>Reset player</button>
-      <button onClick={() => messageSocket(socket, player)}>Send player</button>
+      <button onClick={() => updatePlayer(dummyPlayer)}>Reset player</button>
     </section>
   )
 }

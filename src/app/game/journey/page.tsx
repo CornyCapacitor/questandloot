@@ -1,6 +1,7 @@
 'use client'
 
 import { config } from "@/app/config"
+import { useSocket } from "@/app/SocketContext"
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
 import { Journey, Player } from "@/app/types"
 import { useAtom } from "jotai"
@@ -9,7 +10,8 @@ import { useEffect, useState } from "react"
 import { JourneyCard } from "./JourneyComponents"
 
 const JourneyPage = () => {
-  const [player, setPlayer] = useAtom<Player | null>(playerAtom)
+  const [player] = useAtom<Player | null>(playerAtom)
+  const { updatePlayer } = useSocket()
   const [, setIsCombatReady] = useAtom(combatReadyAtom)
   const [remainingTime, setRemainingTime] = useState<number | null>(null)
   const journeys: { name: string, image: string }[] = [
@@ -74,7 +76,7 @@ const JourneyPage = () => {
     return () => {
       if (timer) clearInterval(timer);
     }
-  }, [player, setPlayer, router, setIsCombatReady]);
+  }, [player, router, setIsCombatReady]);
 
   const startJourney = (location: string, time: number) => {
     if (!player) return
@@ -121,7 +123,7 @@ const JourneyPage = () => {
     }
 
     alert('Activating journey, sending date to database...')
-    setPlayer({
+    updatePlayer({
       ...player,
       activeJourney: journey
     })

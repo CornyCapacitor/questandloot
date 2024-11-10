@@ -3,6 +3,7 @@
 import { config } from "@/app/config"
 import { generateRandomEquipment } from "@/app/generators/generateEquipment"
 import { generateRandomPotion } from "@/app/generators/generatePotion"
+import { useSocket } from "@/app/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
 import { Shops } from "@/app/types"
 import ItemFrame from "@/components/layout/ItemFrame"
@@ -12,7 +13,8 @@ import { useEffect } from "react"
 import { calculateQuality } from "../journey/combat/combatCalculations"
 
 const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
-  const [player, setPlayer] = useAtom(playerAtom)
+  const [player] = useAtom(playerAtom)
+  const { updatePlayer } = useSocket()
 
   // Refresh shop checker
   const shouldRefreshShop = (viewedShop: Shops): boolean => {
@@ -81,17 +83,13 @@ const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
             items: newItems
           }
 
-          setPlayer((prevPlayer) => {
-            if (!prevPlayer) return null
-
-            return {
-              ...prevPlayer,
-              shop: {
-                alchemist: newShop,
-                blacksmith: prevPlayer.shop.blacksmith
-              },
-              gold: payment ? (prevPlayer.gold - payment) : prevPlayer.gold
-            }
+          updatePlayer({
+            ...player,
+            shop: {
+              alchemist: newShop,
+              blacksmith: player.shop.blacksmith
+            },
+            gold: payment ? (player.gold - payment) : player.gold
           })
         }
 
@@ -114,17 +112,13 @@ const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
             items: newItems
           }
 
-          setPlayer((prevPlayer) => {
-            if (!prevPlayer) return null
-
-            return {
-              ...prevPlayer,
-              shop: {
-                alchemist: prevPlayer.shop.alchemist,
-                blacksmith: newShop
-              },
-              gold: payment ? (prevPlayer.gold - payment) : prevPlayer.gold
-            }
+          updatePlayer({
+            ...player,
+            shop: {
+              alchemist: player.shop.alchemist,
+              blacksmith: newShop
+            },
+            gold: payment ? (player.gold - payment) : player.gold
           })
         }
 
