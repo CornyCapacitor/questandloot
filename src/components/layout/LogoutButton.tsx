@@ -1,3 +1,4 @@
+import { useSocket } from '@/app/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
 import { useAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
@@ -5,11 +6,12 @@ import GameButton from './GameButton'
 
 const LogoutButton = () => {
   const [, setPlayer] = useAtom(playerAtom)
+  const { disconnectSocket } = useSocket()
 
   const router = useRouter()
 
   const handleLogout = () => {
-    setPlayer(null)
+    disconnectSocket()
     router.push('/')
   }
 

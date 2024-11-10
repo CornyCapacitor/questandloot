@@ -9,8 +9,8 @@ import { Player } from './types';
 
 type SocketContextType = {
   socket: Socket | null,
-  // setSocket: React.Dispatch<React.SetStateAction<Socket | null>>,
-  connectSocket: (token: string) => void
+  connectSocket: (token: string) => void,
+  disconnectSocket: () => void
 }
 
 const SocketContext = createContext<SocketContextType | null>(null);
@@ -30,6 +30,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const [, setPlayer] = useAtom<Player | null>(playerAtom)
 
   const connectSocket = (token: string) => {
+    disconnectSocket()
+
     const ws = io('http://localhost:3334', { query: { token } });
 
     setSocket(ws);
@@ -39,15 +41,20 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       // Test func
       setPlayer(dummyPlayer)
 
-      ws.on('receiveUpdate', (data: Player) => {
+      ws.on('playerUpdate', (data: Player) => {
         setPlayer(data)
       })
     });
-
   };
 
+  const disconnectSocket = () => {
+    socket?.disconnect()
+    setSocket(null)
+    setPlayer(null)
+  }
+
   return (
-    <SocketContext.Provider value={{ socket, connectSocket }}>
+    <SocketContext.Provider value={{ socket, disconnectSocket, connectSocket }}>
       {children}
     </SocketContext.Provider>
   );

@@ -57,14 +57,14 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (socket) {
+    if (socket?.connected) {
       console.log('Socket connected.')
     }
     if (player) {
       console.log('Player set.')
     }
 
-    if (socket && player) {
+    if (socket?.connected && player) {
       console.log('Congrats! You can play now!')
       router.push('/game')
     }

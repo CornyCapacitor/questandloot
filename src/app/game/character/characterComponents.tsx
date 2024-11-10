@@ -1,7 +1,9 @@
 'use client'
 
 import { dummyPlayer } from "@/app/dummies"
+import { useSocket } from "@/app/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
+import { Player } from "@/app/types"
 import CharacterStat from "@/components/layout/CharacterStat"
 import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import ItemFrame from "@/components/layout/ItemFrame"
@@ -9,6 +11,7 @@ import { TabButton } from "@/components/layout/TabButton"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useState } from "react"
+import { Socket } from "socket.io-client"
 
 export const CharacterEquipmentSection = ({ className }: { className?: string }) => {
   const [player] = useAtom(playerAtom)
@@ -180,6 +183,13 @@ export const CharacterTabs = () => {
 
 const CharacterItemsSection = ({ className }: { className?: string }) => {
   const [player, setPlayer] = useAtom(playerAtom)
+  const { socket } = useSocket()
+
+  const messageSocket = (socket: Socket | null, player: Player) => {
+    if (!socket || !player) return
+
+    socket.emit('playerUpdate', player)
+  }
 
   if (player) return (
     <section className={`${className}`}>
@@ -200,6 +210,7 @@ const CharacterItemsSection = ({ className }: { className?: string }) => {
         gold: player.gold + 500
       })}>Add 500 gold</button>
       <button onClick={() => setPlayer(dummyPlayer)}>Reset player</button>
+      <button onClick={() => messageSocket(socket, player)}>Send player</button>
     </section>
   )
 }
