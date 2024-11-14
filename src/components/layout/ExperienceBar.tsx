@@ -1,4 +1,4 @@
-import { useSocket } from '@/app/SocketContext'
+import { useSocket } from '@/app/middleware/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
 import { Player } from '@/app/types'
 import { useAtom } from 'jotai'
@@ -76,6 +76,5 @@ export const ExperienceBar = () => {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-
   )
 }

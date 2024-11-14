@@ -3,9 +3,8 @@
 import { useAtom } from 'jotai';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { dummyPlayer } from './dummies';
-import { playerAtom } from './state/atoms';
-import { Player } from './types';
+import { playerAtom } from '../state/atoms';
+import { Player } from '../types';
 
 type SocketContextType = {
   socket: Socket | null,
@@ -33,34 +32,38 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const connectSocket = (token: string) => {
     disconnectSocket()
 
-    const ws = io('http://localhost:3334', { query: { token } });
+    const ws = io('ws://localhost:3334', { query: { token } });
 
     setSocket(ws);
 
     ws.on('connect', () => {
       console.log('Connected to WebSocket with id:', ws.id);
 
-      ws.on('sendPlayerId', (data) => {
-        console.log('Id:', data)
-        setPlayer(dummyPlayer)
+      ws.emit('init')
+
+      ws.on('disconnect', () => {
+        setPlayer(null)
       })
 
-      ws.on('updatePlayer', (data: Player) => {
-        setPlayer(data)
+      ws.on('success', (data: Player) => {
+        setPlayer(data as Player)
+      })
+
+      ws.on('error', (data) => {
+        alert(data)
       })
     });
   };
 
-  const updatePlayer = (playerData: Player) => {
+  const updatePlayer = (data: Player) => {
     if (!socket) return
 
-    socket.emit('updatePlayer', playerData)
+    socket.emit('update', data)
   }
 
   const disconnectSocket = () => {
     socket?.disconnect()
     setSocket(null)
-    setPlayer(null)
   }
 
   return (

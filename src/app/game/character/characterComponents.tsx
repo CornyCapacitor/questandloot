@@ -1,7 +1,6 @@
 'use client'
 
-import { dummyPlayer } from "@/app/dummies"
-import { useSocket } from "@/app/SocketContext"
+import { useSocket } from "@/app/middleware/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
 import CharacterStat from "@/components/layout/CharacterStat"
 import { ExperienceBar } from "@/components/layout/ExperienceBar"
@@ -181,27 +180,14 @@ export const CharacterTabs = () => {
 
 const CharacterItemsSection = ({ className }: { className?: string }) => {
   const [player] = useAtom(playerAtom)
-  const { socket, updatePlayer } = useSocket()
+  const { socket } = useSocket()
 
   if (player && socket) return (
     <section className={`${className}`}>
-      {player.items.map((item, index) => (
+      {player.inventory.map((item, index) => (
         <ItemFrame key={index} itemData={item.item} isClickable={true} isEquipped={false} width={128} height={128} />
       ))}
       <button onClick={() => console.log(player)}>Console.log player</button>
-      <button onClick={() => updatePlayer({
-        ...player,
-        experience: player.experience += 100
-      })}>Add 100 experience</button>
-      <button onClick={() => updatePlayer({
-        ...player,
-        experience: player.experience += 250
-      })}>Add 250 experience</button>
-      <button onClick={() => updatePlayer({
-        ...player,
-        gold: player.gold += 500
-      })}>Add 500 gold</button>
-      <button onClick={() => updatePlayer(dummyPlayer)}>Reset player</button>
     </section>
   )
 }

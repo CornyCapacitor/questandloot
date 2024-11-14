@@ -1,16 +1,6 @@
-import { CharacterShop, Items, Material, Player, Shops } from "../types";
+import { CharacterShop, Inventory, Items, Material, Materials, Player, Shops } from "../types";
 
-type PlayerItems = {
-  item: Items,
-  quantity: number
-}[]
-
-type PlayerMaterials = {
-  material: Material,
-  quantity: number
-}[]
-
-export const addItem = (addedItem: Items, currentItems: PlayerItems): PlayerItems => {
+export const addItem = (addedItem: Items, currentItems: Inventory): Inventory => {
   const updatedItems = [...currentItems]
 
   const existingItemIndex = updatedItems.findIndex((entry) => entry.item.id === addedItem.id)
@@ -24,7 +14,7 @@ export const addItem = (addedItem: Items, currentItems: PlayerItems): PlayerItem
   return updatedItems
 }
 
-export const removeItem = (removedItem: Items, currentItems: PlayerItems): PlayerItems => {
+export const removeItem = (removedItem: Items, currentItems: Inventory): Inventory => {
   const updatedItems = [...currentItems]
 
   const removedItemIndex = updatedItems.findIndex((entry) => entry.item.id === removedItem.id)
@@ -91,7 +81,7 @@ export const removeShopItem = (removedItem: Items, currentShop: CharacterShop, s
   }
 }
 
-export const addMaterial = (addedMaterial: Material, currentMaterials: PlayerMaterials): PlayerMaterials => {
+export const addMaterial = (addedMaterial: Material, currentMaterials: Materials): Materials => {
   const updatedMaterials = [...currentMaterials]
 
   const existingMaterialIndex = updatedMaterials.findIndex((entry) => entry.material.id === addedMaterial.id)
@@ -105,7 +95,7 @@ export const addMaterial = (addedMaterial: Material, currentMaterials: PlayerMat
   return updatedMaterials
 }
 
-export const removeMaterial = (removedMaterialId: number, currentMaterials: PlayerMaterials): PlayerMaterials => {
+export const removeMaterial = (removedMaterialId: number, currentMaterials: Materials): Materials => {
   const updatedMaterials = [...currentMaterials]
 
   const removedMaterialIndex = updatedMaterials.findIndex((entry) => entry.material.id === removedMaterialId)
@@ -125,7 +115,7 @@ export const removeMaterial = (removedMaterialId: number, currentMaterials: Play
   return updatedMaterials
 }
 
-export const applyLoot = (loot: Items[], player: Player): { items: PlayerItems, materials: PlayerMaterials, } => {
+export const applyLoot = (loot: Items[], player: Player): { inventory: Inventory, materials: Materials, } => {
   const updatedPlayer = { ...player }
 
   for (let i = 0; i < loot.length; i++) {
@@ -133,12 +123,12 @@ export const applyLoot = (loot: Items[], player: Player): { items: PlayerItems, 
     if (element.type === 'material') {
       updatedPlayer.materials = addMaterial(element, updatedPlayer.materials)
     } else {
-      updatedPlayer.items = addItem(element, updatedPlayer.items)
+      updatedPlayer.inventory = addItem(element, updatedPlayer.inventory)
     }
   }
 
   return {
-    items: updatedPlayer.items,
+    inventory: updatedPlayer.inventory,
     materials: updatedPlayer.materials
   }
 }

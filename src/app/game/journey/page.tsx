@@ -1,7 +1,7 @@
 'use client'
 
 import { config } from "@/app/config"
-import { useSocket } from "@/app/SocketContext"
+import { useSocket } from "@/app/middleware/SocketContext"
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
 import { Journey, Player } from "@/app/types"
 import { useAtom } from "jotai"

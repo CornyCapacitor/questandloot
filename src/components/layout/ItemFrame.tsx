@@ -1,6 +1,6 @@
 import { isArmor, isJewelery, isMaterial, isPotion, isWeapon } from '@/app/functions/itemCheckers'
 import { addGold, addItem, removeGold, removeItem, removeShopItem } from '@/app/functions/manageItems'
-import { useSocket } from '@/app/SocketContext'
+import { useSocket } from '@/app/middleware/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
 import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Potion, Shops, Weapon } from '@/app/types'
 import { useAtom } from 'jotai'
@@ -40,7 +40,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
       },
 
       // Remove item from player's bag
-      items: removeItem(item, player.items)
+      inventory: removeItem(item, player.inventory)
     })
 
     return
@@ -62,7 +62,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
       },
 
       // Add unequipped item to character bag
-      items: addItem(unequippedItem, player.items)
+      inventory: addItem(unequippedItem, player.inventory)
     })
 
     return unequippedItem
@@ -80,7 +80,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
 
     updatePlayer({
       ...player,
-      items: addItem(itemData, player.items),
+      inventory: addItem(itemData, player.inventory),
       gold: removeGold(buyPrice, player.gold),
       shop: removeShopItem(itemData, player.shop, shop)
     })
@@ -93,7 +93,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
 
     updatePlayer({
       ...player,
-      items: removeItem(itemData, player.items),
+      inventory: removeItem(itemData, player.inventory),
       gold: addGold(itemData.sellPrice, player.gold)
     })
   }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { SocketProvider } from "./SocketContext";
+import { SocketProvider } from "./middleware/SocketContext";
 
 export const metadata: Metadata = {
   title: "Quest & Loot",

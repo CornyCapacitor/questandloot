@@ -1,4 +1,3 @@
-import { item_list } from "@/app/db/itemList"
 import { ActivePotion, Attributes, Equipment, Material, Potion } from "@/app/types"
 
 export const calculatePlayerAttributes = (equipment: Equipment, attributes: Attributes, activePotion: ActivePotion): Attributes => {
@@ -22,8 +21,7 @@ export const calculatePlayerAttributes = (equipment: Equipment, attributes: Attr
   }
 
   if (activePotion) {
-    const potionId = activePotion.potionId
-    const potion = item_list[potionId]
+    const { potion } = activePotion
 
     if (!isPotion(potion)) {
       alert('Something went wrong applying a potion buff.')

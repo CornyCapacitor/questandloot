@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSocket } from "./SocketContext";
+import { useSocket } from "./middleware/SocketContext";
 import { playerAtom } from "./state/atoms";
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
 
   const handleLogin = async (username: string, password: string) => {
     try {
-      const response = await fetch('http://localhost:3333/login', {
+      const response = await fetch('http://localhost:3333/api/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,8 +83,6 @@ export default function Home() {
         <Button className="bg-blue-500 hover:bg-blue-600 text-white" onClick={() => handleConnect(username, password)}>Login</Button>
         <span>No account? Create one right now!</span>
         <Button className="bg-blue-500 hover:bg-blue-600 text-white">Signup</Button>
-        <button onClick={() => console.log(player)}>Clg player</button>
-        <button onClick={() => console.log(socket)}>Clg socket</button>
       </section>
       <section className="h-full p-2 flex flex-grow items-center justify-center">
         <Image src="/logo_enlarged.png" width={700} height={700} alt="Quest & Loot logo" />

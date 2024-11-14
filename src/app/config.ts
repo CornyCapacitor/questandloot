@@ -1,4 +1,4 @@
-import { ArmorProficiency, Damage, Profession, Quality } from "./types";
+import { ArmorProficiency, Damage, PotionQuality, Profession, Quality } from "./types";
 
 export const config = {
   // 
@@ -178,16 +178,16 @@ export const config = {
   potionStrength: {
     epic: {
       chance: 95.0,
-      quality: 'epic' as Quality,
+      quality: 'epic' as PotionQuality,
       strength: 25
     },
     rare: {
       chance: 80.0,
-      quality: 'rare' as Quality,
+      quality: 'rare' as PotionQuality,
       strength: 15
     },
     uncommon: {
-      quality: 'uncommon' as Quality,
+      quality: 'uncommon' as PotionQuality,
       strength: 10
     }
   }

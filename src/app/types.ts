@@ -1,62 +1,76 @@
 export type Player = {
-  id: string,
+  _id: string,
+  user_id: string,
   name: string,
   title: string | null,
   profession: Profession,
   level: number,
   experience: number,
   attributes: Attributes,
-  activeJourney: Journey | null,
-  activePotion: ActivePotion | null,
+  activeJourney: Journey,
+  activePotion: ActivePotion,
   equipment: Equipment,
   image: string,
-  items: {
-    item: Items,
-    quantity: number
-  }[],
-  materials: {
-    material: Material,
-    quantity: number,
-  }[],
+  inventory: Inventory,
+  materials: Materials,
   gold: number,
   shop: CharacterShop
 }
 
-export type SingleShop = {
-  lastRefresh: string | null,
-  items: (Items | null)[]
-}
-
-export type CharacterShop = {
-  blacksmith: SingleShop,
-  alchemist: SingleShop
-}
-
-export type Shops = 'blacksmith' | 'alchemist'
-
-export type CombatInformation = {
-  name: string,
-  level: number,
-  profession: "warrior" | "hunter" | "mage",
-  attributes: Attributes,
-  damage: Damage,
-  damageType: DamageType,
-  hp: number,
-  armor: number,
-  classResistances: Resistances,
-  image: string,
-  loot: Loot | null
-}
+// 
+// General types
+// 
 
 export type Profession = "warrior" | "mage" | "hunter"
 
-export type WeaponFamily = "sword" | "axe" | "mace" | "fire" | "frost" | "arcane" | "earth" | "air" | "bow" | "crossbow"
+export type Attributes = {
+  strength: number,
+  agility: number,
+  intellect: number,
+  stamina: number,
+  luck: number,
+}
 
-export type DamageType = WeaponFamily | null
+export type Journey = {
+  location: string,
+  valueMultiplier: number,
+  returnDate: Date
+} | null
 
-export type Items = Weapon | Shield | Jewelery | Armor | Potion | Material
+export type ActivePotion = {
+  potion: Potion,
+  expiringDate: Date
+} | null
+
+// 
+// Equipment & equipment general types
+//
 
 export type Quality = "common" | "uncommon" | "rare" | "epic"
+
+export type Equipment = {
+  weapon: Weapon | null,
+  shield?: Armor | null,
+  head: Armor | null,
+  chest: Armor | null,
+  hands: Armor | null,
+  belt: Armor | null,
+  legs: Armor | null,
+  feet: Armor | null,
+  neck: Armor | null,
+  ring: Armor | null
+}
+
+// 
+// Weapon
+// 
+
+export type WeaponFamily = "sword" | "axe" | "mace" | "fire" | "frost" | "arcane" | "earth" | "air" | "bow" | "crossbow"
+
+export type Damage = {
+  min: number,
+  max: number
+}
 
 export type Weapon = {
   id: string,
@@ -65,17 +79,16 @@ export type Weapon = {
   level: number,
   profession: Profession,
   slot: "weapon",
-  damage: {
-    min: number,
-    max: number
-  },
+  damage: Damage,
   attributes: Attributes,
   image: string,
   quality: Quality,
   type: "weapon",
-  family: string,
+  family: WeaponFamily,
   sellPrice: number
 }
+
+// Armor
 
 export type ArmorProficiency = "heavy" | "medium" | "light"
 
@@ -97,6 +110,8 @@ export type Armor = {
   sellPrice: number
 }
 
+// Shield
+
 export type Shield = {
   id: string,
   name: string,
@@ -111,6 +126,8 @@ export type Shield = {
   type: "shield",
   sellPrice: number
 }
+
+// Jewelery 
 
 export type JewelerySlot = "neck" | "ring"
 
@@ -127,6 +144,14 @@ export type Jewelery = {
   sellPrice: number
 }
 
+// 
+// Other
+// 
+
+export type Items = Weapon | Shield | Jewelery | Armor | Potion | Material
+
+export type PotionQuality = Exclude<Quality, 'common'>
+
 export type Potion = {
   id: string,
   name: string,
@@ -137,9 +162,19 @@ export type Potion = {
   }
   image: string,
   type: "potion",
-  quality: Quality,
+  quality: PotionQuality,
   sellPrice: number
 }
+
+export type Inventory = {
+  item: Items,
+  quantity: number,
+}[]
+
+export type Materials = {
+  material: Material,
+  quantity: number
+}[]
 
 export type Material = {
   id: number,
@@ -151,37 +186,41 @@ export type Material = {
   sellPrice: number,
 }
 
-export type Attributes = {
-  strength: number,
-  agility: number,
-  intellect: number,
-  stamina: number,
-  luck: number,
+// 
+// Shops
+// 
+
+export type Shops = 'blacksmith' | 'alchemist'
+
+export type CharacterShop = {
+  blacksmith: SingleShop,
+  alchemist: SingleShop
 }
 
-export type Equipment = {
-  weapon: Weapon | null,
-  shield?: Armor | null,
-  head: Armor | null,
-  chest: Armor | null,
-  hands: Armor | null,
-  belt: Armor | null,
-  legs: Armor | null,
-  feet: Armor | null,
-  neck: Armor | null,
-  ring: Armor | null
+export type SingleShop = {
+  lastRefresh: string | null,
+  items: (Items | null)[]
 }
 
-export type ActivePotion = {
-  potionId: number,
-  expiringDate: Date
-} | null
+// 
+// Non-player related types
+// 
 
-export type Journey = {
-  location: string,
-  valueMultiplier: number,
-  returnDate: Date
+export type CombatInformation = {
+  name: string,
+  level: number,
+  profession: "warrior" | "hunter" | "mage",
+  attributes: Attributes,
+  damage: Damage,
+  damageType: DamageType,
+  hp: number,
+  armor: number,
+  classResistances: Resistances,
+  image: string,
+  loot: Loot | null
 }
+
+export type DamageType = WeaponFamily | null
 
 export type LogEntry = {
   turn: number,
@@ -223,11 +262,6 @@ export type Monster = {
   classResistances: Resistances,
   image: string,
   loot: Loot
-}
-
-export type Damage = {
-  min: number,
-  max: number
 }
 
 export type Resistances = {

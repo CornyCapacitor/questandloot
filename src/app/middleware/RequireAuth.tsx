@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button'
 import { useAtom } from 'jotai'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { playerAtom } from '../state/atoms'
 import { useSocket } from './SocketContext'
-import { playerAtom } from './state/atoms'
 
 const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   const [player] = useAtom(playerAtom)

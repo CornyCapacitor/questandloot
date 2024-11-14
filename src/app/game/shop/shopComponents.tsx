@@ -3,7 +3,7 @@
 import { config } from "@/app/config"
 import { generateRandomEquipment } from "@/app/generators/generateEquipment"
 import { generateRandomPotion } from "@/app/generators/generatePotion"
-import { useSocket } from "@/app/SocketContext"
+import { useSocket } from "@/app/middleware/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
 import { Shops } from "@/app/types"
 import ItemFrame from "@/components/layout/ItemFrame"

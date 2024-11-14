@@ -70,7 +70,7 @@ const CombatPage = () => {
       ...character1,
       activeJourney: null,
       gold: character1.gold + (earnedGold ?? 0),
-      items: lootToApply.items,
+      inventory: lootToApply.inventory,
       materials: lootToApply.materials,
       experience: character1.experience + (earnedExperience ?? 0)
     })

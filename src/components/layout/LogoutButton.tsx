@@ -1,4 +1,4 @@
-import { useSocket } from '@/app/SocketContext'
+import { useSocket } from '@/app/middleware/SocketContext'
 import { useRouter } from 'next/navigation'
 import GameButton from './GameButton'
 
