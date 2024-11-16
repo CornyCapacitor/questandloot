@@ -1,6 +1,7 @@
+import { config } from '@/app/config'
 import { useSocket } from '@/app/middleware/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
-import { Player } from '@/app/types'
+import { Attributes, Player, Profession } from '@/app/types'
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
 import { Progress } from '../ui/progress'
@@ -12,29 +13,36 @@ export const ExperienceBar = () => {
   const [experienceRequired, setExperienceRequired] = useState(0)
   const [experiencePercentage, setExperiencePercentage] = useState(0)
 
-  const calculateLevelAndExperience = (experience: number, currentLevel: number) => {
-    let level = currentLevel;
-    let experienceRequired = Math.floor(100 + 100 * level * ((level - 1) * 0.12));
+  const calculateCharacter = (experience: number, level: number, attributes: Attributes, profession: Profession): { level: number, experience: number, attributes: Attributes } => {
+    const experienceRequired = Math.floor(100 + 100 * level * ((level - 1) * 0.12));
 
-    while (experience >= experienceRequired) {
-      experience -= experienceRequired;
-      level += 1;
-      experienceRequired = Math.floor(100 + 100 * level * ((level - 1) * 0.12));
-      alert(`Congratulations! You've earned new level: ${level}`)
+    if (experience >= experienceRequired) {
+      return {
+        level: level + 1,
+        experience: experience - experienceRequired,
+        attributes: {
+          strength: attributes.strength + config.professionMultipliers.levelUp[profession].strength,
+          agility: attributes.agility + config.professionMultipliers.levelUp[profession].agility,
+          intellect: attributes.intellect + config.professionMultipliers.levelUp[profession].intellect,
+          stamina: attributes.stamina + config.professionMultipliers.levelUp[profession].stamina,
+          luck: attributes.luck + config.professionMultipliers.levelUp[profession].luck
+        }
+      }
     }
 
-    return { level, remainingExperience: experience };
+    return { level, experience, attributes };
   };
 
   const handleLevelUp = () => {
     if (!player) return
 
-    const { level, remainingExperience } = calculateLevelAndExperience(player.experience, player.level)
+    const { level, experience, attributes } = calculateCharacter(player.experience, player.level, player.attributes, player.profession)
 
     updatePlayer({
       ...player,
       level,
-      experience: remainingExperience
+      experience,
+      attributes
     })
   };
 

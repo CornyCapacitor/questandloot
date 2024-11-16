@@ -50,7 +50,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       })
 
       ws.on('error', (data) => {
-        alert(data)
+        alert(data.error)
       })
     });
   };

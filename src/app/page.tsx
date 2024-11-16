@@ -1,5 +1,6 @@
 'use client'
 
+import { Tailspin } from "@/components/layout/Tailspin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAtom } from "jotai";
@@ -12,12 +13,15 @@ import { playerAtom } from "./state/atoms";
 export default function Home() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const [player] = useAtom(playerAtom)
   const { socket, connectSocket } = useSocket()
 
   const router = useRouter()
 
   const handleLogin = async (username: string, password: string) => {
+    setLoading(true)
+
     try {
       const response = await fetch('http://localhost:3333/api/login/', {
         method: 'POST',
@@ -39,6 +43,7 @@ export default function Home() {
       return token;
     } catch (error) {
       console.error('Error during login:', error);
+      setLoading(false)
       return null;
     }
   }
@@ -48,6 +53,7 @@ export default function Home() {
 
     if (!token) {
       console.error('No token provided, cannot connect')
+      setLoading(false)
       return
     }
 
@@ -77,12 +83,12 @@ export default function Home() {
         <h1>Welcome to Quest & Loot!</h1>
         <span>In order to access the game you need to be logged in. (login and password are credentials)</span>
         <label htmlFor="username" className="self-start text-sm text-slate-200">Username</label>
-        <Input id="username" autoFocus placeholder="Username" className="w-full p-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <Input id="username" autoFocus placeholder="Username" className="w-full p-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
         <label htmlFor="password" className="self-start text-sm text-slate-200">Password</label>
-        <Input id="password" type="password" placeholder="Password" className="w-full p-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <Button className="bg-blue-500 hover:bg-blue-600 text-white" onClick={() => handleConnect(username, password)}>Login</Button>
+        <Input id="password" type="password" placeholder="Password" className="w-full p-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
+        <Button className="bg-blue-500 hover:bg-blue-600 text-white" disabled={loading} onClick={() => handleConnect(username, password)}>{loading ? (<Tailspin size={30} />) : 'Login'}</Button>
         <span>No account? Create one right now!</span>
-        <Button className="bg-blue-500 hover:bg-blue-600 text-white">Signup</Button>
+        <Button className="bg-blue-500 hover:bg-blue-600 text-white" disabled={loading}>{loading ? (<Tailspin size={30} />) : 'Signup'}</Button>
       </section>
       <section className="h-full p-2 flex flex-grow items-center justify-center">
         <Image src="/logo_enlarged.png" width={700} height={700} alt="Quest & Loot logo" />

@@ -7,9 +7,9 @@ export const monsterList: MonsterArray[] = [
     family: 'mountains',
     loot: {
       common: [1],
-      uncommon: [1, 101, 102, 103, 104, 105],
-      rare: [202],
-      epic: [202]
+      uncommon: [2],
+      rare: [3],
+      epic: [4]
     }
   },
   {
@@ -18,9 +18,9 @@ export const monsterList: MonsterArray[] = [
     family: 'forest',
     loot: {
       common: [1],
-      uncommon: [1, 101, 102, 103, 104, 105],
-      rare: [202],
-      epic: [202]
+      uncommon: [2],
+      rare: [3],
+      epic: [4]
     }
   },
   {
@@ -29,9 +29,9 @@ export const monsterList: MonsterArray[] = [
     family: 'graveyard',
     loot: {
       common: [1],
-      uncommon: [1, 101, 102, 103, 104, 105],
-      rare: [202],
-      epic: [202]
+      uncommon: [2],
+      rare: [3],
+      epic: [4]
     }
   }
 ]

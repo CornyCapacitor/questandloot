@@ -1,4 +1,4 @@
-import { ArmorProficiency, Damage, PotionQuality, Profession, Quality } from "./types";
+import { ArmorProficiency, Attributes, Damage, PotionQuality, Profession, Quality } from "./types";
 
 export const config = {
   // 
@@ -69,7 +69,31 @@ export const config = {
       warrior: 3.0,
       hunter: 2.0,
       mage: 1.0
-    } as Record<Profession, number>
+    } as Record<Profession, number>,
+
+    levelUp: {
+      warrior: {
+        strength: 2,
+        agility: 0,
+        intellect: 0,
+        stamina: 1,
+        luck: 1
+      } as Attributes,
+      hunter: {
+        strength: 0,
+        agility: 2,
+        intellect: 0,
+        stamina: 1,
+        luck: 1
+      } as Attributes,
+      mage: {
+        strength: 0,
+        agility: 0,
+        intellect: 2,
+        stamina: 0,
+        luck: 2
+      } as Attributes
+    } as Record<Profession, Attributes>
   },
 
   // Armor proficiency

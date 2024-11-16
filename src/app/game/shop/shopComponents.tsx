@@ -121,10 +121,8 @@ const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
             gold: payment ? (player.gold - payment) : player.gold
           })
         }
-
         break
       }
-
       default: {
         return
       }
@@ -148,6 +146,7 @@ const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
     if (!player) return
 
     if (shouldRefreshShop(shop)) {
+      console.log('Player should refresh the shop:', shop)
       refreshShop(shop)
     }
 

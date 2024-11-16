@@ -179,8 +179,8 @@ export const calculateLoot = (loot: Loot, chance: number): number[] => {
   return finalLoot
 }
 
-export const calculateExperience = (level: number, multiplier: number): number => {
-  const min = config.experience.min + (config.experience.min * (level / 2) * (multiplier / 100) * config.experience.divider)
-  const max = config.experience.max + (config.experience.max * (level / 2) * (multiplier / 100) * config.experience.divider)
-  return Math.floor(random(min, max))
+export const calculateExperience = (level: number, journeyMultiplier: number): number => {
+  const min = config.experience.min + (config.experience.min * (level / 2) * config.experience.divider)
+  const max = config.experience.max + (config.experience.max * (level / 2) * config.experience.divider)
+  return Math.floor(random(min, max) * (journeyMultiplier / 100))
 }

@@ -118,6 +118,8 @@ export const removeMaterial = (removedMaterialId: number, currentMaterials: Mate
 export const applyLoot = (loot: Items[], player: Player): { inventory: Inventory, materials: Materials, } => {
   const updatedPlayer = { ...player }
 
+  console.log(loot)
+
   for (let i = 0; i < loot.length; i++) {
     const element = loot[i];
     if (element.type === 'material') {

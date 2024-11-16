@@ -153,6 +153,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             <CharacterStat stat="armor" player={player} />
           </div>
         </div>
+        <button onClick={() => console.log(player)}>Console.log player</button>
       </div>
     </section>
   )
@@ -187,7 +188,6 @@ const CharacterItemsSection = ({ className }: { className?: string }) => {
       {player.inventory.map((item, index) => (
         <ItemFrame key={index} itemData={item.item} isClickable={true} isEquipped={false} width={128} height={128} />
       ))}
-      <button onClick={() => console.log(player)}>Console.log player</button>
     </section>
   )
 }
