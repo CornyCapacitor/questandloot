@@ -7,6 +7,7 @@ import { useSocket } from "@/app/middleware/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
 import { Shops } from "@/app/types"
 import ItemFrame from "@/components/layout/ItemFrame"
+import { errorToast } from "@/components/ui/toasts"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useEffect } from "react"
@@ -135,7 +136,7 @@ const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
     const refreshPrice = player.level * config.refreshPriceMultiplier
 
     if (refreshPrice > player.gold) {
-      alert('Not enough gold')
+      errorToast({ text: 'Not enough gold' })
       return
     }
 

@@ -3,6 +3,7 @@
 import { Tailspin } from "@/components/layout/Tailspin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { errorToast, pendingToast, successToast } from "@/components/ui/toasts";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -21,6 +22,7 @@ export default function Home() {
 
   const handleLogin = async (username: string, password: string) => {
     setLoading(true)
+    pendingToast({ text: 'Logging in...', position: 'top' })
 
     try {
       const response = await fetch('http://localhost:3333/api/login/', {
@@ -32,7 +34,8 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        throw new Error('Invalid credentials');
+        errorToast({ text: 'Invalid credentials', position: 'top' })
+        return
       }
 
       const data = await response.json();
@@ -41,8 +44,9 @@ export default function Home() {
       console.log(token)
 
       return token;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error('Error during login:', error);
+      errorToast({ text: 'Failed to log in', position: 'top' })
       setLoading(false)
       return null;
     }
@@ -52,7 +56,6 @@ export default function Home() {
     const token = await handleLogin(username, password)
 
     if (!token) {
-      console.error('No token provided, cannot connect')
       setLoading(false)
       return
     }
@@ -72,6 +75,7 @@ export default function Home() {
     }
 
     if (socket?.connected && player) {
+      successToast({ text: 'Hello again!', position: 'top' })
       console.log('Congrats! You can play now!')
       router.push('/game')
     }

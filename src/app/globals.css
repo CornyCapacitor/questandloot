@@ -139,3 +139,17 @@ body {
 .tooltip-button-animation {
   animation: tooltip-button-appear ease-in 0.2s;
 }
+
+.fade-out {
+  animation: fadeOut 0.4s;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

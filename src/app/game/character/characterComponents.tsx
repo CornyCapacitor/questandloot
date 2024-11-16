@@ -184,9 +184,11 @@ const CharacterItemsSection = ({ className }: { className?: string }) => {
 
   if (player && socket) return (
     <section className={`${className}`}>
-      {player.inventory.map((item, index) => (
+      {player.inventory.length ? player.inventory.map((item, index) => (
         <ItemFrame key={index} itemData={item.item} isClickable={true} isEquipped={false} width={128} height={128} />
-      ))}
+      )) : (
+        <p>You currently have no items to browse</p>
+      )}
     </section>
   )
 }

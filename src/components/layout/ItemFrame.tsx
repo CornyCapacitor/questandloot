@@ -7,6 +7,7 @@ import { useAtom } from 'jotai'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { errorToast, successToast } from '../ui/toasts'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
 const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, shop?: Shops, width: number, height: number }) => {
@@ -84,7 +85,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
     const buyPrice = itemData.sellPrice * 4
     console.log(`Buying item: ${itemData.name} for ${buyPrice}`)
     if (buyPrice > player.gold) {
-      alert('Not enough gold')
+      errorToast({ text: 'Not enough gold' })
       return
     }
 
@@ -94,18 +95,20 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
       gold: removeGold(buyPrice, player.gold),
       shop: removeShopItem(itemData, player.shop, shop)
     })
+
+    successToast({ text: `${itemData.name} bought for ${buyPrice} gold` })
   }
 
   const handleSellItem = (itemData: Items) => {
     if (!player) return
-
-    console.log(`Selling item: ${itemData.name} for ${itemData.sellPrice}`)
 
     updatePlayer({
       ...player,
       inventory: removeItem(itemData, player.inventory),
       gold: addGold(itemData.sellPrice, player.gold)
     })
+
+    successToast({ text: `${itemData.name} sold for ${itemData.sellPrice} gold` })
   }
 
   const PopoverComponent = ({ itemData, isEquipped, shop, onAction }: { itemData: Items, isEquipped: boolean, shop?: Shops, onAction: () => void }) => {

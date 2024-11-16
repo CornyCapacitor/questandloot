@@ -4,6 +4,7 @@ import { config } from "@/app/config"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
 import { Journey, Player } from "@/app/types"
+import { pendingToast, successToast } from "@/components/ui/toasts"
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -63,7 +64,7 @@ const JourneyPage = () => {
           setRemainingTime(null);
           setIsCombatReady(true)
           // Testing alert
-          alert('Journey ended, entering combat...')
+          pendingToast({ text: 'Starting combat...' })
           router.push('/game/journey/combat')
         } else {
           setRemainingTime(timeLeft);
@@ -122,7 +123,7 @@ const JourneyPage = () => {
       // returnDate: new Date(Date.now() + time * 1000 * 60) // date now + time * minutes
     }
 
-    alert('Activating journey, sending date to database...')
+    successToast({ text: 'Journey started' })
     updatePlayer({
       ...player,
       activeJourney: journey
