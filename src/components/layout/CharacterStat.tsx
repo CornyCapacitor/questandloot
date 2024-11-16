@@ -43,7 +43,7 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
   }
 
   if (!player) return (
-    <span>Loading character stats...</span>
+    <span>Loading stat</span>
   )
 
   const StrengthAgilityIntellect = ({ stat, className, header }: { stat: 'strength' | 'agility' | 'intellect', className?: string, header?: boolean }) => {
@@ -58,22 +58,22 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
         {profession === object.profession ? (
           <div className={`${className}`}>
             <h2>Damage:</h2>
-            <span>~{calculateDamage(player.attributes, player.profession, ((calculateWeaponDamage(player.equipment.weapon)).min + calculateWeaponDamage(player.equipment.weapon).max) / 2)}</span>
+            <span>~{calculateDamage(player.attributes, player.profession, ((calculateWeaponDamage(player.equipment.weapon)).min + calculateWeaponDamage(player.equipment.weapon).max) / 2).toFixed(1)}</span>
           </div>
         ) : stat === 'strength' ? (
           <div className={`${className}`}>
             <h2>Defense:</h2>
-            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).strength) / 2)}</span>
+            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).strength) / 2).toFixed(0)}</span>
           </div>
         ) : stat === 'agility' ? (
           <div className={`${className}`}>
             <h2>Evasion:</h2>
-            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).agility) / 2)}</span>
+            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).agility) / 2).toFixed(0)}</span>
           </div>
         ) : (
           <div className={`${className}`}>
             <h2>Resistance:</h2>
-            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).intellect) / 2)}</span>
+            <span>~{Math.floor((calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion).intellect) / 2).toFixed(0)}</span>
           </div>
         )}
 
@@ -92,17 +92,17 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
         {stat === 'stamina' ? (
           <div className={`${className}`}>
             <h2>Hit points:</h2>
-            <span>{calculateTotalHP(player.level, player.attributes)}</span>
+            <span>{calculateTotalHP(player.level, player.attributes).toFixed(0)}</span>
           </div>
         ) : stat === 'luck' ? (
           <div className={`${className}`}>
             <h2>Crit chance:</h2>
-            <span>~{Math.floor(calculateCritChance(player.level, player.attributes))}%</span>
+            <span>~{Math.floor(calculateCritChance(player.level, player.attributes)).toFixed(0)}%</span>
           </div>
         ) : (
           <div className={`${className}`}>
             <h2>{header ? 'Damage reduction:' : 'Reduction:'}</h2>
-            <span>~{Math.floor(calculateArmorReduction(calculatePlayerArmor(player.equipment), player.level))}%</span>
+            <span>~{Math.floor(calculateArmorReduction(calculatePlayerArmor(player.equipment), player.level)).toFixed(0)}%</span>
           </div>
         )}
 

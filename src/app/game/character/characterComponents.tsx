@@ -153,7 +153,6 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             <CharacterStat stat="armor" player={player} />
           </div>
         </div>
-        <button onClick={() => console.log(player)}>Console.log player</button>
       </div>
     </section>
   )
