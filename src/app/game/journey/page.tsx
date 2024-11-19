@@ -3,22 +3,22 @@
 import { config } from "@/app/config"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
-import { Journey, Player } from "@/app/types"
+import { Journey, Location, Player } from "@/app/types"
 import { pendingToast, successToast } from "@/components/ui/toasts"
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { JourneyCard } from "./JourneyComponents"
+import { JourneyCard, JourneyDisplay } from "./JourneyComponents"
 
 const JourneyPage = () => {
   const [player] = useAtom<Player | null>(playerAtom)
   const { updatePlayer } = useSocket()
   const [, setIsCombatReady] = useAtom(combatReadyAtom)
   const [remainingTime, setRemainingTime] = useState<number | null>(null)
-  const journeys: { name: string, image: string }[] = [
+  const locations: { name: string, image: string }[] = [
     {
       name: 'Dark Forest',
-      image: 'placeholder.svg'
+      image: 'darkforest.png'
     },
     {
       name: 'High mountains',
@@ -79,7 +79,7 @@ const JourneyPage = () => {
     }
   }, [player, router, setIsCombatReady]);
 
-  const startJourney = (location: string, time: number) => {
+  const startJourney = (location: Location, time: number) => {
     if (!player) return
 
     let valueMultiplier = config.availableTimeOptions.multipliers[0]
@@ -117,10 +117,8 @@ const JourneyPage = () => {
     const journey: Journey = {
       location,
       valueMultiplier,
-      // Temporary returnDate function (testing)
-      returnDate: new Date(Date.now() + 5000)
-      // Actually good returnDate function (build)
-      // returnDate: new Date(Date.now() + time * 1000 * 60) // date now + time * minutes
+      startDate: new Date(Date.now()),
+      returnDate: new Date(Date.now() + time * 1000 * 60) // date now + time * minutes
     }
 
     successToast({ text: 'Journey started' })
@@ -132,19 +130,14 @@ const JourneyPage = () => {
 
   if (player?.activeJourney) {
     return (
-      <div className="w-full h-full flex flex-col gap-2 justify-center items-center">
-        <h1>Journey in progress..</h1>
-        {remainingTime !== null && (
-          <h2>Remaining time: {Math.floor(remainingTime / 60)}m {remainingTime % 60}s</h2>
-        )}
-      </div>
+      <JourneyDisplay remainingTime={remainingTime} />
     )
   }
 
   return (
     <div className="w-full h-full flex flex-wrap justify-center content-start p-2 gap-2 overflow-y-auto">
-      {journeys.map((journey, index) => (
-        <JourneyCard key={index} journey={journey} startJourney={startJourney} />
+      {locations.map((location, index) => (
+        <JourneyCard key={index} location={location} startJourney={startJourney} />
       ))}
     </div>
   )
