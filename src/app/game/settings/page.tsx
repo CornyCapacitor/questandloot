@@ -1,7 +1,10 @@
+import Image from "next/image"
+
 const SettingPage = () => {
   return (
-    <div className="w-full h-full flex flex-wrap justify-center content-start p-2 gap-2 overflow-y-auto">
-      <h1>Settings</h1>
+    <div className="w-full h-full flex flex-col flex-wrap justify-center items-center p-2 gap-2 overflow-y-auto">
+      <Image width={300} height={300} src="/placeholderItem.svg" alt="placeholder" />
+      <h1>Settings page under construction</h1>
     </div>
   )
 }
