@@ -1,11 +1,13 @@
 import { isArmor, isJewelery, isMaterial, isPotion, isShield, isWeapon } from '@/app/functions/itemCheckers'
-import { addGold, addItem, removeGold, removeItem, removeShopItem } from '@/app/functions/manageItems'
+import { addGold, addItem, applyPotion, removeGold, removeItem, removeShopItem } from '@/app/functions/manageItems'
+import { formatTime } from '@/app/functions/time'
 import { useSocket } from '@/app/middleware/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
 import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Material, Potion, Shield, Shops, Weapon } from '@/app/types'
 import { useAtom } from 'jotai'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
+import { questionAlert } from '../ui/alerts'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { errorToast, successToast } from '../ui/toasts'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
@@ -111,6 +113,36 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
     successToast({ text: `${itemData.name} sold for ${itemData.sellPrice} gold` })
   }
 
+  const handleDrinkPotion = (potion: Potion) => {
+    if (!player) return
+
+    if (player.activePotion) {
+      const expiringDate = new Date(player.activePotion.expiringDate).getTime()
+      const timeLeft = (expiringDate - Date.now()) / 1000
+      questionAlert({
+        text: `Are you sure you want to overwrite ${player.activePotion.potion.name} with ${potion.name}? You still have ${formatTime(timeLeft).uniText} left of your current potion.`,
+        confirmFunction: () => {
+          return updatePlayer({
+            ...player,
+            inventory: removeItem(potion, player.inventory),
+            activePotion: applyPotion(potion)
+          })
+        },
+        cancelFunction: () => {
+          return
+        }
+      })
+
+      return
+    }
+
+    return updatePlayer({
+      ...player,
+      inventory: removeItem(potion, player.inventory),
+      activePotion: applyPotion(potion)
+    })
+  }
+
   const PopoverComponent = ({ itemData, isEquipped, shop, onAction }: { itemData: Items, isEquipped: boolean, shop?: Shops, onAction: () => void }) => {
     return shop ? (
       // Item in shop active tooltip
@@ -123,6 +155,11 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
         <button onClick={() => { handleUnequipItem(itemData.slot); onAction() }}>Unequip</button>
       </div>
       // Item in bag active tooltip
+    ) : isPotion(itemData) ? (
+      <div className="flex flex-col gap-5 min-w-[100px]">
+        <button onClick={() => { handleDrinkPotion(itemData); onAction() }}>Drink</button>
+        <button onClick={() => { handleSellItem(itemData); onAction() }}>Sell</button>
+      </div>
     ) : (
       <div className="flex flex-col gap-5 min-w-[100px]">
         <button onClick={() => { handleEquipItem(itemData); onAction() }}>Equip</button>

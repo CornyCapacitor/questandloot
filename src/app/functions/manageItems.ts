@@ -1,4 +1,4 @@
-import { CharacterShop, Inventory, Items, Material, Materials, Player, Shops } from "../types";
+import { ActivePotion, CharacterShop, Inventory, Items, Material, Materials, Player, Potion, Shops } from "../types";
 
 export const addItem = (addedItem: Items, currentItems: Inventory): Inventory => {
   const updatedItems = [...currentItems]
@@ -113,6 +113,13 @@ export const removeMaterial = (removedMaterialId: number, currentMaterials: Mate
   }
 
   return updatedMaterials
+}
+
+export const applyPotion = (potion: Potion): ActivePotion => {
+  return {
+    potion: potion,
+    expiringDate: new Date(Date.now() + 1 * 1000 * 60 * 60 * 24)
+  }
 }
 
 export const applyLoot = (loot: Items[], player: Player): { inventory: Inventory, materials: Materials, } => {

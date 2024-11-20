@@ -1,4 +1,5 @@
 import { config } from "@/app/config"
+import { formatTime } from "@/app/functions/time"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
 import { Location } from "@/app/types"
@@ -95,7 +96,7 @@ export const JourneyDisplay = ({ remainingTime }: { remainingTime: number | null
         />
         <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold">
           {remainingTime !== null && (
-            <>Remaining time: {Math.floor(remainingTime / 60)}m {remainingTime % 60}s</>
+            <>{formatTime(remainingTime).uniText}</>
           )}
         </span>
       </div>
