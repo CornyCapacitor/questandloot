@@ -1,9 +1,9 @@
 import { useSocket } from '@/app/middleware/SocketContext'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { pendingToast } from '../ui/toasts'
-import GameButton from './GameButton'
 
-const LogoutButton = () => {
+const LogoutButton = ({ className }: { className?: string }) => {
   const { disconnectSocket } = useSocket()
   const router = useRouter()
 
@@ -14,7 +14,9 @@ const LogoutButton = () => {
   }
 
   return (
-    <GameButton onClick={() => handleLogout()} className="py-4 w-[80%]">Logout</GameButton>
+    <button className={`${className} bg-black rounded-md hover:bg-gray-700 cursor-pointer w-full flex items-center justify-center`}>
+      <Image src="/assets/sidebar/logout.svg" width={40} height={40} alt="logout button" onClick={() => handleLogout()} />
+    </button>
   )
 }
 

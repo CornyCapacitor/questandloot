@@ -6,6 +6,7 @@ import CharacterStat from "@/components/layout/CharacterStat"
 import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import ItemFrame from "@/components/layout/ItemFrame"
 import { TabButton } from "@/components/layout/TabButton"
+import { Button } from "@/components/ui/button"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useState } from "react"
@@ -159,21 +160,22 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
 }
 
 export const CharacterTabs = () => {
-  const [currentTab, setCurrentTab] = useState<'items' | 'materials'>('items')
+  const [currentTab, setCurrentTab] = useState<'items' | 'materials' | 'tests'>('items')
 
   return (
     <div className="flex flex-col h-full flex-grow">
       <div className="w-full flex gap-2 px-4 pt-2 border-b border-slate-700">
         <TabButton tabName="items" currentTab={currentTab} onClick={() => setCurrentTab('items')} />
         <TabButton tabName="materials" currentTab={currentTab} onClick={() => setCurrentTab('materials')} />
+        <TabButton tabName="tests" currentTab={currentTab} onClick={() => setCurrentTab('tests')} />
       </div>
       {currentTab === 'items' ? (
         <CharacterItemsSection className="flex content-start flex-grow flex-wrap h-full gap-2 p-2 border-slate-700 overflow-y-auto" />
       ) : currentTab === 'materials' ? (
         <CharacterMaterialsSection className="flex content-start flex-grow flex-wrap h-full gap-2 p-2 border-slate-700 overflow-y-auto" />
-      ) : (
-        null
-      )}
+      ) : currentTab === 'tests' ? (
+        <CharacterTestsSection className="flex content-start flex-grow flex-wrap h-full gap-2 p-2 border-slate-700 overflow-y-auto" />
+      ) : null}
     </div>
   )
 }
@@ -203,6 +205,26 @@ const CharacterMaterialsSection = ({ className }: { className?: string }) => {
       )) : (
         <p>You currently have no materials to browse</p>
       )}
+    </section>
+  )
+}
+
+const CharacterTestsSection = ({ className }: { className?: string }) => {
+  const [player] = useAtom(playerAtom)
+  const { updatePlayer } = useSocket()
+
+  const handleAddGold = () => {
+    if (!player) return
+
+    updatePlayer({
+      ...player,
+      gold: player.gold += 1000
+    })
+  }
+
+  if (player) return (
+    <section className={`${className}`}>
+      <Button onClick={() => handleAddGold()}>Add 1000 gold</Button>
     </section>
   )
 }
