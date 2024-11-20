@@ -2,7 +2,7 @@ import { isArmor, isJewelery, isMaterial, isPotion, isShield, isWeapon } from '@
 import { addGold, addItem, removeGold, removeItem, removeShopItem } from '@/app/functions/manageItems'
 import { useSocket } from '@/app/middleware/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
-import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Potion, Shield, Shops, Weapon } from '@/app/types'
+import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Material, Potion, Shield, Shops, Weapon } from '@/app/types'
 import { useAtom } from 'jotai'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
@@ -158,7 +158,9 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
               <JeweleryDescription item={itemData} shop={shop} />
             ) : isShield(itemData) ? (
               <ShieldDescription item={itemData} shop={shop} />
-            ) : isPotion(itemData) && <PotionDescription item={itemData} shop={shop} />}
+            ) : isPotion(itemData) ? (
+              <PotionDescription item={itemData} shop={shop} />
+            ) : isMaterial(itemData) && <MaterialDescription item={itemData} />}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -330,6 +332,15 @@ const JeweleryDescription = ({ item, shop }: { item: Jewelery, shop?: Shops }) =
           <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
         )}
       </div>
+    </div>
+  )
+}
+
+export const MaterialDescription = ({ item }: { item: Material }) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <h1 className={`${item.quality === 'uncommon' ? 'text-green-500' : item.quality === 'rare' ? 'text-blue-500' : item.quality === 'epic' ? 'text-purple-500' : 'text-white'}`}>{item.name}</h1>
+      <h2 className="text-gray-300 text-sm text-wrap max-w-[350px]">{item.description}</h2>
     </div>
   )
 }

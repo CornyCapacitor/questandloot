@@ -68,7 +68,7 @@ export const JourneyDisplay = ({ remainingTime }: { remainingTime: number | null
       ...player,
       activeJourney: {
         ...player.activeJourney,
-        returnDate: new Date(Date.now() + 1000 * 10)
+        returnDate: new Date(Date.now() + 1000 * 3)
       }
     })
     successToast({ text: 'Journey sped up' })

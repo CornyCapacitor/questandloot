@@ -1,7 +1,10 @@
 'use client'
 
+import { item_list } from "@/app/db/itemList"
+import { addMaterial } from "@/app/functions/manageItems"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
+import { Material } from "@/app/types"
 import CharacterStat from "@/components/layout/CharacterStat"
 import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import ItemFrame from "@/components/layout/ItemFrame"
@@ -222,9 +225,41 @@ const CharacterTestsSection = ({ className }: { className?: string }) => {
     })
   }
 
+  const handleAddMaterial = () => {
+    if (!player) return
+
+    const material: Material = item_list[201] as Material
+    const newMaterials = addMaterial(material, player.materials)
+
+    updatePlayer({
+      ...player,
+      materials: newMaterials
+    })
+  }
+
+  const handleResetPlayer = () => {
+    if (!player) return
+
+    updatePlayer({
+      ...player,
+      experience: 0,
+      level: 1,
+      attributes: {
+        strength: 10,
+        agility: 10,
+        intellect: 10,
+        stamina: 10,
+        luck: 10
+      }
+    })
+  }
+
   if (player) return (
     <section className={`${className}`}>
       <Button onClick={() => handleAddGold()}>Add 1000 gold</Button>
+      <Button onClick={() => console.log(player)}>Console log player</Button>
+      <Button onClick={() => handleAddMaterial()}>Add 1 Test material (test)</Button>
+      <Button onClick={() => handleResetPlayer()}>Reset player</Button>
     </section>
   )
 }

@@ -82,7 +82,7 @@ export const removeShopItem = (removedItem: Items, currentShop: CharacterShop, s
 }
 
 export const addMaterial = (addedMaterial: Material, currentMaterials: Materials): Materials => {
-  const updatedMaterials = [...currentMaterials]
+  const updatedMaterials: Materials = [...currentMaterials]
 
   const existingMaterialIndex = updatedMaterials.findIndex((entry) => entry.material.id === addedMaterial.id)
 
@@ -117,8 +117,6 @@ export const removeMaterial = (removedMaterialId: number, currentMaterials: Mate
 
 export const applyLoot = (loot: Items[], player: Player): { inventory: Inventory, materials: Materials, } => {
   const updatedPlayer = { ...player }
-
-  console.log(loot)
 
   for (let i = 0; i < loot.length; i++) {
     const element = loot[i];
