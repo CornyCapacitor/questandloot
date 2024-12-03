@@ -11,6 +11,7 @@ import { questionAlert } from '../ui/alerts'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { errorToast, successToast } from '../ui/toasts'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
+import DynamicItemFrame from './DynamicItemFrame'
 
 const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, shop?: Shops, width: number, height: number }) => {
   const [player] = useAtom(playerAtom)
@@ -168,7 +169,7 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
     )
   }
 
-  return (
+  if (player) return (
     <div ref={itemFrameRef} className="relative">
       <TooltipProvider>
         <Tooltip>
@@ -176,14 +177,14 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
             {isClickable ? (
               <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
                 <PopoverTrigger>
-                  <Image src={`/placeholderItem.svg`} width={width} height={height} alt={itemData.name} className={`border ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} />
+                  <DynamicItemFrame itemData={itemData} player={player} width={width} height={height} />
                 </PopoverTrigger>
                 <PopoverContent>
                   <PopoverComponent shop={shop} itemData={itemData} isEquipped={isEquipped} onAction={() => setPopoverOpen(false)} />
                 </PopoverContent>
               </Popover>
             ) : (
-              <Image src={`/placeholderItem.svg`} width={width} height={height} alt={itemData.name} className={`border ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} />
+              <DynamicItemFrame itemData={itemData} player={player} width={width} height={height} />
             )}
           </TooltipTrigger>
           <TooltipContent>

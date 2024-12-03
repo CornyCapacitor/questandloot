@@ -5,6 +5,9 @@ export const config = {
   // Equipment static variables
   // 
 
+  // Quantity of randomized item options based on player level from equipment arrays
+  itemsPerDraw: 3,
+
   // Minimum and maximum of item's price
   // formula: ___
   sellPrice: {

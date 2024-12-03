@@ -71,6 +71,8 @@ export type Equipment = {
 // Weapon
 // 
 
+export type WeaponArray = "sword" | "axe" | "mace" | "ranged" | "staves"
+
 export type WeaponFamily = "sword" | "axe" | "mace" | "fire" | "frost" | "arcane" | "earth" | "air" | "bow" | "crossbow"
 
 export type Damage = {

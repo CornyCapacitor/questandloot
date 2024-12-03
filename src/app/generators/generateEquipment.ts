@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 import { config } from '../config'
-import { heavyArmors, jewelery, lightArmors, mediumArmors, shields, weapons } from "../db/equipmentList"
+import { ArmorItem, heavyArmors, jewelery, lightArmors, mediumArmors, shields, WeaponItem, weapons } from "../db/equipmentList"
 import { random } from "../game/journey/combat/combatCalculations"
-import { Armor, ArmorProficiency, ArmorSlot, Attributes, Jewelery, JewelerySlot, Profession, Quality, Shield, Weapon, WeaponFamily } from "../types"
+import { Armor, ArmorProficiency, ArmorSlot, Attributes, Jewelery, JewelerySlot, Profession, Quality, Shield, Weapon, WeaponArray } from "../types"
 
 const randomizeAttributes = (level: number, qualityMultiplier: number): Attributes => {
   const getRandomAttributes = (count: number) => {
@@ -37,14 +37,28 @@ const randomizeAttributes = (level: number, qualityMultiplier: number): Attribut
   return attributes
 }
 
-const weaponFamilies: { [key in Profession]: WeaponFamily[] } = {
-  'warrior': ['sword', 'axe', 'mace'],
-  'hunter': ['bow', 'crossbow'],
-  'mage': ['fire', 'frost', 'arcane', 'earth', 'air']
+const getRandomItemsForLevel = (level: number, array: (WeaponItem | ArmorItem)[]): (WeaponItem | ArmorItem)[] => {
+  const totalItems = array.length
+  const start = Math.max(0, Math.floor((level / 100) * (totalItems - config.itemsPerDraw)))
+  const end = start + config.itemsPerDraw
+  const items = [];
+
+  for (let i = start; i < end; i++) {
+    const item = array[i]
+    items.push(item)
+  }
+
+  return items;
 }
 
-const randomizeWeaponFamily = (profession: Profession): WeaponFamily => {
-  const array = weaponFamilies[profession]
+const weaponTypes: { [key in Profession]: WeaponArray[] } = {
+  'warrior': ['sword', 'axe', 'mace'],
+  'hunter': ['ranged'],
+  'mage': ['staves']
+}
+
+const randomizeWeaponType = (profession: Profession): WeaponArray => {
+  const array = weaponTypes[profession]
   return array[random(0, array.length - 1)]
 }
 
@@ -56,10 +70,10 @@ const generateWeapon = (level: number, profession: Profession, quality: Quality)
   const qualityMultiplier = config.qualityMultipliers.damage[quality]
   const attributes = randomizeAttributes(level, qualityMultiplier)
   const professionMultiplier = config.professionMultipliers.weaponDamage[profession]
-  const family = randomizeWeaponFamily(profession)
-  const itemArray = weapons[family]
-  const randomItem = itemArray[random(0, itemArray.length - 1)]
-  const { name, description, image } = randomItem
+  const weaponType = randomizeWeaponType(profession)
+  const itemArray = weapons[weaponType]
+  const randomItem = getRandomItemsForLevel(level, itemArray)[Math.floor(Math.random() * config.itemsPerDraw)]
+  const { name, description, image, family } = randomItem as WeaponItem
   const sellPrice = randomizePrice(level)
 
   // Randoms item damage based on level;
@@ -95,8 +109,9 @@ const generateArmor = (level: number, profession: Profession, quality: Quality, 
   const proficiency: ArmorProficiency = config.armorProficiency[profession]
   const armor = random((config.baseArmor.min * level * qualityMultiplier * professionMultiplier), (config.baseArmor.max * level * qualityMultiplier * professionMultiplier))
   const itemArray = proficiency === 'heavy' ? heavyArmors[slot] : proficiency === 'medium' ? mediumArmors[slot] : lightArmors[slot]
-  const randomItem = itemArray[random(0, itemArray.length - 1)]
-  const { name, description, image } = randomItem
+  const randomItem = getRandomItemsForLevel(level, itemArray)[Math.floor(Math.random() * config.itemsPerDraw)]
+  console.log(slot, itemArray.length)
+  const { name, description, image } = randomItem as ArmorItem
   const sellPrice = randomizePrice(level)
 
   return {
@@ -121,7 +136,8 @@ const generateShield = (level: number, profession: Profession, quality: Quality)
   const attributes = randomizeAttributes(level, qualityMultiplier)
   const professionMultiplier = config.professionMultipliers.armor.warrior
   const armor = random((config.baseArmor.min * level * qualityMultiplier * professionMultiplier), (config.baseArmor.max * level * qualityMultiplier * professionMultiplier))
-  const randomItem = shields[random(0, shields.length - 1)]
+  const itemArray = shields
+  const randomItem = getRandomItemsForLevel(level, itemArray)[Math.floor(Math.random() * config.itemsPerDraw)]
   const { name, description, image } = randomItem
   const sellPrice = randomizePrice(level)
 
@@ -145,7 +161,7 @@ const generateJewelery = (level: number, quality: Quality, slot: JewelerySlot): 
   const qualityMultiplier = config.qualityMultipliers.armor[quality]
   const attributes = randomizeAttributes(level, qualityMultiplier)
   const itemArray = jewelery[slot]
-  const randomItem = itemArray[random(0, itemArray.length - 1)]
+  const randomItem = itemArray[Math.floor(Math.random() * itemArray.length)]
   const { name, description, image } = randomItem
   const sellPrice = randomizePrice(level)
 

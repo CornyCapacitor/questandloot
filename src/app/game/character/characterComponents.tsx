@@ -185,9 +185,8 @@ export const CharacterTabs = () => {
 
 const CharacterItemsSection = ({ className }: { className?: string }) => {
   const [player] = useAtom(playerAtom)
-  const { socket } = useSocket()
 
-  if (player && socket) return (
+  if (player) return (
     <section className={`${className}`}>
       {player.inventory.length ? player.inventory.map((item, index) => (
         <ItemFrame key={index} itemData={item.item} isClickable={true} isEquipped={false} width={128} height={128} />
