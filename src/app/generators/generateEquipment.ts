@@ -110,7 +110,6 @@ const generateArmor = (level: number, profession: Profession, quality: Quality, 
   const armor = random((config.baseArmor.min * level * qualityMultiplier * professionMultiplier), (config.baseArmor.max * level * qualityMultiplier * professionMultiplier))
   const itemArray = proficiency === 'heavy' ? heavyArmors[slot] : proficiency === 'medium' ? mediumArmors[slot] : lightArmors[slot]
   const randomItem = getRandomItemsForLevel(level, itemArray)[Math.floor(Math.random() * config.itemsPerDraw)]
-  console.log(slot, itemArray.length)
   const { name, description, image } = randomItem as ArmorItem
   const sellPrice = randomizePrice(level)
 
