@@ -154,7 +154,7 @@ const CombatPage = () => {
       <section className="w-full flex flex-col flex-grow border-t border-b">
 
         {/* Messages section */}
-        <section className="w-full flex flex-col flex-grow overflow-y-auto">
+        <section className="w-full flex flex-col flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-700">
 
           {/* Combat logs */}
           {parsedCombatLog?.slice(0, turn + 1).map((entry, index) => (
