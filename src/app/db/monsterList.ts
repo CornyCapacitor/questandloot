@@ -7,9 +7,10 @@ export const monsterList: MonsterArray[] = [
     family: 'mountains',
     loot: {
       common: [
+        // Test materials
         201,
         202,
-        203 // Test materials
+        203
       ],
       uncommon: [
         1 // Random common item
@@ -28,9 +29,10 @@ export const monsterList: MonsterArray[] = [
     family: 'forest',
     loot: {
       common: [
+        // Test materials
         201,
         202,
-        203 // Test materials
+        203
       ],
       uncommon: [
         1 // Random common item
@@ -49,9 +51,10 @@ export const monsterList: MonsterArray[] = [
     family: 'graveyard',
     loot: {
       common: [
+        // Test materials
         201,
         202,
-        203 // Test materials
+        203
       ],
       uncommon: [
         1 // Random common item

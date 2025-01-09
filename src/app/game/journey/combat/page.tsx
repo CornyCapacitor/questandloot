@@ -6,7 +6,6 @@ import { generateLoot } from "@/app/generators/generateLoot"
 import { generateMonster } from "@/app/generators/generateMonster"
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
 import { Attributes, Items, LogEntry, Monster, Player } from "@/app/types"
-import AvatarFrame from "@/components/layout/AvatarFrame"
 import { HealthBar } from "@/components/layout/HealthBar"
 import IconSpinner from "@/components/layout/IconSpinner"
 import ItemFrame from "@/components/layout/ItemFrame"
@@ -75,6 +74,8 @@ const CombatPage = () => {
       experience: character1.experience + (earnedExperience ?? 0)
     })
 
+    console.log(combatResult)
+
     setIsInitialized(true)
     setIsCombatReady(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,69 +136,77 @@ const CombatPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5 items-center justify-center h-full w-full">
-      <h1>Combat page</h1>
-      <div className="flex w-full max-w-[1200px] min-h-[350px] border space-between">
+    <main className="p-2 flex w-full h-full">
+      {/* Attacker section */}
+      <section id="attacker-section" className="w-full flex items-center flex-col p-2 max-w-[300px] border">
+        <div className="relative w-full h-auto aspect-square border">
+          <Image src={`/assets/portraits/${character1?.image}`} alt="Monster image" fill className="object-cover" />
+        </div>
+        <h1>{character1?.name}</h1>
+        <h1>Level: {character1?.level}</h1>
+        <HealthBar currentHP={combatLog ? combatLog[turn].HP1 : 0} maxHP={combatLog ? combatLog[turn].maxHP1 : 0} />
+        {character1Attributes && Object.entries(character1Attributes).map(([key, value]) => (
+          <span key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}: {value}</span>
+        ))}
+      </section>
 
-        {/* Attacker section */}
-        <section id="attacker-section" className="w-full max-w-[250px] flex flex-col gap-1 items-center text-center border-r p-2">
-          <AvatarFrame size={128} image={`/assets/portraits/${character1?.image}`} inverted={false} />
-          <h1>{character1?.name}</h1>
-          <h1>Level: {character1?.level}</h1>
-          <HealthBar currentHP={combatLog ? combatLog[turn].HP1 : 0} maxHP={combatLog ? combatLog[turn].maxHP1 : 0} />
-          {character1Attributes && Object.entries(character1Attributes).map(([key, value]) => (
-            <span key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}: {value}</span>
-          ))}
-        </section>
+      {/* Information section */}
+      <section className="w-full flex flex-col flex-grow border-t border-b">
 
-        {/* Information section */}
-        <section id="information-section" className="w-full flex flex-col">
+        {/* Messages section */}
+        <section className="w-full flex flex-col flex-grow overflow-y-auto">
 
-          {/* Messages section */}
-          <section id="messages-section" className="flex-grow h-full p-2 text-wrap text-center overflow-y-auto overflow-hidden">
-            {/* <span>{parsedCombatLog && parsedCombatLog[turn]}</span> */}
-            <div className="flex flex-col">
-              {parsedCombatLog?.slice(0, turn + 1).map((entry, index) => (
-                <div key={index}>
-                  <h1>Turn: {index + 1}</h1>
-                  <span className="border-b p-1">{entry}</span>
-                </div>
-              ))}
+          {/* Combat logs */}
+          {parsedCombatLog?.slice(0, turn + 1).map((entry, index) => (
+            <div key={index} className="w-full px-5 py-1 border-b">
+              <h1 className="w-full text-center">{index + 1}</h1>
+              <span className="">{entry}</span>
             </div>
-            {combatLog && turn === combatLog.length - 1 &&
-              <div className="flex flex-col">
-                <h1>Loot:</h1>
-                <h1 className="flex gap-1 justify-center">Gold: {gold} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
-                <h1 className="flex gap-1 justify-center">Exp: {experience} <Image width={20} height={20} src="/experience.svg" alt="Experience" /></h1>
-                <div className="flex gap-2 w-full justify-center text-start flex-wrap">
-                  {loot.map((item, index) => (
-                    <ItemFrame key={index} itemData={item} isClickable={false} isEquipped={false} width={100} height={100} />
-                  ))}
-                </div>
-              </div>
-            }
-          </section>
-
-          {/* Actions section */}
-          <section id="actions-section" className="max-h-[100px] border-t flex gap-3 items-center justify-center p-2">
-            <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('decrease')}>Previous turn</button>
-            <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('increase')}>Next turn</button>
-            <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('skip')}>Skip to the end</button>
-          </section>
-        </section>
-
-        {/* Defender section */}
-        <section id="defender-section" className="w-full max-w-[250px] flex flex-col gap-1 items-center text-center border-l p-2">
-          <AvatarFrame size={128} image={`/assets/portraits/${character2?.image}`} inverted={true} />
-          <h1>{character2?.name}</h1>
-          <h1>Level: {character2?.level}</h1>
-          <HealthBar currentHP={combatLog ? combatLog[turn].HP2 : 0} maxHP={combatLog ? combatLog[turn].maxHP2 : 0} />
-          {character2Attributes && Object.entries(character2Attributes).map(([key, value]) => (
-            <span key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}: {value}</span>
           ))}
+
+          {/* Loot */}
+          {combatLog && turn === combatLog.length - 1 && (
+            <div className="flex flex-col p-5">
+              <h1>Loot:</h1>
+              <h1 className="flex gap-1 justify-center">
+                Gold: {gold ?? 0}
+                <Image width={20} height={20} src="/coin.svg" alt="Gold coin" />
+              </h1>
+              <h1 className="flex gap-1 justify-center">
+                Exp: {experience ?? 0}
+                <Image width={20} height={20} src="/experience.svg" alt="Experience" />
+              </h1>
+              <div className="flex gap-2 w-full justify-center pt-5 flex-wrap">
+                {loot.map((item, index) => (
+                  <ItemFrame key={index} itemData={item} isClickable={false} isEquipped={false} width={100} height={100} />
+                ))}
+              </div>
+            </div>
+          )}
         </section>
-      </div>
-    </div>
+
+        {/* Actions section */}
+        <section className="w-full items-center justify-center flex gap-2 h-16 flex-shrink-0">
+          <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('decrease')}>Previous turn</button>
+          <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('increase')}>Next turn</button>
+          <button className="bg-blue-500 p-2 rounded-lg" onClick={() => handleChangeTurn('skip')}>Skip to the end</button>
+          <button className="bg-blue-500 p-2 rounded-lg" onClick={() => console.log(loot)}>Clog</button>
+        </section>
+      </section>
+
+      {/* Defender section */}
+      <section className="w-full flex items-center flex-col p-2 max-w-[300px] border">
+        <div className="relative w-full h-auto aspect-square border">
+          <Image src={`/assets/portraits/${character2?.image}`} alt="Monster image" fill className="object-cover invertX" />
+        </div>
+        <h1>{character2?.name}</h1>
+        <h1>Level: {character2?.level}</h1>
+        <HealthBar currentHP={combatLog ? combatLog[turn].HP2 : 0} maxHP={combatLog ? combatLog[turn].maxHP2 : 0} />
+        {character2Attributes && Object.entries(character2Attributes).map(([key, value]) => (
+          <span key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}: {value}</span>
+        ))}
+      </section>
+    </main>
   )
 }
 
