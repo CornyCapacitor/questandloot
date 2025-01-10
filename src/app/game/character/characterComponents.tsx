@@ -7,7 +7,8 @@ import { playerAtom } from "@/app/state/atoms"
 import { Material } from "@/app/types"
 import CharacterStat from "@/components/layout/CharacterStat"
 import { ExperienceBar } from "@/components/layout/ExperienceBar"
-import ItemFrame from "@/components/layout/ItemFrame"
+import { ItemFrame } from "@/components/layout/ItemFrame"
+import { MaterialRow } from "@/components/layout/Material"
 import { TabButton } from "@/components/layout/TabButton"
 import { Button } from "@/components/ui/button"
 import { useAtom } from "jotai"
@@ -175,7 +176,7 @@ export const CharacterTabs = () => {
       {currentTab === 'items' ? (
         <CharacterItemsSection className="flex content-start flex-grow flex-wrap h-full gap-2 p-2 border-slate-700 overflow-y-auto" />
       ) : currentTab === 'materials' ? (
-        <CharacterMaterialsSection className="flex content-start flex-grow flex-wrap h-full gap-2 p-2 border-slate-700 overflow-y-auto" />
+        <CharacterMaterialsSection className="flex content-start flex-grow flex-wrap h-full border-slate-700 overflow-y-auto" />
       ) : currentTab === 'tests' ? (
         <CharacterTestsSection className="flex content-start flex-grow flex-wrap h-full gap-2 p-2 border-slate-700 overflow-y-auto" />
       ) : null}
@@ -201,12 +202,22 @@ const CharacterMaterialsSection = ({ className }: { className?: string }) => {
   const [player] = useAtom(playerAtom)
 
   if (player) return (
-    <section className={`${className}`}>
-      {player.materials.length ? player.materials.map((material, index) => (
-        <p key={index}>{material.material.name}: {material.quantity}</p>
-      )) : (
-        <p>You currently have no materials to browse</p>
-      )}
+    <section className={`flex-col ${className}`}>
+      <div className="border-b border-slate-700 flex justify-between items-center p-2 w-full">
+        <div className="flex gap-3 items-center">
+          <Image src="/question_mark.png" width={50} height={50} alt="question mark" className="border rounded-md border-slate-700" />
+          <p>Material name</p>
+        </div>
+        <p className="w-[80px] text-center">Quantity</p>
+      </div>
+      <div className="p-2 flex flex-col gap-2 w-full">
+        {player.materials.length ? player.materials.map((material, index) => (
+          // <p key={index}>{material.material.name}: {material.quantity}</p>
+          <MaterialRow material={material} player={player} height={50} width={50} key={index} />
+        )) : (
+          <p>You currently have no materials to browse</p>
+        )}
+      </div>
     </section>
   )
 }
@@ -253,12 +264,22 @@ const CharacterTestsSection = ({ className }: { className?: string }) => {
     })
   }
 
+  const handleResetMaterials = () => {
+    if (!player) return
+
+    updatePlayer({
+      ...player,
+      materials: []
+    })
+  }
+
   if (player) return (
     <section className={`${className}`}>
       <Button onClick={() => handleAddGold()}>Add 1000 gold</Button>
       <Button onClick={() => console.log(player)}>Console log player</Button>
       <Button onClick={() => handleAddMaterial()}>Add 1 Test material (test)</Button>
       <Button onClick={() => handleResetPlayer()}>Reset player</Button>
+      <Button onClick={() => handleResetMaterials()}>Reset materials</Button>
     </section>
   )
 }

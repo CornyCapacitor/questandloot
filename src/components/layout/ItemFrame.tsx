@@ -13,7 +13,7 @@ import { errorToast, successToast } from '../ui/toasts'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 import DynamicItemFrame from './DynamicItemFrame'
 
-const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, shop?: Shops, width: number, height: number }) => {
+export const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, shop?: Shops, width: number, height: number }) => {
   const [player] = useAtom(playerAtom)
   const [popoverOpen, setPopoverOpen] = useState(false)
   const { updatePlayer } = useSocket()
@@ -205,8 +205,6 @@ const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: {
     </div>
   )
 }
-
-export default ItemFrame
 
 const PotionDescription = ({ item, shop }: { item: Potion, shop?: Shops }) => {
   return (

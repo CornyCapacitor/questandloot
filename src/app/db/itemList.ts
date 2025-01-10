@@ -14,7 +14,7 @@ export const item_list: { [key: number]: Material | StringRepresentatives } = {
     id: 201,
     name: "Test Material 1",
     description: "Test Material Description",
-    image: "no_image.png",
+    image: "placeholderMaterial.svg",
     quality: "common",
     type: "material",
     sellPrice: 0
@@ -23,7 +23,7 @@ export const item_list: { [key: number]: Material | StringRepresentatives } = {
     id: 202,
     name: "Test Material 2",
     description: "Test Material Description",
-    image: "no_image.png",
+    image: "placeholderMaterial.svg",
     quality: "common",
     type: "material",
     sellPrice: 0
@@ -32,7 +32,7 @@ export const item_list: { [key: number]: Material | StringRepresentatives } = {
     id: 203,
     name: "Test Material 3",
     description: "Test Material Description",
-    image: "no_image.png",
+    image: "placeholderMaterial.svg",
     quality: "common",
     type: "material",
     sellPrice: 0
