@@ -6,9 +6,9 @@ export const MaterialRow = ({ material, player, width, height }: { material: { m
     <div className="flex w-full justify-between items-center">
       <div className="flex items-center gap-3">
         <DynamicItemFrame itemData={material.material} player={player} height={height} width={width} />
-        <p>{material.material.name}</p>
+        <p className={`${material.quantity === 0 ? 'text-gray-400 grayscale' : ''}`}>{material.material.name}</p>
       </div>
-      <p className="w-[80px] text-center">{material.quantity}</p>
+      <p className={`w-[80px] text-center ${material.quantity === 0 ? 'text-red-700' : ''}`}>{material.quantity}</p>
     </div>
   )
 }
