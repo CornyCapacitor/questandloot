@@ -192,13 +192,13 @@ export default function Home() {
             <h1>Welcome to Quest & Loot!</h1>
             <h2 className="w-full">Username and character name are different properties. You will use your username only to log into the game.</h2>
             <label htmlFor="username" className="self-start text-sm text-slate-200">Username</label>
-            <Input id="username" autoFocus placeholder="Username" className="w-full border border-slate-600 rounded-md hover:bg-gray-700 transition" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
+            <Input id="username" autoFocus placeholder="Username" className="w-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
             <label htmlFor="password" className="self-start text-sm text-slate-200">Password</label>
-            <Input id="password" type="password" placeholder="Password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
+            <Input id="password" type="password" placeholder="Password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
             <label htmlFor="passwordRepeat" className="self-start text-sm text-slate-200">Repeat password</label>
-            <Input id="passwordRepeat" type="password" placeholder="Repeat password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition" value={passwordRepeat} disabled={loading} onChange={(e) => setPasswordRepeat(e.target.value)} />
+            <Input id="passwordRepeat" type="password" placeholder="Repeat password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={passwordRepeat} disabled={loading} onChange={(e) => setPasswordRepeat(e.target.value)} />
             <label htmlFor="characterName" className="self-start text-sm text-slate-200">Character name</label>
-            <Input id="characterName" placeholder="Character name" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition" value={characterName} disabled={loading} onChange={(e) => setCharacterName(e.target.value)} />
+            <Input id="characterName" placeholder="Character name" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={characterName} disabled={loading} onChange={(e) => setCharacterName(e.target.value)} />
             <label htmlFor="profession" className="self-start text-sm text-slate-200">Profession</label>
             <Select disabled={loading} onValueChange={(value) => setProfession(value as Profession)}>
               <SelectTrigger className="w-full border border-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-400 hover:bg-gray-700 transition" >
@@ -218,9 +218,9 @@ export default function Home() {
             <h1>Welcome to Quest & Loot!</h1>
             <h2 className="w-full">In order to access the game you need to be logged in. (login and password are credentials)</h2>
             <label htmlFor="username" className="self-start text-sm text-slate-200">Username</label>
-            <Input id="username" autoFocus placeholder="Username" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
+            <Input id="username" autoFocus placeholder="Username" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
             <label htmlFor="password" className="self-start text-sm text-slate-200">Password</label>
-            <Input id="password" type="password" placeholder="Password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
+            <Input id="password" type="password" placeholder="Password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
             <Button className="bg-blue-500 hover:bg-blue-600 text-white" disabled={loading} onClick={() => handleConnect(username, password)}>{loading ? (<Tailspin size={30} />) : 'Login'}</Button>
             <span>No account? Create one right now!</span>
             <Button className="bg-blue-500 hover:bg-blue-600 text-white" disabled={loading} onClick={() => handleChange()}>{loading ? (<Tailspin size={30} />) : 'Signup'}</Button>

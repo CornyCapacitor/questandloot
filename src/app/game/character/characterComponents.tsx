@@ -4,13 +4,15 @@ import { item_list } from "@/app/db/itemList"
 import { addMaterial } from "@/app/functions/manageItems"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
-import { Material } from "@/app/types"
+import { Material, Player } from "@/app/types"
 import CharacterStat from "@/components/layout/CharacterStat"
 import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import { ItemFrame } from "@/components/layout/ItemFrame"
 import { MaterialRow } from "@/components/layout/Material"
 import { TabButton } from "@/components/layout/TabButton"
 import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { successToast } from "@/components/ui/toasts"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useState } from "react"
@@ -143,9 +145,28 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
         </div>
       </div>
 
-      {/* Character attributes */}
-      <div className="flex flex-col flex-grow border-t border-slate-700 p-2">
-        <span className="font-semibold text-orange-300 self-center py-1">Level: {player.level}</span>
+      {/* Character information */}
+      <CharacterInformation player={player} />
+    </section>
+  )
+}
+
+export const CharacterInformation = ({ player }: { player: Player }) => {
+  const [currentTab, setCurrentTab] = useState<'attributes' | 'hero'>('attributes')
+
+  const Tabs = () => {
+    if (player) return (
+      <div className="w-full flex gap-2 px-4 pt-2 border-b border-slate-700">
+        <TabButton tabName="attributes" currentTab={currentTab} onClick={() => setCurrentTab('attributes')} />
+        <TabButton tabName="hero" currentTab={currentTab} onClick={() => setCurrentTab('hero')} />
+      </div>
+    )
+  }
+
+  const AttributesTab = () => {
+    if (player) return (
+      <div className="py-2 pl-2 flex flex-col items-between">
+        <span className="font-semibold text-orange-300 self-center">Level: {player.level}</span>
         <div className="flex h-full w-full">
           <div className="flex flex-col gap-2 flex-1">
             <CharacterStat stat="strength" player={player} />
@@ -159,6 +180,45 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           </div>
         </div>
       </div>
+    )
+  }
+
+  const HeroTab = () => {
+    const [playerDescription, setPlayerDescription] = useState(player.description)
+    const { updatePlayer } = useSocket()
+
+    const handleChangePlayerDescription = () => {
+      if (!player) return
+
+      updatePlayer({
+        ...player,
+        description: playerDescription ? playerDescription : null
+      })
+
+      successToast({
+        text: 'Description changed succesfully',
+      })
+    }
+
+    if (player) return (
+      <div className="p-2 h-full gap-2 flex flex-col items-between">
+        <span className="font-semibold text-orange-300 self-center">Description:</span>
+        <div className="flex h-full w-full">
+          <Textarea placeholder="Describe who is your hero. Other player may read this on your player profile." value={playerDescription ? playerDescription : ''} className="border-slate-700 focus-visible:ring-orange-400 resize-none h-full" onChange={(e) => setPlayerDescription(e.target.value)} />
+        </div>
+        <Button className="text-white rounded-t-sm py-1 px-2 bg-slate-600 border-slate-700 transition hover:bg-slate-700" onClick={() => handleChangePlayerDescription()}>Save</Button>
+      </div>
+    )
+  }
+
+  return (
+    <section className="flex flex-col flex-grow border-t border-slate-700">
+      <Tabs />
+      {currentTab === 'attributes' ? (
+        <AttributesTab />
+      ) : currentTab === 'hero' ? (
+        <HeroTab />
+      ) : null}
     </section>
   )
 }

@@ -137,23 +137,53 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
           </TooltipTrigger>
           <TooltipContent>
             {stat === 'strength' ? (
-              <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
+              <div className="flex gap-4 items-center">
+                <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
+                <div>
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                </div>
+              </div>
             ) : stat === 'agility' ? (
-              <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
+              <div className="flex gap-4 items-center">
+                <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
+                <div>
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                </div>
+              </div>
             ) : stat === 'intellect' ? (
-              <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
+              <div className="flex gap-4 items-center">
+                <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
+                <div>
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                </div>
+              </div>
             ) : stat === 'stamina' ? (
-              <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
+              <div className="flex gap-4 items-center">
+                <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
+                <div>
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                </div>
+              </div>
             ) : stat === 'luck' ? (
-              <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
+              <div className="flex gap-4 items-center">
+                <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
+                <div>
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                </div>
+              </div>
             ) : (
-              <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
+              <div className="flex gap-4 items-center">
+                <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
+                <div>
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                </div>
+              </div>
             )}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <div className="flex w-1/3 items-center justify-center">
-        <Image width={50} height={50} src={`/${stat}.svg`} alt={`${stat} icon`} />
+        <Image width={50} height={50} src={`/plus_icon.png`} alt={`${stat} icon`} className="rounded-md cursor-pointer p-1 border border-slate-700 transition hover:bg-slate-700 bg-slate-600" />
       </div>
     </div>
   )

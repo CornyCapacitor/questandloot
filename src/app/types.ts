@@ -3,6 +3,7 @@ export type Player = {
   user_id: string,
   name: string,
   title: string | null,
+  description: string | null,
   profession: Profession,
   level: number,
   experience: number,
