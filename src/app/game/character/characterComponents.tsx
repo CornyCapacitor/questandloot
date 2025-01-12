@@ -333,6 +333,15 @@ const CharacterTestsSection = ({ className }: { className?: string }) => {
     })
   }
 
+  const handleResetGold = () => {
+    if (!player) return
+
+    updatePlayer({
+      ...player,
+      gold: 100
+    })
+  }
+
   if (player) return (
     <section className={`${className}`}>
       <Button onClick={() => handleAddGold()}>Add 1000 gold</Button>
@@ -340,6 +349,7 @@ const CharacterTestsSection = ({ className }: { className?: string }) => {
       <Button onClick={() => handleAddMaterial()}>Add 1 Test material (test)</Button>
       <Button onClick={() => handleResetPlayer()}>Reset player</Button>
       <Button onClick={() => handleResetMaterials()}>Reset materials</Button>
+      <Button onClick={() => handleResetGold()}>Reset gold</Button>
     </section>
   )
 }

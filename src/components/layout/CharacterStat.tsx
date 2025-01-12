@@ -1,14 +1,32 @@
 'use client'
 
+import { config } from "@/app/config"
 import { calculatePlayerAttributes } from "@/app/functions/characterCalculations"
 import { calculateArmorReduction, calculateCritChance, calculateDamage, calculatePlayerArmor, calculateTotalHP, calculateWeaponDamage } from "@/app/game/journey/combat/combatCalculations"
-import { Player } from "@/app/types"
+import { useSocket } from "@/app/middleware/SocketContext"
+import { Attributes, Player } from "@/app/types"
 import Image from "next/image"
+import { errorToast, successToast } from "../ui/toasts"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
+import GoldIcon from "./GoldIcon"
 
 type Stats = 'strength' | 'agility' | 'intellect' | 'stamina' | 'luck'
 
 const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player }) => {
+  const { updatePlayer } = useSocket()
+
+  const calculateAttributeCost = (attribute: keyof Attributes) => {
+    const currentAttribute = player.attributes[attribute]
+    const multiplyPower = currentAttribute - 10
+    const multiplier = config.attributeCostMultiplier
+
+    if (multiplyPower <= 0) {
+      return config.baseAttributeCost
+    }
+
+    return Math.floor(config.baseAttributeCost * Math.pow(multiplier, multiplyPower))
+  }
+
   const statDescriptions = {
     strength: {
       name: 'Strength',
@@ -110,6 +128,34 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
     )
   }
 
+  const attributeKeys: (keyof Attributes)[] = ['strength', 'agility', 'intellect', 'stamina', 'luck']
+
+  const handleRaiseAttribute = (attribute: keyof Attributes) => {
+    if (!player) return
+
+    const cost = calculateAttributeCost(attribute)
+
+    if (cost > player.gold) {
+      errorToast({
+        text: `Not enough money to upgrade ${attribute}.`
+      })
+      return
+    }
+
+    const attributes: Attributes = player.attributes
+    attributes[attribute] += 1
+
+    updatePlayer({
+      ...player,
+      attributes: attributes,
+      gold: player.gold - cost
+    })
+
+    successToast({
+      text: `Succesfully upgraded ${attribute}. Your gold should be now ${player.gold - cost}`
+    })
+  }
+
   return (
     <div className="flex w-full justify-between">
       <TooltipProvider>
@@ -183,7 +229,21 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
         </Tooltip>
       </TooltipProvider>
       <div className="flex w-1/3 items-center justify-center">
-        <Image width={50} height={50} src={`/plus_icon.png`} alt={`${stat} icon`} className="rounded-md cursor-pointer p-1 border border-slate-700 transition hover:bg-slate-700 bg-slate-600" />
+        {attributeKeys.map((key) => (
+          stat === key && (
+            <TooltipProvider key={key}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Image width={50} height={50} src={`/plus_icon.png`} alt={`${stat} icon`} className={`rounded-md cursor-pointer p-1 border border-slate-700 transition hover:bg-slate-700 bg-slate-600 ${calculateAttributeCost(stat) > player.gold ? 'grayscale' : ''}`} onClick={() => handleRaiseAttribute(stat)} />
+                </TooltipTrigger>
+                <TooltipContent className="flex items-center justify-center gap-2">
+                  <GoldIcon />
+                  <span className={`font-semibold ${calculateAttributeCost(stat) > player.gold ? 'text-red-500' : 'text-white'}`}>{calculateAttributeCost(stat)}</span>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )
+        ))}
       </div>
     </div>
   )

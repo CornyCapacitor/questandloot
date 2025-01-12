@@ -8,7 +8,11 @@ export const config = {
   // Quantity of randomized item options based on player level from equipment arrays
   itemsPerDraw: 3,
 
-  // Minimum and maximum of item's price
+  // Miltuplier of raising attribute level cost & base attribute cost
+  attributeCostMultiplier: 1.09,
+  baseAttributeCost: 10,
+
+  // Minimum and maximum of item's price, multiplied by level
   // formula: ___
   sellPrice: {
     min: 10,
