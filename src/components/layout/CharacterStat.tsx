@@ -2,6 +2,7 @@
 
 import { config } from "@/app/config"
 import { calculatePlayerAttributes } from "@/app/functions/characterCalculations"
+import { removeGold } from "@/app/functions/manageItems"
 import { calculateArmorReduction, calculateCritChance, calculateDamage, calculatePlayerArmor, calculateTotalHP, calculateWeaponDamage } from "@/app/game/journey/combat/combatCalculations"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { Attributes, Player } from "@/app/types"
@@ -148,11 +149,11 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
     updatePlayer({
       ...player,
       attributes: attributes,
-      gold: player.gold - cost
+      gold: removeGold(cost, player.gold)
     })
 
     successToast({
-      text: `Succesfully upgraded ${attribute}. Your gold should be now ${player.gold - cost}`
+      text: `Succesfully upgraded ${attribute}. Your gold should be now ${removeGold(cost, player.gold)}`
     })
   }
 

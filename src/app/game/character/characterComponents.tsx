@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { successToast } from "@/components/ui/toasts"
 import { useAtom } from "jotai"
 import Image from "next/image"
+import Link from "next/link"
 import { useState } from "react"
 
 export const CharacterEquipmentSection = ({ className }: { className?: string }) => {
@@ -71,10 +72,18 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
           <div className="flex flex-col flex-grow">
             <div className="w-full flex flex-shrink-0 items-center border-b h-8 justify-center bg-slate-900 text-orange-400 font-semibold text-lg text-center">{player.name}</div>
             <div className="flex flex-grow">
+
+              {/* Avatar */}
               <div className="w-full relative">
                 <Image src={`/assets/portraits/${player.image}`} layout="fill" objectFit="cover" alt="Player portrait" className="border-b border-slate-700" />
+                <Link href="/game/settings/portrait" className="absolute p-1 z-10 bottom-2 right-2 cursor-pointer group">
+                  <div className="absolute inset-0 bg-black rounded-md opacity-50 group-hover:opacity-75 transition"></div>
+                  <Image src="/edit.svg" width={50} height={50} alt="Edit button" className="relative" />
+                </Link>
               </div>
             </div>
+
+            {/* Experience bar */}
             <div className="w-full items-center h-8 flex flex-shrink-0 justify-center">
               <ExperienceBar />
             </div>
