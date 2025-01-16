@@ -215,10 +215,10 @@ const PotionDescription = ({ item, shop }: { item: Potion, shop?: Shops }) => {
       <div className="flex gap-1">
         {shop ? (
           <>
-            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h2>
           </>
         ) : (
-          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h1>
         )}
       </div>
     </div>
@@ -252,10 +252,10 @@ const WeaponDescription = ({ item, shop }: { item: Weapon, shop?: Shops }) => {
       <div className="flex gap-1">
         {shop ? (
           <>
-            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h2>
           </>
         ) : (
-          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h1>
         )}
       </div>
     </div>
@@ -289,10 +289,10 @@ const ArmorDescription = ({ item, shop }: { item: Armor, shop?: Shops }) => {
       <div className="flex gap-1">
         {shop ? (
           <>
-            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h2>
           </>
         ) : (
-          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h1>
         )}
       </div>
     </div>
@@ -326,10 +326,10 @@ const ShieldDescription = ({ item, shop }: { item: Shield, shop?: Shops }) => {
       <div className="flex gap-1">
         {shop ? (
           <>
-            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h2>
           </>
         ) : (
-          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h1>
         )}
       </div>
     </div>
@@ -362,10 +362,10 @@ const JeweleryDescription = ({ item, shop }: { item: Jewelery, shop?: Shops }) =
       <div className="flex gap-1">
         {shop ? (
           <>
-            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h2>
+            <h2 className="flex gap-1 justify-center">Buy price: {item.sellPrice * 4} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h2>
           </>
         ) : (
-          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" /></h1>
+          <h1 className="flex gap-1 justify-center">Sell price: {item.sellPrice} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h1>
         )}
       </div>
     </div>

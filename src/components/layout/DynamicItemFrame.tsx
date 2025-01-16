@@ -5,7 +5,7 @@ import Image from 'next/image'
 const DynamicItemFrame = ({ itemData, player, width, height }: { itemData: Items, player: Player, width: number, height: number }) => {
   const BaseImage = ({ src }: { src: string }) => {
     return (
-      <Image src={src} alt={itemData.name || "item"} width={width} height={height} className={`border ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} />
+      <Image src={src} alt={itemData.name || "item"} width={width} height={height} className={`border ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} unoptimized />
     )
   }
 

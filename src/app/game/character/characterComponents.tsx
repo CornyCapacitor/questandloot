@@ -35,7 +35,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.equipment.head ? (
               <ItemFrame itemData={player.equipment.head} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
-              <Image src="/assets/equipment/slots/headslot.svg" layout="fill" alt="Head slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+              <Image src="/assets/equipment/slots/headslot.svg" layout="fill" alt="Head slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
             )}
           </div>
 
@@ -44,7 +44,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.equipment.neck ? (
               <ItemFrame itemData={player.equipment.neck} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
-              <Image src="/assets/equipment/slots/neckslot.svg" layout="fill" alt="Neck slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+              <Image src="/assets/equipment/slots/neckslot.svg" layout="fill" alt="Neck slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
             )}
           </div>
 
@@ -53,7 +53,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.equipment.chest ? (
               <ItemFrame itemData={player.equipment.chest} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
-              <Image src="/assets/equipment/slots/chestslot.svg" layout="fill" alt="Chest slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+              <Image src="/assets/equipment/slots/chestslot.svg" layout="fill" alt="Chest slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
             )}
           </div>
 
@@ -62,7 +62,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.equipment.ring ? (
               <ItemFrame itemData={player.equipment.ring} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
-              <Image src="/assets/equipment/slots/ringslot.svg" layout="fill" alt="Ring slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+              <Image src="/assets/equipment/slots/ringslot.svg" layout="fill" alt="Ring slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
             )}
           </div>
         </div>
@@ -75,7 +75,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
 
               {/* Avatar */}
               <div className="w-full relative">
-                <Image src={`/assets/portraits/${player.image}`} layout="fill" objectFit="cover" alt="Player portrait" className="border-b border-slate-700" />
+                <Image src={`/assets/portraits/${player.image}`} layout="fill" objectFit="cover" alt="Player portrait" className="border-b border-slate-700" unoptimized />
                 <Link href="/game/settings/portrait" className="absolute p-1 z-10 bottom-2 right-2 cursor-pointer group">
                   <div className="absolute inset-0 bg-black rounded-md opacity-50 group-hover:opacity-75 transition"></div>
                   <Image src="/edit.svg" width={50} height={50} alt="Edit button" className="relative" />
@@ -96,7 +96,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
               {player.equipment.weapon ? (
                 <ItemFrame itemData={player.equipment.weapon} isClickable={true} isEquipped={true} width={100} height={100} />
               ) : (
-                <Image src="/assets/equipment/slots/primaryslot.svg" layout="fill" alt="Primary slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+                <Image src="/assets/equipment/slots/primaryslot.svg" layout="fill" alt="Primary slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
               )}
             </div>
 
@@ -106,7 +106,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
                 {player.equipment.shield ? (
                   <ItemFrame itemData={player.equipment.shield} isClickable={true} isEquipped={true} width={100} height={100} />
                 ) : (
-                  <Image src="/assets/equipment/slots/secondaryslot.svg" layout="fill" alt="Secondary slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+                  <Image src="/assets/equipment/slots/secondaryslot.svg" layout="fill" alt="Secondary slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
                 )}
               </div>
             )}
@@ -121,7 +121,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.equipment.hands ? (
               <ItemFrame itemData={player.equipment.hands} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
-              <Image src="/assets/equipment/slots/handsslot.svg" layout="fill" alt="Hands slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+              <Image src="/assets/equipment/slots/handsslot.svg" layout="fill" alt="Hands slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
             )}
           </div>
 
@@ -130,7 +130,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.equipment.belt ? (
               <ItemFrame itemData={player.equipment.belt} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
-              <Image src="/assets/equipment/slots/beltslot.svg" layout="fill" alt="Belt slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+              <Image src="/assets/equipment/slots/beltslot.svg" layout="fill" alt="Belt slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
             )}
           </div>
 
@@ -139,7 +139,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.equipment.legs ? (
               <ItemFrame itemData={player.equipment.legs} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
-              <Image src="/assets/equipment/slots/legsslot.svg" layout="fill" alt="Legs slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+              <Image src="/assets/equipment/slots/legsslot.svg" layout="fill" alt="Legs slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
             )}
           </div>
 
@@ -148,7 +148,7 @@ export const CharacterEquipmentSection = ({ className }: { className?: string })
             {player.equipment.feet ? (
               <ItemFrame itemData={player.equipment.feet} isClickable={true} isEquipped={true} width={100} height={100} />
             ) : (
-              <Image src="/assets/equipment/slots/feetslot.svg" layout="fill" alt="Feet slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" />
+              <Image src="/assets/equipment/slots/feetslot.svg" layout="fill" alt="Feet slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
             )}
           </div>
         </div>
@@ -274,7 +274,7 @@ const CharacterMaterialsSection = ({ className }: { className?: string }) => {
     <section className={`flex-col ${className}`}>
       <div className="border-b border-slate-700 flex justify-between items-center p-2 w-full">
         <div className="flex gap-3 items-center">
-          <Image src="/question_mark.png" width={50} height={50} alt="question mark" className="border rounded-md border-slate-700" />
+          <Image src="/question_mark.png" width={50} height={50} alt="question mark" className="border rounded-md border-slate-700" unoptimized />
           <p>Material name</p>
         </div>
         <p className="w-[80px] text-center">Quantity</p>

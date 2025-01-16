@@ -140,7 +140,7 @@ const CombatPage = () => {
       {/* Attacker section */}
       <section id="attacker-section" className="w-full flex items-center flex-col p-2 max-w-[300px] border">
         <div className="relative w-full h-auto aspect-square border">
-          <Image src={`/assets/portraits/${character1?.image}`} alt="Monster image" fill className="object-cover" />
+          <Image src={`/assets/portraits/${character1?.image}`} alt="Monster image" fill className="object-cover" unoptimized />
         </div>
         <h1>{character1?.name}</h1>
         <h1>Level: {character1?.level}</h1>
@@ -170,11 +170,11 @@ const CombatPage = () => {
               <h1>Loot:</h1>
               <h1 className="flex gap-1 justify-center">
                 Gold: {gold ?? 0}
-                <Image width={20} height={20} src="/coin.svg" alt="Gold coin" />
+                <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized />
               </h1>
               <h1 className="flex gap-1 justify-center">
                 Exp: {experience ?? 0}
-                <Image width={20} height={20} src="/experience.svg" alt="Experience" />
+                <Image width={20} height={20} src="/experience.svg" alt="Experience" unoptimized />
               </h1>
               <div className="flex gap-2 w-full justify-center pt-5 flex-wrap">
                 {loot.map((item, index) => (
@@ -197,7 +197,7 @@ const CombatPage = () => {
       {/* Defender section */}
       <section className="w-full flex items-center flex-col p-2 max-w-[300px] border">
         <div className="relative w-full h-auto aspect-square border">
-          <Image src={`/assets/portraits/${character2?.image}`} alt="Monster image" fill className="object-cover invertX" />
+          <Image src={`/assets/portraits/${character2?.image}`} alt="Monster image" fill className="object-cover invertX" unoptimized />
         </div>
         <h1>{character2?.name}</h1>
         <h1>Level: {character2?.level}</h1>

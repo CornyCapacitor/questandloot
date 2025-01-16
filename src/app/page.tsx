@@ -229,7 +229,7 @@ export default function Home() {
         }
       </section >
       <section className="h-full p-2 flex flex-grow items-center justify-center">
-        <Image src="/logo_enlarged.png" width={700} height={700} alt="Quest & Loot logo" />
+        <Image src="/logo_enlarged.png" width={700} height={700} alt="Quest & Loot logo" unoptimized />
       </section>
     </div >
   );

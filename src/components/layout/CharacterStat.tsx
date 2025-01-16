@@ -187,42 +187,42 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
               <div className="flex gap-4 items-center">
                 <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
                 <div>
-                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" unoptimized />
                 </div>
               </div>
             ) : stat === 'agility' ? (
               <div className="flex gap-4 items-center">
                 <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
                 <div>
-                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" unoptimized />
                 </div>
               </div>
             ) : stat === 'intellect' ? (
               <div className="flex gap-4 items-center">
                 <StrengthAgilityIntellect stat={stat} header={true} className="flex gap-1" />
                 <div>
-                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" unoptimized />
                 </div>
               </div>
             ) : stat === 'stamina' ? (
               <div className="flex gap-4 items-center">
                 <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
                 <div>
-                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" unoptimized />
                 </div>
               </div>
             ) : stat === 'luck' ? (
               <div className="flex gap-4 items-center">
                 <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
                 <div>
-                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" unoptimized />
                 </div>
               </div>
             ) : (
               <div className="flex gap-4 items-center">
                 <StaminaLuckArmor stat={stat} header={true} className="flex gap-1" />
                 <div>
-                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" />
+                  <Image src={`/assets/attributes/${stat}.png`} alt={`${stat} icon`} width={50} height={50} className="rounded-md border" unoptimized />
                 </div>
               </div>
             )}

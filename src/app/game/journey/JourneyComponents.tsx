@@ -21,7 +21,7 @@ export const JourneyCard = ({ location, startJourney }: { location: Location, st
   return (
     <div key={location.name} className="p-2 flex flex-col w-[350px] h-[350px] bg-slate-800 gap-2 items-center justify-between rounded-sm">
       <h1 className="font-semibold text-orange-400">{location.name}</h1>
-      <Image width={200} height={200} alt="Journey image" src={`/assets/journeys/${location.image}`} className="rounded-md" />
+      <Image width={200} height={200} alt="Journey image" src={`/assets/journeys/${location.image}`} className="rounded-md" unoptimized />
       <div className="flex flex-col gap-1 w-[50%]">
         <Select onValueChange={(value) => setTime(value)}>
           <SelectTrigger className="w-full focus:outline-none focus:ring-2 focus:ring-orange-400 hover:bg-gray-700 transition" >
@@ -86,7 +86,7 @@ export const JourneyDisplay = ({ remainingTime }: { remainingTime: number | null
 
   if (player && player.activeJourney) return (
     <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
-      <Image src={`/assets/journeys/${player.activeJourney.location.image}`} width={300} height={300} alt={player.activeJourney.location.name} />
+      <Image src={`/assets/journeys/${player.activeJourney.location.image}`} width={300} height={300} alt={player.activeJourney.location.name} unoptimized />
       <h1>{player.activeJourney.location.name}</h1>
       <div className="relative w-[80%] h-8 flex items-center">
         <Progress
