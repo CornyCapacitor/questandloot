@@ -158,7 +158,7 @@ const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
 
     return (
       <section className={`flex content-start flex-grow h-full gap-2 border-slate-700 overflow-y-auto flex-col justify-center items-center p-2 ${className}`}>
-        <Image src="/assets/portraits/blacksmith.png" width={256} height={256} alt="Merchant" className="p-2" unoptimized />
+        <Image src="/assets/portraits/dwarf/dwarf43.png" width={256} height={256} alt="Merchant" className="p-2" unoptimized />
         <div className="grid gap-5 grid-cols-3 p-2">
           {player.shop.blacksmith.items.map((item, index) =>
             item !== null ? (
@@ -178,7 +178,7 @@ const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
 
     return (
       <section className={`flex content-start flex-grow h-full gap-2 border-slate-700 overflow-y-auto flex-col justify-center items-center p-2 ${className}`}>
-        <Image src="/assets/portraits/alchemist.png" width={256} height={256} alt="Merchant" className="p-2" unoptimized />
+        <Image src="/assets/portraits/human/human22.png" width={256} height={256} alt="Merchant" className="p-2" unoptimized />
         <div className="grid gap-5 grid-cols-3 p-2">
           {player.shop.alchemist.items.map((item, index) =>
             item !== null ? (
