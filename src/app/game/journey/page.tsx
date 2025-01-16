@@ -18,31 +18,19 @@ const JourneyPage = () => {
   const locations: { name: string, image: string }[] = [
     {
       name: 'Dark Forest',
-      image: 'darkforest.png'
+      image: 'dark_forest.png'
     },
     {
-      name: 'High mountains',
-      image: 'placeholder.svg'
+      name: 'Pirate cove',
+      image: 'pirate_cove.png'
     },
     {
-      name: 'Volcano',
-      image: 'placeholder.svg'
+      name: 'Abandoned mines',
+      image: 'abandoned_mines.png'
     },
     {
-      name: 'Something',
-      image: 'placeholder.svg'
-    },
-    {
-      name: 'Something',
-      image: 'placeholder.svg'
-    },
-    {
-      name: 'Something',
-      image: 'placeholder.svg'
-    },
-    {
-      name: 'Something',
-      image: 'placeholder.svg'
+      name: 'Abandoned wizard tower',
+      image: 'abandoned_wizard_tower.png'
     }
   ]
 
