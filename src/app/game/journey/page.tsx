@@ -3,7 +3,7 @@
 import { config } from "@/app/config"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
-import { Journey, Location, Player } from "@/app/types"
+import { Journey, Player, Zone } from "@/app/types"
 import { pendingToast, successToast } from "@/components/ui/toasts"
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
@@ -15,21 +15,21 @@ const JourneyPage = () => {
   const { updatePlayer } = useSocket()
   const [, setIsCombatReady] = useAtom(combatReadyAtom)
   const [remainingTime, setRemainingTime] = useState<number | null>(null)
-  const locations: { name: string, image: string }[] = [
+  const zones: { name: string, image: string }[] = [
     {
-      name: 'Dark Forest',
+      name: 'dark_forest',
       image: 'dark_forest.png'
     },
     {
-      name: 'Pirate cove',
+      name: 'pirate_cove',
       image: 'pirate_cove.png'
     },
     {
-      name: 'Abandoned mines',
+      name: 'abandoned_mines',
       image: 'abandoned_mines.png'
     },
     {
-      name: 'Abandoned wizard tower',
+      name: 'abandoned_wizard_tower',
       image: 'abandoned_wizard_tower.png'
     }
   ]
@@ -67,7 +67,7 @@ const JourneyPage = () => {
     }
   }, [player, router, setIsCombatReady]);
 
-  const startJourney = (location: Location, time: number) => {
+  const startJourney = (zone: Zone, time: number) => {
     if (!player) return
 
     let valueMultiplier = config.availableTimeOptions.multipliers[0]
@@ -103,7 +103,7 @@ const JourneyPage = () => {
     }
 
     const journey: Journey = {
-      location,
+      zone,
       valueMultiplier,
       startDate: new Date(Date.now()),
       returnDate: new Date(Date.now() + time * 1000 * 60) // date now + time * minutes
@@ -124,8 +124,8 @@ const JourneyPage = () => {
 
   return (
     <div className="w-full h-full flex flex-wrap justify-center content-start p-2 gap-2 overflow-y-auto">
-      {locations.map((location, index) => (
-        <JourneyCard key={index} location={location} startJourney={startJourney} />
+      {zones.map((zone, index) => (
+        <JourneyCard key={index} zone={zone} startJourney={startJourney} />
       ))}
     </div>
   )

@@ -33,13 +33,13 @@ export type Attributes = {
 }
 
 export type Journey = {
-  location: Location,
+  zone: Zone,
   valueMultiplier: number,
   startDate: Date,
   returnDate: Date
 } | null
 
-export type Location = {
+export type Zone = {
   name: string,
   image: string
 }
@@ -252,10 +252,10 @@ export type Loot = {
   epic: number[] | null
 }
 
-export type MonsterArray = {
+export type MonsterInfo = {
   name: string,
   image: string,
-  family: string,
+  zone: string,
   loot: Loot
 }
 

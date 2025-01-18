@@ -41,7 +41,7 @@ const CombatPage = () => {
 
   // Page preparation & perform combat
   useEffect(() => {
-    if (!character1 || !character1.activeJourney || !isCombatReady || !character2 || isInitialized) return
+    if (!character1 || !character1.activeJourney || !character1.activeJourney.zone || !isCombatReady || !character2 || isInitialized) return
 
     const combatResult = combat(character1, character2, character1.activeJourney.valueMultiplier)
     const log = combatResult.combatLog
@@ -83,8 +83,8 @@ const CombatPage = () => {
 
   // Apply monster for a combat
   useEffect(() => {
-    if (!character1 || !isCombatReady || character2 || isInitialized) return
-    setCharacter2(generateMonster(character1.level))
+    if (!character1 || !isCombatReady || !character1.activeJourney || character2 || isInitialized) return
+    setCharacter2(generateMonster(character1.level, character1.activeJourney.zone.name))
   }, [character1, character2, isCombatReady, isInitialized])
 
   // Message for player when page isnt initialized

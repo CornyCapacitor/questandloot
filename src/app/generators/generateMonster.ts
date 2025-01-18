@@ -1,7 +1,7 @@
 import { config } from "../config"
 import { monsterList } from "../db/monsterList"
 import { calculateResistances, calculateTotalHP, random } from "../game/journey/combat/combatCalculations"
-import { Attributes, Damage, Monster, MonsterArray, Profession, Resistances } from "../types"
+import { Attributes, Damage, Monster, MonsterInfo, Profession, Resistances } from "../types"
 
 const calculateMonsterStats = (level: number) => {
   const attributes: Attributes = {
@@ -26,8 +26,9 @@ const calculateMonsterStats = (level: number) => {
   }
 }
 
-const randomizeMonster = () => {
-  return monsterList[random(0, (monsterList.length - 1))]
+const randomizeMonster = (zone: string) => {
+  const zoneArray = monsterList[zone]
+  return zoneArray[random(0, (zoneArray.length - 1))]
 }
 
 const randomizeProfession = () => {
@@ -36,8 +37,8 @@ const randomizeProfession = () => {
   return professions[Math.floor(Math.random() * professions.length)]
 }
 
-export const generateMonster = (_level: number): Monster => {
-  const chosenMonster: MonsterArray = randomizeMonster()
+export const generateMonster = (_level: number, zone: string): Monster => {
+  const chosenMonster: MonsterInfo = randomizeMonster(zone)
 
   const level: number = _level
   const profession: Profession = randomizeProfession()

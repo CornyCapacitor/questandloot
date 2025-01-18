@@ -1,70 +1,76 @@
-import { MonsterArray } from "../types";
+import { MonsterInfo } from "../types";
 
-export const monsterList: MonsterArray[] = [
-  {
-    name: 'Frost Golem',
-    image: 'frost_golem.png',
-    family: 'mountains',
-    loot: {
-      common: [
-        // Test materials
-        201,
-        202,
-        203
-      ],
-      uncommon: [
-        1 // Random common item
-      ],
-      rare: [
-        2 // Rnadom uncommon item
-      ],
-      epic: [
-        3 // Random rare item
-      ]
+// 1-3 are common-rare item drops (armour, weapon, potions etc.)
+// 200-299 are materials
+
+export const monsterList: Record<string, MonsterInfo[]> = {
+  dark_forest: [
+    {
+      name: 'Angry Gnome',
+      image: 'gnome.png',
+      zone: 'forest',
+      loot: {
+        common: [
+          201,
+          202,
+          203
+        ],
+        uncommon: [
+          1
+        ],
+        rare: [
+          2
+        ],
+        epic: [
+          3
+        ]
+      }
+    },
+  ],
+  abandoned_mines: [
+    {
+      name: 'Frost Golem',
+      image: 'frost_golem.png',
+      zone: 'mountains',
+      loot: {
+        common: [
+          201,
+          202,
+          203
+        ],
+        uncommon: [
+          1
+        ],
+        rare: [
+          2
+        ],
+        epic: [
+          3
+        ]
+      }
+    },
+  ],
+  abandoned_wizard_tower: [
+    {
+      name: 'Flying Skull',
+      image: 'skull.png',
+      zone: 'graveyard',
+      loot: {
+        common: [
+          201,
+          202,
+          203
+        ],
+        uncommon: [
+          1
+        ],
+        rare: [
+          2
+        ],
+        epic: [
+          3
+        ]
+      }
     }
-  },
-  {
-    name: 'Angry Gnome',
-    image: 'gnome.png',
-    family: 'forest',
-    loot: {
-      common: [
-        // Test materials
-        201,
-        202,
-        203
-      ],
-      uncommon: [
-        1 // Random common item
-      ],
-      rare: [
-        2 // Rnadom uncommon item
-      ],
-      epic: [
-        3 // Random rare item
-      ]
-    }
-  },
-  {
-    name: 'Flying Skull',
-    image: 'skull.png',
-    family: 'graveyard',
-    loot: {
-      common: [
-        // Test materials
-        201,
-        202,
-        203
-      ],
-      uncommon: [
-        1 // Random common item
-      ],
-      rare: [
-        2 // Rnadom uncommon item
-      ],
-      epic: [
-        3 // Random rare item
-      ]
-    }
-  }
-]
+  ]
+}
