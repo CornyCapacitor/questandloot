@@ -181,7 +181,7 @@ const generateJewelery = (level: number, quality: Quality, slot: JewelerySlot): 
 const randomizeItemType = (profession: Profession, storeType?: 'blacksmith' | 'alchemist'): string => {
   switch (storeType) {
     case 'blacksmith': {
-      const blacksmithStore: ('weapon' | 'head' | 'chest' | 'hands' | 'legs' | 'feet' | 'shield')[] = ['weapon', 'head', 'chest', 'hands', 'legs', 'feet'];
+      const blacksmithStore = ['weapon', 'head', 'chest', 'hands', 'legs', 'feet', 'belt'];
 
       if (profession === 'warrior') blacksmithStore.push('shield')
 
@@ -215,7 +215,7 @@ export const generateRandomEquipment = (level: number, profession: Profession, q
   } else if (slot === 'ring' || slot === 'neck') {
     const jewelery = generateJewelery(level, quality, slot)
     return jewelery
-  } else if (slot === 'head' || slot === 'chest' || slot === 'hands' || slot === 'legs' || slot === 'feet') {
+  } else if (slot === 'head' || slot === 'chest' || slot === 'hands' || slot === 'legs' || slot === 'feet' || slot === 'belt') {
     const armor = generateArmor(level, profession, quality, slot)
     return armor
   } else {
