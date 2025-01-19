@@ -307,7 +307,9 @@ const CharacterTestsSection = ({ className }: { className?: string }) => {
   const handleAddMaterial = () => {
     if (!player) return
 
-    const material: Material = item_list[201] as Material
+    const id = Math.floor((Math.random() * 9) + 201)
+
+    const material: Material = item_list[id] as Material
     const newMaterials = addMaterial(material, player.materials)
 
     updatePlayer({
