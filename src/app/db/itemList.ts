@@ -10,6 +10,15 @@ export const item_list: { [key: number]: Material | StringRepresentatives } = {
   5: "RANDOM_UNCOMMON_POTION",
   6: "RANDOM_RARE_POTION",
   7: "RANDOM_EPIC_POTION",
+  200: {
+    id: 200,
+    name: "Test Material 0",
+    description: "Test Material Description",
+    image: "placeholderMaterial.svg",
+    quality: "common",
+    type: "material",
+    sellPrice: 0
+  },
   201: {
     id: 201,
     name: "Test Material 1",

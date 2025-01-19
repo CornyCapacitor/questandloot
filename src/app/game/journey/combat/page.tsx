@@ -1,6 +1,7 @@
 'use client'
 
 import { calculatePlayerAttributes } from "@/app/functions/characterCalculations"
+import { getFolderName } from "@/app/functions/getFolderName"
 import { applyLoot } from "@/app/functions/manageItems"
 import { generateLoot } from "@/app/generators/generateLoot"
 import { generateMonster } from "@/app/generators/generateMonster"
@@ -135,12 +136,12 @@ const CombatPage = () => {
     )
   }
 
-  return (
+  if (character1 && character2) return (
     <main className="p-2 flex w-full h-full">
       {/* Attacker section */}
       <section id="attacker-section" className="w-full flex items-center flex-col p-2 max-w-[300px] border">
         <div className="relative w-full h-auto aspect-square border">
-          <Image src={`/assets/portraits/${character1?.image}`} alt="Monster image" fill className="object-cover" unoptimized />
+          <Image src={`/assets/portraits/${character1.image}`} alt="Player image" fill className="object-cover" unoptimized />
         </div>
         <h1>{character1?.name}</h1>
         <h1>Level: {character1?.level}</h1>
@@ -197,7 +198,7 @@ const CombatPage = () => {
       {/* Defender section */}
       <section className="w-full flex items-center flex-col p-2 max-w-[300px] border">
         <div className="relative w-full h-auto aspect-square border">
-          <Image src={`/assets/portraits/${character2?.image}`} alt="Monster image" fill className="object-cover invertX" unoptimized />
+          <Image src={`/assets/portraits/${getFolderName(character2.image)}/${character2.image}`} alt="Monster image" fill className="object-cover invertX" unoptimized />
         </div>
         <h1>{character2?.name}</h1>
         <h1>Level: {character2?.level}</h1>

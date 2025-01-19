@@ -29,8 +29,8 @@ const JourneyPage = () => {
       image: 'abandoned_mines.png'
     },
     {
-      name: 'abandoned_wizard_tower',
-      image: 'abandoned_wizard_tower.png'
+      name: 'cursed_wizard_tower',
+      image: 'cursed_wizard_tower.png'
     }
   ]
 

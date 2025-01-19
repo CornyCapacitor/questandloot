@@ -255,7 +255,6 @@ export type Loot = {
 export type MonsterInfo = {
   name: string,
   image: string,
-  zone: string,
   loot: Loot
 }
 
