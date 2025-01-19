@@ -2,6 +2,7 @@
 
 import { item_list } from "@/app/db/itemList"
 import { addMaterial } from "@/app/functions/manageItems"
+import { formatTime } from "@/app/functions/time"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { playerAtom } from "@/app/state/atoms"
 import { Material, Player } from "@/app/types"
@@ -10,13 +11,15 @@ import { ExperienceBar } from "@/components/layout/ExperienceBar"
 import { ItemFrame } from "@/components/layout/ItemFrame"
 import { MaterialRow } from "@/components/layout/Material"
 import { TabButton } from "@/components/layout/TabButton"
+import { questionAlert } from "@/components/ui/alerts"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { successToast } from "@/components/ui/toasts"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export const CharacterEquipmentSection = ({ className }: { className?: string }) => {
   const [player] = useAtom(playerAtom)
@@ -192,6 +195,68 @@ export const CharacterInformation = ({ player }: { player: Player }) => {
     )
   }
 
+  const ActivePotion = () => {
+    const { updatePlayer } = useSocket()
+    const [timeLeft, setTimeLeft] = useState<number | null>(null)
+
+    useEffect(() => {
+      if (!player || !player.activePotion) {
+        setTimeLeft(null)
+        return
+      }
+
+      const updateRemainingTime = () => {
+        if (!player.activePotion) return
+        const expiringDate = new Date(player.activePotion.expiringDate).getTime()
+        const timeLeft = (expiringDate - Date.now()) / 1000
+        setTimeLeft(timeLeft > 0 ? timeLeft : 0)
+      }
+
+      updateRemainingTime();
+
+      const intervalId = setInterval(updateRemainingTime, 1000);
+
+      return () => clearInterval(intervalId)
+    }, [player.activePotion]);
+
+    const handleRemovePotion = () => {
+      if (!player || !player.activePotion || !timeLeft) return
+      questionAlert({
+        text: `Are you sure you want to cancel the effect of ${player.activePotion.potion.name}? You still have ${formatTime(timeLeft).uniText} left of it.`,
+        confirmFunction: () => {
+          return updatePlayer({
+            ...player,
+            activePotion: null
+          })
+        },
+        cancelFunction: () => {
+          return
+        }
+      })
+    }
+
+    if (player) return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger onClick={() => handleRemovePotion()}>
+            <Image src={`/assets/potions/${player.activePotion ? player.activePotion.potion.image : 'strength_potion.png'}`} alt="Player potion" width={70} height={70} className={`rounded-full bg-slate-600 ring ring-orange-500 hover:bg-slate-700 transition p-1 ${player.activePotion ? '' : 'grayscale'}`} />
+          </TooltipTrigger>
+          <TooltipContent>
+            {player.activePotion ? (
+              <div className="flex flex-col items-start">
+                <h1 className="text-orange-500 font-semibold">{player.activePotion.potion.name}</h1>
+                <h2 className="max-w-[250px]">{player.activePotion.potion.description}</h2>
+                <h3 className="">Time left: {formatTime((new Date(player.activePotion.expiringDate).getTime() - Date.now()) / 1000).uniText}</h3>
+              </div>
+            ) : (
+              <div className="max-w-[250px]">Here you can preview your active potion. You can buy potions straight from an alchemist or find one during your journeys.</div>
+            )}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    )
+  }
+
   const HeroTab = () => {
     const [playerDescription, setPlayerDescription] = useState(player.description)
     const { updatePlayer } = useSocket()
@@ -224,7 +289,14 @@ export const CharacterInformation = ({ player }: { player: Player }) => {
     <section className="flex flex-col flex-grow border-t border-slate-700">
       <Tabs />
       {currentTab === 'attributes' ? (
-        <AttributesTab />
+        <>
+          <AttributesTab />
+          <div className="flex flex-grow justify-end items-end px-3 py-1">
+            <div className="max-w-[70px]">
+              <ActivePotion />
+            </div>
+          </div>
+        </>
       ) : currentTab === 'hero' ? (
         <HeroTab />
       ) : null}
@@ -331,7 +403,8 @@ const CharacterTestsSection = ({ className }: { className?: string }) => {
         intellect: 10,
         stamina: 10,
         luck: 10
-      }
+      },
+      activePotion: null
     })
   }
 
