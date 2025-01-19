@@ -198,6 +198,15 @@ export const CharacterInformation = ({ player }: { player: Player }) => {
     const { updatePlayer } = useSocket()
     const [timeLeft, setTimeLeft] = useState<number | null>(null)
 
+    const removePotion = () => {
+      if (!player) return
+
+      updatePlayer({
+        ...player,
+        activePotion: null
+      })
+    }
+
     useEffect(() => {
       if (!player || !player.activePotion) {
         setTimeLeft(null)
@@ -208,6 +217,7 @@ export const CharacterInformation = ({ player }: { player: Player }) => {
         if (!player.activePotion) return
         const expiringDate = new Date(player.activePotion.expiringDate).getTime()
         const timeLeft = (expiringDate - Date.now()) / 1000
+        if (timeLeft < 0) removePotion()
         setTimeLeft(timeLeft > 0 ? timeLeft : 0)
       }
 
@@ -426,6 +436,30 @@ const CharacterTestsSection = ({ className }: { className?: string }) => {
     })
   }
 
+  const applyTestPotion = () => {
+    if (!player) return
+
+    updatePlayer({
+      ...player,
+      activePotion: {
+        expiringDate: new Date(Date.now() + 1 * 1000 * 15),
+        potion: {
+          id: 'testid',
+          description: "Test potion",
+          enchancing: {
+            attribute: 'strength',
+            value: 10
+          },
+          image: "lesser_strength_potion.png",
+          name: "Test potion",
+          quality: 'rare',
+          sellPrice: 12,
+          type: 'potion'
+        }
+      }
+    })
+  }
+
   if (player) return (
     <section className={`${className}`}>
       <Button onClick={() => handleAddGold()}>Add 1000 gold</Button>
@@ -434,6 +468,7 @@ const CharacterTestsSection = ({ className }: { className?: string }) => {
       <Button onClick={() => handleResetPlayer()}>Reset player</Button>
       <Button onClick={() => handleResetMaterials()}>Reset materials</Button>
       <Button onClick={() => handleResetGold()}>Reset gold</Button>
+      <Button onClick={() => applyTestPotion()}>Apply test potion</Button>
     </section>
   )
 }
