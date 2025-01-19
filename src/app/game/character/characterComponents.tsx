@@ -239,7 +239,8 @@ export const CharacterInformation = ({ player }: { player: Player }) => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger onClick={() => handleRemovePotion()}>
-            <Image src={`/assets/potions/${player.activePotion ? player.activePotion.potion.image : 'strength_potion.png'}`} alt="Player potion" width={70} height={70} className={`rounded-full bg-slate-600 ring ring-orange-500 hover:bg-slate-700 transition p-1 ${player.activePotion ? '' : 'grayscale'}`} />
+            {/* This is awful, I know, but tried different approaches and it had multiple problems everytime, so I went straightforward with jsx */}
+            <Image src={`/assets/potions/${player.activePotion ? player.activePotion.potion.image : 'strength_potion.png'}`} alt="Player potion" width={70} height={70} className={`rounded-full bg-slate-600 ring ${player.activePotion ? `${player.activePotion.potion.enchancing.attribute === 'strength' ? 'ring-red-500' : player.activePotion.potion.enchancing.attribute === 'agility' ? 'ring-green-500' : player.activePotion.potion.enchancing.attribute === 'intellect' ? 'ring-blue-500' : player.activePotion.potion.enchancing.attribute === 'stamina' ? 'ring-purple-500' : 'ring-yellow-500'}` : 'ring-orange-500'} hover:bg-slate-700 transition p-1 ${player.activePotion ? '' : 'grayscale'}`} />
           </TooltipTrigger>
           <TooltipContent>
             {player.activePotion ? (
