@@ -178,7 +178,6 @@ export const CharacterInformation = ({ player }: { player: Player }) => {
   const AttributesTab = () => {
     if (player) return (
       <div className="py-2 pl-2 flex flex-col items-between">
-        <span className="font-semibold text-orange-300 self-center">Level: {player.level}</span>
         <div className="flex h-full w-full">
           <div className="flex flex-col gap-2 flex-1">
             <CharacterStat stat="strength" player={player} />

@@ -164,7 +164,7 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
           <TooltipTrigger className="flex flex-col w-2/3">
             <div className="w-full flex justify-between text-orange-300 font-semibold">
               <h1>{statDescriptions[stat].name}:</h1>
-              <span>{stat !== 'armor' ? calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion)[stat] : calculatePlayerArmor(player.equipment)}</span>
+              <span>{Math.floor(stat !== 'armor' ? calculatePlayerAttributes(player.equipment, player.attributes, player.activePotion)[stat] : calculatePlayerArmor(player.equipment))}</span>
             </div>
             <div className="w-full">
               {stat === 'strength' ? (
