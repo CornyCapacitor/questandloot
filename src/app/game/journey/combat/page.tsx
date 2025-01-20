@@ -14,7 +14,6 @@ import { useAtom } from "jotai"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { combat } from "./combat"
-import { calculateGold } from "./combatCalculations"
 import { parseCombatLog } from "./combatLogParser"
 
 type FinishedCombatType = {
@@ -39,12 +38,13 @@ const CombatPage = () => {
   const [isInitialized, setIsInitialized] = useState(false)
   const [showMessage, setShowMessage] = useState(false)
   const [isCombatReady, setIsCombatReady] = useAtom(combatReadyAtom)
+  const [dungeon] = useState(false)
 
   // Page preparation & perform combat
   useEffect(() => {
     if (!character1 || !character1.activeJourney || !character1.activeJourney.zone || !isCombatReady || !character2 || isInitialized) return
 
-    const combatResult = combat(character1, character2, character1.activeJourney.valueMultiplier)
+    const combatResult = combat(character1, character2, character1.activeJourney.valueMultiplier, dungeon)
     const log = combatResult.combatLog
     const parsedLog = parseCombatLog(log)
     const char1Attributes = calculatePlayerAttributes(character1.equipment, character1.attributes, character1.activePotion)
@@ -57,7 +57,7 @@ const CombatPage = () => {
     setCharacter2Attributes(char2Attributes ? char2Attributes : null)
 
     const earnedLoot = combatResult.loot ? generateLoot(combatResult.loot, character1.profession, character1.level) : []
-    const earnedGold = combatResult.loot ? calculateGold(character1.level, character1.activeJourney.valueMultiplier) : null
+    const earnedGold = combatResult.gold ? combatResult.gold : null
     const earnedExperience = combatResult.experience ? combatResult.experience : null
 
     setLoot(earnedLoot)

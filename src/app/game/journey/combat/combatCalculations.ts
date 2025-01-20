@@ -161,10 +161,10 @@ const calculateItemQuality = (loot: Loot): number => {
   }
 }
 
-export const calculateGold = (level: number, multiplier: number): number => {
+export const calculateGold = (level: number, multiplier: number, dungeon: boolean): number => {
   const min = config.gold.min + (config.gold.min * (level / 2) * (multiplier / 100))
   const max = config.gold.max + (config.gold.max * (level / 2) * (multiplier / 100))
-  return Math.floor(random(min, max))
+  return Math.floor(random(min, max)) * (dungeon ? config.gold.dungeonMultiplier : 1)
 }
 
 export const calculateLoot = (loot: Loot, chance: number): number[] => {
@@ -179,8 +179,8 @@ export const calculateLoot = (loot: Loot, chance: number): number[] => {
   return finalLoot
 }
 
-export const calculateExperience = (level: number, journeyMultiplier: number): number => {
+export const calculateExperience = (level: number, journeyMultiplier: number, dungeon: boolean): number => {
   const min = config.experience.min + (config.experience.min * (level / 2) * config.experience.divider)
   const max = config.experience.max + (config.experience.max * (level / 2) * config.experience.divider)
-  return Math.floor(random(min, max) * (journeyMultiplier / 100))
+  return Math.floor(random(min, max) * (journeyMultiplier / 100)) * (dungeon ? config.experience.dungeonMultiplier : 1)
 }

@@ -186,19 +186,21 @@ export const config = {
   // formula: 
   hpMultiplier: 4,
 
-  // Minimum flat and maximum flat of gold gain from journeys
+  // Minimum flat, maximum flat and dungeon multiplier of gold gain from journeys
   // formula: (min + min * (level / 2) * (journeyMultiplier / 100) ) to (max + max * (level / 2) * (journeyMultiplier / 100) )
   gold: {
     min: 10,
-    max: 15
+    max: 15,
+    dungeonMultiplier: 10,
   },
 
-  // Minimum flat and maximum flat of experience gain from journeys + bonus divider
+  // Minimum flat, maximum flat and dungeon multiplier of experience gain from journeys + bonus divider
   // formula: (min + min * (level / 2) * (journeyMulriplier / 100) * divider) to (max + max * (level / 2) * (journeyMultiplier / 100) * divider)
   experience: {
     min: 30,
     max: 33,
-    divider: 0.10
+    divider: 0.10,
+    dungeonMultiplier: 10,
   },
 
   // 
