@@ -74,7 +74,7 @@ export type Equipment = {
 
 export type WeaponArray = "sword" | "axe" | "mace" | "ranged" | "staves"
 
-export type WeaponFamily = "sword" | "axe" | "mace" | "fire" | "frost" | "arcane" | "earth" | "air" | "bow" | "crossbow"
+export type WeaponFamily = "sword" | "axe" | "mace" | "fire" | "frost" | "lightning" | "arcane" | "earth" | "air" | "dark" | "mystic" | "death" | "holy" | "water" | "bow" | "crossbow"
 
 export type Damage = {
   min: number,
