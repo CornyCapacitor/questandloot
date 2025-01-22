@@ -265,44 +265,494 @@ export const weapons: { [key in WeaponArray]: WeaponItem[] } = {
 export const lightArmors: { [key in ArmorSlot]: ArmorItem[] } = {
   'head': [
     {
-      name: "1",
-      description: 'A simple hood worn by novice mages.',
+      name: "Apprentice's Hood",
+      description: "A simple hood worn by novice mages during their training.",
       image: '1.png'
+    },
+    {
+      name: "Mystic's Cowl",
+      description: "A hood imbued with a faint magical aura, ideal for beginner spellcasters.",
+      image: '2.png'
+    },
+    {
+      name: "Adept's Circlet",
+      description: "A silver circlet enhancing focus and concentration.",
+      image: '3.png'
+    },
+    {
+      name: "Sage's Veil",
+      description: "A veil blessed with protective enchantments against mental intrusion.",
+      image: '4.png'
+    },
+    {
+      name: "Enchanter's Cap",
+      description: "A stylish cap enchanted to amplify minor spells.",
+      image: '5.png'
+    },
+    {
+      name: "Seer's Crown",
+      description: "A golden crown, said to grant visions of the future.",
+      image: '6.png'
+    },
+    {
+      name: "Illusionist's Hat",
+      description: "A wide-brimmed hat favored by masters of deception.",
+      image: '7.png'
+    },
+    {
+      name: "Arcanist's Helm",
+      description: "A helm inscribed with ancient runes of power.",
+      image: '8.png'
+    },
+    {
+      name: "Magister's Tiara",
+      description: "A delicate tiara enhancing the wearer's magical capabilities.",
+      image: '9.png'
+    },
+    {
+      name: "Sorcerer's Headdress",
+      description: "An ornate headdress crafted for masters of the arcane.",
+      image: '10.png'
+    },
+    {
+      name: "Runebinder's Hood",
+      description: "A hood etched with runes that glow softly with latent magic.",
+      image: '11.png'
+    },
+    {
+      name: "Celestial Diadem",
+      description: "A diadem said to channel the energies of the stars.",
+      image: '12.png'
+    },
+    {
+      name: "Warlock's Crown",
+      description: "A dark crown radiating malevolent energy.",
+      image: '13.png'
+    },
+    {
+      name: "Ethereal Mask",
+      description: "A mask that shimmers as if woven from the fabric of dreams.",
+      image: '14.png'
+    },
+    {
+      name: "Archmage's Circlet",
+      description: "A circlet of immense power, worn only by the most skilled mages.",
+      image: '15.png'
+    },
+    {
+      name: "Crown of Infinite Wisdom",
+      description: "A crown that grants unparalleled knowledge of the arcane.",
+      image: '16.png'
     }
   ],
   'chest': [
     {
-      name: "1",
-      description: 'A lightweight robe providing minimal protection, designed for apprentice spellcasters.',
+      name: "Apprentice's Robe",
+      description: "A lightweight robe providing minimal protection, designed for apprentice spellcasters.",
       image: '1.png'
+    },
+    {
+      name: "Mystic's Vestments",
+      description: "Robes enchanted to enhance basic spellcasting abilities.",
+      image: '2.png'
+    },
+    {
+      name: "Adept's Cloak",
+      description: "A fine cloak offering improved magical resistance.",
+      image: '3.png'
+    },
+    {
+      name: "Sage's Mantle",
+      description: "A mantle blessed with protective charms.",
+      image: '4.png'
+    },
+    {
+      name: "Enchanter's Robes",
+      description: "Elegant robes adorned with intricate embroidery of magical glyphs.",
+      image: '5.png'
+    },
+    {
+      name: "Seer's Raiment",
+      description: "Flowing robes that amplify divination magic.",
+      image: '6.png'
+    },
+    {
+      name: "Illusionist's Cloak",
+      description: "A shimmering cloak that aids in blending into the surroundings.",
+      image: '7.png'
+    },
+    {
+      name: "Arcanist's Garb",
+      description: "An ornate robe inscribed with potent arcane runes.",
+      image: '8.png'
+    },
+    {
+      name: "Magister's Robes",
+      description: "Regal robes worn by high-ranking mages.",
+      image: '9.png'
+    },
+    {
+      name: "Sorcerer's Attire",
+      description: "A luxurious outfit crafted for masters of arcane arts.",
+      image: '10.png'
+    },
+    {
+      name: "Runebinder's Cloak",
+      description: "A cloak infused with glowing runic patterns.",
+      image: '11.png'
+    },
+    {
+      name: "Celestial Vestments",
+      description: "Robes that shimmer with the light of the stars.",
+      image: '12.png'
+    },
+    {
+      name: "Warlock's Shroud",
+      description: "A dark, foreboding shroud pulsing with eldritch power.",
+      image: '13.png'
+    },
+    {
+      name: "Ethereal Raiment",
+      description: "Robes that seem to be made of ephemeral, otherworldly fabric.",
+      image: '14.png'
+    },
+    {
+      name: "Archmage's Robe",
+      description: "The pinnacle of magical attire, offering unparalleled protection and power.",
+      image: '15.png'
+    },
+    {
+      name: "Raiment of the Eternal Sage",
+      description: "A robe woven from threads of pure magic, fit for the most legendary spellcasters.",
+      image: '16.png'
     }
   ],
   'legs': [
     {
-      name: "1",
-      description: 'Comfortable pants that allow for easy movement during spell practice.',
+      name: "Apprentice's Leggings",
+      description: "Simple leggings providing basic mobility for novice mages.",
       image: '1.png'
+    },
+    {
+      name: "Mystic's Trousers",
+      description: "Comfortable trousers imbued with a faint magical aura.",
+      image: '2.png'
+    },
+    {
+      name: "Adept's Greaves",
+      description: "Light greaves designed to provide moderate protection without hindering movement.",
+      image: '3.png'
+    },
+    {
+      name: "Sage's Pants",
+      description: "Pants enchanted to enhance stamina and focus.",
+      image: '4.png'
+    },
+    {
+      name: "Enchanter's Leggings",
+      description: "Intricately designed leggings adorned with magical glyphs.",
+      image: '5.png'
+    },
+    {
+      name: "Seer's Legwraps",
+      description: "Legwraps imbued with divination magic.",
+      image: '6.png'
+    },
+    {
+      name: "Illusionist's Tights",
+      description: "Elegant tights favored by masters of illusion.",
+      image: '7.png'
+    },
+    {
+      name: "Arcanist's Legplates",
+      description: "Reinforced legplates inscribed with runes of protection.",
+      image: '8.png'
+    },
+    {
+      name: "Magister's Trousers",
+      description: "Elegant trousers worn by high-ranking magicians.",
+      image: '9.png'
+    },
+    {
+      name: "Sorcerer's Leggings",
+      description: "Luxurious leggings enhanced for spellcasting efficiency.",
+      image: '10.png'
+    },
+    {
+      name: "Runebinder's Greaves",
+      description: "Greaves adorned with glowing arcane runes.",
+      image: '11.png'
+    },
+    {
+      name: "Celestial Pants",
+      description: "Pants radiating the light of the heavens.",
+      image: '12.png'
+    },
+    {
+      name: "Warlock's Leggings",
+      description: "Dark leggings imbued with shadowy magic.",
+      image: '13.png'
+    },
+    {
+      name: "Ethereal Legwraps",
+      description: "Light and ephemeral legwraps made from otherworldly materials.",
+      image: '14.png'
+    },
+    {
+      name: "Archmage's Leggings",
+      description: "Leggings of immense power, reserved for the most skilled wizards.",
+      image: '15.png'
+    },
+    {
+      name: "Greaves of Eternal Knowledge",
+      description: "Mythical greaves granting both protection and infinite wisdom.",
+      image: '16.png'
     }
   ],
   'feet': [
     {
-      name: "1",
-      description: 'Simple boots that offer modest protection and comfort for new mages.',
+      name: "Apprentice's Boots",
+      description: "Basic boots offering minimal protection for novice mages.",
       image: '1.png'
+    },
+    {
+      name: "Mystic's Sandals",
+      description: "Simple sandals infused with light magical energy.",
+      image: '2.png'
+    },
+    {
+      name: "Adept's Shoes",
+      description: "Comfortable shoes designed for prolonged magical study.",
+      image: '3.png'
+    },
+    {
+      name: "Sage's Footwear",
+      description: "Footwear blessed with protective charms.",
+      image: '4.png'
+    },
+    {
+      name: "Enchanter's Boots",
+      description: "Stylish boots with minor magical enhancements.",
+      image: '5.png'
+    },
+    {
+      name: "Seer's Slippers",
+      description: "Soft slippers that aid in silent movement and focus.",
+      image: '6.png'
+    },
+    {
+      name: "Illusionist's Footpads",
+      description: "Footwear designed to enhance agility and stealth.",
+      image: '7.png'
+    },
+    {
+      name: "Arcanist's Boots",
+      description: "Reinforced boots adorned with glowing arcane symbols.",
+      image: '8.png'
+    },
+    {
+      name: "Magister's Sandals",
+      description: "Regal sandals providing comfort and magical support.",
+      image: '9.png'
+    },
+    {
+      name: "Sorcerer's Shoes",
+      description: "Elegant shoes crafted for masters of the arcane.",
+      image: '10.png'
+    },
+    {
+      name: "Runebinder's Boots",
+      description: "Boots with soles etched in runes that glow faintly.",
+      image: '11.png'
+    },
+    {
+      name: "Celestial Striders",
+      description: "Boots said to grant the wearer a weightless stride.",
+      image: '12.png'
+    },
+    {
+      name: "Warlock's Treads",
+      description: "Dark and foreboding boots infused with sinister magic.",
+      image: '13.png'
+    },
+    {
+      name: "Ethereal Slippers",
+      description: "Slippers that appear to hover just above the ground.",
+      image: '14.png'
+    },
+    {
+      name: "Archmage's Boots",
+      description: "Boots of unparalleled craftsmanship, granting unmatched agility.",
+      image: '15.png'
+    },
+    {
+      name: "Starlight Walkers",
+      description: "Mythical boots that leave a shimmering trail of stars.",
+      image: '16.png'
     }
   ],
   'hands': [
     {
-      name: "1",
-      description: 'Gloves that provide basic protection while handling magical items.',
+      name: "Apprentice's Gloves",
+      description: "Simple gloves offering basic protection for handling magical artifacts.",
       image: '1.png'
+    },
+    {
+      name: "Mystic's Handwraps",
+      description: "Handwraps infused with a faint magical aura.",
+      image: '2.png'
+    },
+    {
+      name: "Adept's Gloves",
+      description: "Sturdy gloves enhancing grip and precision.",
+      image: '3.png'
+    },
+    {
+      name: "Sage's Mitts",
+      description: "Mitts enchanted to increase focus during casting.",
+      image: '4.png'
+    },
+    {
+      name: "Enchanter's Handguards",
+      description: "Handguards adorned with intricate magical patterns.",
+      image: '5.png'
+    },
+    {
+      name: "Seer's Gloves",
+      description: "Soft gloves that enhance sensory perception.",
+      image: '6.png'
+    },
+    {
+      name: "Illusionist's Gauntlets",
+      description: "Gauntlets designed to aid in creating intricate illusions.",
+      image: '7.png'
+    },
+    {
+      name: "Arcanist's Bracers",
+      description: "Bracers etched with ancient protective runes.",
+      image: '8.png'
+    },
+    {
+      name: "Magister's Gloves",
+      description: "Elegant gloves favored by seasoned mages.",
+      image: '9.png'
+    },
+    {
+      name: "Sorcerer's Handwraps",
+      description: "Luxurious handwraps enhanced with arcane power.",
+      image: '10.png'
+    },
+    {
+      name: "Runebinder's Gauntlets",
+      description: "Gauntlets with glowing runic etchings.",
+      image: '11.png'
+    },
+    {
+      name: "Celestial Mitts",
+      description: "Mitts said to channel the energy of the cosmos.",
+      image: '12.png'
+    },
+    {
+      name: "Warlock's Handguards",
+      description: "Dark gloves pulsing with shadowy energy.",
+      image: '13.png'
+    },
+    {
+      name: "Ethereal Gloves",
+      description: "Gloves that shimmer with an otherworldly glow.",
+      image: '14.png'
+    },
+    {
+      name: "Archmage's Bracers",
+      description: "Bracers of immense power, granting unrivaled control over magic.",
+      image: '15.png'
+    },
+    {
+      name: "Gauntlets of Infinite Power",
+      description: "Legendary gauntlets imbued with unfathomable magical energy.",
+      image: '16.png'
     }
   ],
   'belt': [
     {
-      name: "1",
-      description: 'No description yet',
+      name: "Apprentice's Sash",
+      description: "A simple sash holding a mage's robes in place.",
       image: '1.png'
+    },
+    {
+      name: "Mystic's Cord",
+      description: "A cord enchanted with basic magical protections.",
+      image: '2.png'
+    },
+    {
+      name: "Adept's Belt",
+      description: "A sturdy belt enhancing stability and focus.",
+      image: '3.png'
+    },
+    {
+      name: "Sage's Girdle",
+      description: "A girdle blessed with protective charms.",
+      image: '4.png'
+    },
+    {
+      name: "Enchanter's Sash",
+      description: "An ornate sash embroidered with magical glyphs.",
+      image: '5.png'
+    },
+    {
+      name: "Seer's Belt",
+      description: "A belt aiding in the channeling of divination magic.",
+      image: '6.png'
+    },
+    {
+      name: "Illusionist's Band",
+      description: "A lightweight band designed for masters of illusion.",
+      image: '7.png'
+    },
+    {
+      name: "Arcanist's Girdle",
+      description: "A girdle inscribed with runes of stability and power.",
+      image: '8.png'
+    },
+    {
+      name: "Magister's Belt",
+      description: "A regal belt enhancing magical energy flow.",
+      image: '9.png'
+    },
+    {
+      name: "Sorcerer's Sash",
+      description: "A luxurious sash enhancing magical control.",
+      image: '10.png'
+    },
+    {
+      name: "Runebinder's Cord",
+      description: "A cord with glowing runic patterns.",
+      image: '11.png'
+    },
+    {
+      name: "Celestial Sash",
+      description: "A sash glowing with the light of the heavens.",
+      image: '12.png'
+    },
+    {
+      name: "Warlock's Girdle",
+      description: "A dark girdle pulsing with malevolent energy.",
+      image: '13.png'
+    },
+    {
+      name: "Ethereal Belt",
+      description: "A belt that seems to shift between dimensions.",
+      image: '14.png'
+    },
+    {
+      name: "Archmage's Cord",
+      description: "A cord of immense power, worn by legendary spellcasters.",
+      image: '15.png'
+    },
+    {
+      name: "Girdle of Endless Arcana",
+      description: "A mythical girdle granting access to infinite magical potential.",
+      image: '16.png'
     }
   ]
 }
@@ -310,44 +760,494 @@ export const lightArmors: { [key in ArmorSlot]: ArmorItem[] } = {
 export const mediumArmors: { [key in ArmorSlot]: ArmorItem[] } = {
   'head': [
     {
-      name: "1",
-      description: 'A durable hood designed to offer protection without sacrificing stealth.',
+      name: "Tracker's Hood",
+      description: "A hood designed to blend seamlessly with the environment, perfect for novice hunters.",
       image: '1.png'
+    },
+    {
+      name: "Outlander's Cap",
+      description: "A sturdy cap offering protection during wilderness expeditions.",
+      image: '2.png'
+    },
+    {
+      name: "Warden's Mask",
+      description: "A mask providing protection against harsh weather and dust.",
+      image: '3.png'
+    },
+    {
+      name: "Ranger's Cowl",
+      description: "A cowl reinforced with leather to provide stealth and protection.",
+      image: '4.png'
+    },
+    {
+      name: "Stalker's Hood",
+      description: "A sleek hood designed to enhance vision in dim environments.",
+      image: '5.png'
+    },
+    {
+      name: "Hunter's Helm",
+      description: "A lightweight helm adorned with symbols of a skilled hunter.",
+      image: '6.png'
+    },
+    {
+      name: "Pathfinder's Headgear",
+      description: "A headgear suited for tracking in uncharted territories.",
+      image: '7.png'
+    },
+    {
+      name: "Sharpshooter's Visor",
+      description: "A visor enhancing precision and focus for ranged attacks.",
+      image: '8.png'
+    },
+    {
+      name: "Beastmaster's Helm",
+      description: "A helm adorned with trophies from conquered beasts.",
+      image: '9.png'
+    },
+    {
+      name: "Shadowstalker's Hood",
+      description: "A dark hood offering supreme stealth capabilities.",
+      image: '10.png'
+    },
+    {
+      name: "Tracker's Vigil",
+      description: "A hood imbued with enchantments for night vision.",
+      image: '11.png'
+    },
+    {
+      name: "Wildsoul Helm",
+      description: "A helm crafted from natural materials, resonating with nature's energy.",
+      image: '12.png'
+    },
+    {
+      name: "Duskwarden's Cowl",
+      description: "A cowl designed to protect against the dangers of nocturnal hunts.",
+      image: '13.png'
+    },
+    {
+      name: "Eagle-Eye Mask",
+      description: "A mask granting unparalleled clarity of sight.",
+      image: '14.png'
+    },
+    {
+      name: "Master Hunter's Hood",
+      description: "A hood reserved for the most skilled hunters in the realm.",
+      image: '15.png'
+    },
+    {
+      name: "Crown of the Wild Hunt",
+      description: "A legendary helm symbolizing mastery over the wilderness.",
+      image: '16.png'
     }
   ],
   'chest': [
     {
-      name: "1",
-      description: 'A lightweight, reinforced jacket ideal for long expeditions and quick movements.',
+      name: "Tracker's Vest",
+      description: "A lightweight vest offering basic protection for novice hunters.",
       image: '1.png'
+    },
+    {
+      name: "Outlander's Jacket",
+      description: "A reinforced jacket designed for long treks through rugged terrain.",
+      image: '2.png'
+    },
+    {
+      name: "Warden's Chestguard",
+      description: "A chestguard providing balanced protection and mobility.",
+      image: '3.png'
+    },
+    {
+      name: "Ranger's Coat",
+      description: "A durable coat, ideal for quick movements and harsh conditions.",
+      image: '4.png'
+    },
+    {
+      name: "Stalker's Jerkin",
+      description: "A leather jerkin optimized for stealth and agility.",
+      image: '5.png'
+    },
+    {
+      name: "Hunter's Mail",
+      description: "A chainmail vest offering protection without compromising mobility.",
+      image: '6.png'
+    },
+    {
+      name: "Pathfinder's Tunic",
+      description: "A lightweight tunic with multiple pockets for storing tools.",
+      image: '7.png'
+    },
+    {
+      name: "Sharpshooter's Vest",
+      description: "A vest designed to stabilize ranged weaponry.",
+      image: '8.png'
+    },
+    {
+      name: "Beastmaster's Harness",
+      description: "A rugged harness adorned with beastly trophies.",
+      image: '9.png'
+    },
+    {
+      name: "Shadowstalker's Coat",
+      description: "A dark coat enhancing stealth and resistance to detection.",
+      image: '10.png'
+    },
+    {
+      name: "Tracker's Mantle",
+      description: "A mantle enchanted to camouflage the wearer in natural surroundings.",
+      image: '11.png'
+    },
+    {
+      name: "Wildsoul Jerkin",
+      description: "A jerkin crafted from enchanted vines and leather.",
+      image: '12.png'
+    },
+    {
+      name: "Duskwarden's Chestpiece",
+      description: "A chestpiece imbued with nocturnal enchantments.",
+      image: '13.png'
+    },
+    {
+      name: "Eagle-Eye Jerkin",
+      description: "A jerkin enhancing precision and focus in ranged combat.",
+      image: '14.png'
+    },
+    {
+      name: "Master Hunter's Mail",
+      description: "A mail vest designed for the greatest hunters in the land.",
+      image: '15.png'
+    },
+    {
+      name: "Wild Hunt Cuirass",
+      description: "A legendary cuirass radiating the essence of the hunt.",
+      image: '16.png'
     }
   ],
   'legs': [
     {
-      name: "1",
-      description: 'Pants tailored for agility and endurance, suitable for traversing rough terrain.',
+      name: "Tracker's Trousers",
+      description: "Simple trousers offering basic mobility for novice trackers.",
       image: '1.png'
+    },
+    {
+      name: "Outlander's Leggings",
+      description: "Durable leggings suited for traversing rugged terrain.",
+      image: '2.png'
+    },
+    {
+      name: "Warden's Legguards",
+      description: "Legguards reinforced for protection during extended patrols.",
+      image: '3.png'
+    },
+    {
+      name: "Ranger's Pants",
+      description: "Light pants designed for quick movement and stealth.",
+      image: '4.png'
+    },
+    {
+      name: "Stalker's Leggings",
+      description: "Leggings designed for enhanced agility and camouflage.",
+      image: '5.png'
+    },
+    {
+      name: "Hunter's Greaves",
+      description: "Light greaves offering protection without hindering mobility.",
+      image: '6.png'
+    },
+    {
+      name: "Pathfinder's Trousers",
+      description: "Trousers equipped with pockets for carrying tools and equipment.",
+      image: '7.png'
+    },
+    {
+      name: "Sharpshooter's Pants",
+      description: "Pants designed for stability while aiming ranged weapons.",
+      image: '8.png'
+    },
+    {
+      name: "Beastmaster's Leggings",
+      description: "Leggings adorned with symbols of dominance over beasts.",
+      image: '9.png'
+    },
+    {
+      name: "Shadowstalker's Legwraps",
+      description: "Dark legwraps enhancing stealth and movement in the shadows.",
+      image: '10.png'
+    },
+    {
+      name: "Tracker's Guard",
+      description: "Legguards enchanted to blend with natural environments.",
+      image: '11.png'
+    },
+    {
+      name: "Wildsoul Pants",
+      description: "Pants infused with the vitality of the forest.",
+      image: '12.png'
+    },
+    {
+      name: "Duskwarden's Leggings",
+      description: "Leggings designed for nighttime scouting and hunting.",
+      image: '13.png'
+    },
+    {
+      name: "Eagle-Eye Greaves",
+      description: "Greaves enhancing precision and focus in the wilderness.",
+      image: '14.png'
+    },
+    {
+      name: "Master Hunter's Legguards",
+      description: "Legguards worn by the most skilled hunters in the realm.",
+      image: '15.png'
+    },
+    {
+      name: "Leggings of the Eternal Hunt",
+      description: "Legendary leggings granting unmatched agility and endurance.",
+      image: '16.png'
     }
   ],
   'feet': [
     {
-      name: "1",
-      description: 'Sturdy boots providing excellent traction and support for scouting missions.',
+      name: "Tracker's Boots",
+      description: "Simple leather boots providing basic protection and comfort.",
       image: '1.png'
+    },
+    {
+      name: "Outlander's Striders",
+      description: "Sturdy boots designed for traversing rugged terrain.",
+      image: '2.png'
+    },
+    {
+      name: "Warden's Footwear",
+      description: "Durable footwear offering protection and agility during patrols.",
+      image: '3.png'
+    },
+    {
+      name: "Ranger's Boots",
+      description: "Light boots perfect for silent movement and long marches.",
+      image: '4.png'
+    },
+    {
+      name: "Stalker's Treads",
+      description: "Boots designed to leave minimal tracks, ideal for stalking prey.",
+      image: '5.png'
+    },
+    {
+      name: "Hunter's Greaves",
+      description: "Reinforced greaves offering durability and mobility.",
+      image: '6.png'
+    },
+    {
+      name: "Pathfinder's Footwraps",
+      description: "Flexible footwraps for scaling and swift movement.",
+      image: '7.png'
+    },
+    {
+      name: "Sharpshooter's Boots",
+      description: "Boots providing stability while aiming ranged weapons.",
+      image: '8.png'
+    },
+    {
+      name: "Beastmaster's Stompers",
+      description: "Heavy boots adorned with the claws of defeated beasts.",
+      image: '9.png'
+    },
+    {
+      name: "Shadowstalker's Slippers",
+      description: "Soft slippers enhancing stealth and silent movement.",
+      image: '10.png'
+    },
+    {
+      name: "Tracker's Walkers",
+      description: "Boots enchanted to endure long hunts in the wild.",
+      image: '11.png'
+    },
+    {
+      name: "Wildsoul Boots",
+      description: "Boots infused with the vitality of the forest, ensuring firm footing.",
+      image: '12.png'
+    },
+    {
+      name: "Duskwarden's Footguards",
+      description: "Footguards designed for nocturnal pursuits.",
+      image: '13.png'
+    },
+    {
+      name: "Eagle-Eye Treads",
+      description: "Treads providing a firm stance for precision attacks.",
+      image: '14.png'
+    },
+    {
+      name: "Master Hunter's Boots",
+      description: "Boots designed for the most skilled hunters, ensuring unmatched agility.",
+      image: '15.png'
+    },
+    {
+      name: "Footwear of the Eternal Hunt",
+      description: "Legendary boots granting endurance and stealth in any environment.",
+      image: '16.png'
     }
   ],
   'hands': [
     {
-      name: "1",
-      description: 'Gloves offering both grip and protection, ideal for handling tools and climbing.',
+      name: "Tracker's Gloves",
+      description: "Simple gloves offering basic grip and warmth for novice trackers.",
       image: '1.png'
+    },
+    {
+      name: "Outlander's Mitts",
+      description: "Durable mitts designed for handling tools and rough terrain.",
+      image: '2.png'
+    },
+    {
+      name: "Warden's Handguards",
+      description: "Handguards providing protection during extended patrols.",
+      image: '3.png'
+    },
+    {
+      name: "Ranger's Grips",
+      description: "Light grips designed for precision and dexterity.",
+      image: '4.png'
+    },
+    {
+      name: "Stalker's Wraps",
+      description: "Flexible wraps enhancing agility and stealth.",
+      image: '5.png'
+    },
+    {
+      name: "Hunter's Gauntlets",
+      description: "Reinforced gauntlets offering protection without hindering movement.",
+      image: '6.png'
+    },
+    {
+      name: "Pathfinder's Gloves",
+      description: "Gloves optimized for handling ropes and climbing.",
+      image: '7.png'
+    },
+    {
+      name: "Sharpshooter's Handwraps",
+      description: "Handwraps ensuring stability while aiming.",
+      image: '8.png'
+    },
+    {
+      name: "Beastmaster's Claws",
+      description: "Gloves adorned with beastly elements, signifying dominance.",
+      image: '9.png'
+    },
+    {
+      name: "Shadowstalker's Handguards",
+      description: "Dark handguards enhancing stealth and silent attacks.",
+      image: '10.png'
+    },
+    {
+      name: "Tracker's Grip",
+      description: "Gloves enchanted to ensure firm grip on weapons and tools.",
+      image: '11.png'
+    },
+    {
+      name: "Wildsoul Gauntlets",
+      description: "Gauntlets infused with the spirit of the forest.",
+      image: '12.png'
+    },
+    {
+      name: "Duskwarden's Wraps",
+      description: "Wraps designed for nocturnal precision and agility.",
+      image: '13.png'
+    },
+    {
+      name: "Eagle-Eye Grips",
+      description: "Grips enhancing focus and stability during hunts.",
+      image: '14.png'
+    },
+    {
+      name: "Master Hunter's Gloves",
+      description: "Gloves providing unmatched dexterity and comfort.",
+      image: '15.png'
+    },
+    {
+      name: "Claws of the Eternal Hunt",
+      description: "Legendary gloves empowering swift and deadly strikes.",
+      image: '16.png'
     }
   ],
   'belt': [
     {
-      name: "1",
-      description: 'Some belt description.',
-      image: '1'
+      name: "Tracker's Belt",
+      description: "A basic leather belt with pouches for carrying essentials.",
+      image: '1.png'
+    },
+    {
+      name: "Outlander's Girdle",
+      description: "A reinforced girdle designed for long expeditions.",
+      image: '2.png'
+    },
+    {
+      name: "Warden's Sash",
+      description: "A sash providing additional storage and protection.",
+      image: '3.png'
+    },
+    {
+      name: "Ranger's Belt",
+      description: "A lightweight belt designed for quick access to tools.",
+      image: '4.png'
+    },
+    {
+      name: "Stalker's Strap",
+      description: "A strap with compartments for carrying traps and supplies.",
+      image: '5.png'
+    },
+    {
+      name: "Hunter's Girdle",
+      description: "A sturdy girdle supporting a variety of hunting tools.",
+      image: '6.png'
+    },
+    {
+      name: "Pathfinder's Utility Belt",
+      description: "A belt with multiple pouches for tools and equipment.",
+      image: '7.png'
+    },
+    {
+      name: "Sharpshooter's Band",
+      description: "A belt designed for carrying ammunition and small gadgets.",
+      image: '8.png'
+    },
+    {
+      name: "Beastmaster's Cinch",
+      description: "A rugged cinch adorned with trophies of defeated beasts.",
+      image: '9.png'
+    },
+    {
+      name: "Shadowstalker's Belt",
+      description: "A dark belt enhancing stealth and mobility.",
+      image: '10.png'
+    },
+    {
+      name: "Tracker's Sash",
+      description: "A sash enchanted for enduring long and arduous hunts.",
+      image: '11.png'
+    },
+    {
+      name: "Wildsoul Cord",
+      description: "A cord infused with the vitality of nature.",
+      image: '12.png'
+    },
+    {
+      name: "Duskwarden's Strap",
+      description: "A strap designed for carrying nocturnal hunting gear.",
+      image: '13.png'
+    },
+    {
+      name: "Eagle-Eye Girdle",
+      description: "A girdle enhancing precision and carrying capacity.",
+      image: '14.png'
+    },
+    {
+      name: "Master Hunter's Belt",
+      description: "A belt crafted for the most skilled hunters in the realm.",
+      image: '15.png'
+    },
+    {
+      name: "Belt of the Eternal Hunt",
+      description: "A legendary belt empowering the wearer with unmatched endurance.",
+      image: '16.png'
     }
   ]
 }
@@ -850,7 +1750,7 @@ export const heavyArmors: { [key in ArmorSlot]: ArmorItem[] } = {
 
 export const shields: ArmorItem[] = [
   {
-    name: "1",
+    name: "Recruit's Shield",
     description: "A sturdy shield used by seasoned warriors to block even the strongest attacks.",
     image: "1.png"
   },
