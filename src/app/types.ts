@@ -10,6 +10,7 @@ export type Player = {
   attributes: Attributes,
   activeJourney: Journey,
   activePotion: ActivePotion,
+  dungeon: Dungeon,
   equipment: Equipment,
   image: string,
   inventory: Inventory,
@@ -32,13 +33,6 @@ export type Attributes = {
   luck: number,
 }
 
-export type Journey = {
-  zone: Zone,
-  valueMultiplier: number,
-  startDate: Date,
-  returnDate: Date
-} | null
-
 export type Zone = {
   name: string,
   image: string
@@ -48,6 +42,28 @@ export type ActivePotion = {
   potion: Potion,
   expiringDate: Date
 } | null
+
+// 
+// Dungeon & Journey types
+// 
+
+export type Journey = {
+  zone: Zone,
+  valueMultiplier: number,
+  startDate: Date,
+  returnDate: Date
+} | null
+
+export type CompletedBossesKey = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+
+export type DungeonKey = "dungeon1" | "dungeon2" | "dungeon3" | "dungeon4" | "dungeon5" | "dungeon6" | "dungeon7" | "dungeon8" | "dungeon9" | "dungeon10"
+
+export type DungeonProgress = Record<DungeonKey, CompletedBossesKey | null>
+
+export type Dungeon = {
+  refreshDate: Date | null,
+  dungeonProgress: DungeonProgress
+}
 
 // 
 // Equipment & equipment general types

@@ -11,7 +11,7 @@ import { errorToast } from "@/components/ui/toasts"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { useEffect } from "react"
-import { calculateQuality } from "../journey/combat/combatCalculations"
+import { calculateQuality } from "../../functions/combatCalculations"
 
 const Shop = ({ className, shop }: { className?: string, shop: Shops }) => {
   const [player] = useAtom(playerAtom)

@@ -1,6 +1,6 @@
 import { config } from "../config"
 import { monsterList } from "../db/monsterList"
-import { calculateResistances, calculateTotalHP, random } from "../game/journey/combat/combatCalculations"
+import { calculateResistances, calculateTotalHP, random } from "../functions/combatCalculations"
 import { Attributes, Damage, Monster, MonsterInfo, Profession, Resistances } from "../types"
 
 const calculateMonsterStats = (level: number) => {

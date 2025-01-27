@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { config } from "../config"
 import { potionList } from "../db/potionList"
-import { random } from "../game/journey/combat/combatCalculations"
+import { random } from "../functions/combatCalculations"
 import { Attributes, Potion, PotionQuality } from "../types"
 import { randomizePrice } from './generateEquipment'
 

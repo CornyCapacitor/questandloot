@@ -1,6 +1,6 @@
 import { config } from "@/app/config"
 import { Attributes, CombatInformation, Damage, DamageType, Equipment, Loot, Player, Profession, Quality, Resistances, Weapon } from "@/app/types"
-import { calculatePlayerAttributes } from "../../../functions/characterCalculations"
+import { calculatePlayerAttributes } from "./characterCalculations"
 
 export const random = (number1: number, number2: number): number => {
   return Math.floor(Math.random() * (number2 - number1 + 1) + number1)

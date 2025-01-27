@@ -18,23 +18,6 @@ export const JourneyCard = ({ zone, startJourney }: { zone: Zone, startJourney: 
   const [availableTimeOptions] = useState(config.availableTimeOptions.options)
 
   return (
-    // <div key={zone.name} className="p-2 flex flex-col w-[350px] h-[350px] bg-slate-800 gap-2 items-center justify-between rounded-sm">
-    //   <h1 className="font-semibold text-orange-400">{zone.name}</h1>
-    //   <Image width={350} height={350} alt="Journey image" src={`/assets/journeys/${zone.image}`} className="rounded-md absolute z-0" unoptimized />
-    //   <div className="flex flex-col gap-1 w-[50%]">
-    //     <Select onValueChange={(value) => setTime(value)}>
-    //       <SelectTrigger className="w-full focus:outline-none focus:ring-2 focus:ring-orange-400 hover:bg-gray-700 transition" >
-    //         <SelectValue placeholder="Select time" />
-    //       </SelectTrigger>
-    //       <SelectContent>
-    //         {availableTimeOptions.map((option) => (
-    //           <SelectItem className="transition" key={option} value={option}>{`${Number(option) / 60}h`}</SelectItem>
-    //         ))}
-    //       </SelectContent>
-    //     </Select>
-    //     <GameButton onClick={() => startJourney(zone, Number(time))}>Start journey <GoldIcon /><ExperienceIcon /></GameButton>
-    //   </div>
-    // </div>
     <div
       key={zone.name}
       className="p-2 flex flex-col w-[350px] h-[350px] bg-slate-800 gap-2 items-center justify-between rounded-sm relative overflow-hidden"
@@ -117,24 +100,6 @@ export const JourneyDisplay = ({ remainingTime }: { remainingTime: number | null
   }, [remainingTime, player])
 
   if (player && player.activeJourney) return (
-    // <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
-    //   <Image src={`/assets/journeys/${player.activeJourney.zone.image}`} width={300} height={300} alt={player.activeJourney.zone.name} unoptimized />
-    //   <h1>{player.activeJourney.zone.name}</h1>
-    //   <div className="relative w-[80%] h-8 flex items-center">
-    //     <Progress
-    //       value={timePercentage}
-    //       indicatorColor="bg-green-600"
-    //       className="rounded-none h-full bg-slate-900"
-    //     />
-    //     <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold">
-    //       {remainingTime !== null && (
-    //         <>{formatTime(remainingTime).uniText}</>
-    //       )}
-    //     </span>
-    //   </div>
-    //   <GameButton className="bg-white w-32 text-black" onClick={() => handleCancelJourney()}>Cancel journey</GameButton>
-    //   <GameButton className="bg-white w-48 text-black" onClick={() => handleSpeedupJourney()}>Speed up journey</GameButton>
-    // </div>
     <div className="w-full h-full flex flex-col gap-5 items-center justify-center relative overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"

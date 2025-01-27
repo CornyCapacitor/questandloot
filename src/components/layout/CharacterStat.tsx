@@ -2,8 +2,8 @@
 
 import { config } from "@/app/config"
 import { calculatePlayerAttributes } from "@/app/functions/characterCalculations"
+import { calculateArmorReduction, calculateCritChance, calculateDamage, calculatePlayerArmor, calculateTotalHP, calculateWeaponDamage } from "@/app/functions/combatCalculations"
 import { removeGold } from "@/app/functions/manageItems"
-import { calculateArmorReduction, calculateCritChance, calculateDamage, calculatePlayerArmor, calculateTotalHP, calculateWeaponDamage } from "@/app/game/journey/combat/combatCalculations"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { Attributes, Player } from "@/app/types"
 import Image from "next/image"
