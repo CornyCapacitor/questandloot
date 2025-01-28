@@ -223,5 +223,19 @@ export const config = {
       quality: 'uncommon' as PotionQuality,
       strength: 10
     }
+  },
+
+  // 
+  // Dungeon static variables
+  // 
+
+  // Base dungeon values
+  dungeon: {
+    baseLevelMultiplier: 10,
+    bossLevel: {
+      thirdFromEnd: 9,
+      secondFromEnd: 12,
+      last: 15
+    }
   }
 }

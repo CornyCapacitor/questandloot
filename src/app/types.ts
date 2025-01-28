@@ -58,7 +58,7 @@ export type CompletedBossesKey = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 
 export type DungeonKey = "dungeon1" | "dungeon2" | "dungeon3" | "dungeon4" | "dungeon5" | "dungeon6" | "dungeon7" | "dungeon8" | "dungeon9" | "dungeon10"
 
-export type DungeonProgress = Record<DungeonKey, CompletedBossesKey | null>
+export type DungeonProgress = Record<DungeonKey, CompletedBossesKey>
 
 export type Dungeon = {
   refreshDate: Date | null,
