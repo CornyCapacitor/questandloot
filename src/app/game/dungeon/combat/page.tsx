@@ -1,10 +1,10 @@
 'use client'
 
-import { CombatComponent } from "@/components/layout/CombatComponent"
+import { Combat } from "@/components/combat/Combat"
 
 const JourneyCombatPage = () => {
   return (
-    <CombatComponent />
+    <Combat />
   )
 }
 

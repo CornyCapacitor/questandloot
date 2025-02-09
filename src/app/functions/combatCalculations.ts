@@ -88,7 +88,7 @@ export const calculateTotalHP = (level: number, attributes: Attributes): number 
     return 100
   }
 
-  return attributes['stamina'] * config.hpMultiplier * (level + 1)
+  return Math.floor(attributes['stamina'] * config.hpMultiplier * (level + 1))
 }
 
 const mapWeaponFamilyToDamageType = (family: string): DamageType => {
@@ -179,8 +179,8 @@ export const calculateLoot = (loot: Loot, chance: number): number[] => {
   return finalLoot
 }
 
-export const calculateExperience = (level: number, journeyMultiplier: number, dungeon: boolean): number => {
+export const calculateExperience = (level: number, multiplier: number, dungeon: boolean): number => {
   const min = config.experience.min + (config.experience.min * (level / 2) * config.experience.divider)
   const max = config.experience.max + (config.experience.max * (level / 2) * config.experience.divider)
-  return Math.floor(random(min, max) * (journeyMultiplier / 100)) * (dungeon ? config.experience.dungeonMultiplier : 1)
+  return Math.floor(random(min, max) * (multiplier / 100)) * (dungeon ? config.experience.dungeonMultiplier : 1)
 }

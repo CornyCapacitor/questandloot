@@ -7,13 +7,13 @@ import { removeGold } from "@/app/functions/manageItems"
 import { useSocket } from "@/app/middleware/SocketContext"
 import { Attributes, Player } from "@/app/types"
 import Image from "next/image"
-import { errorToast, successToast } from "../ui/toasts"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
-import GoldIcon from "./GoldIcon"
+import GoldIcon from "../../ui/GoldIcon"
+import { errorToast, successToast } from "../../ui/toasts"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip"
 
 type Stats = 'strength' | 'agility' | 'intellect' | 'stamina' | 'luck'
 
-const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player }) => {
+export const Stat = ({ stat, player }: { stat: Stats | 'armor', player: Player }) => {
   const { updatePlayer } = useSocket()
 
   const calculateAttributeCost = (attribute: keyof Attributes) => {
@@ -249,5 +249,3 @@ const CharacterStat = ({ stat, player }: { stat: Stats | 'armor', player: Player
     </div>
   )
 }
-
-export default CharacterStat

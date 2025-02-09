@@ -1,4 +1,4 @@
-import { Tailspin } from "@/components/layout/Tailspin"
+import { Tailspin } from "@/components/ui/Tailspin"
 import Image from "next/image"
 
 const PageLoader = ({ information }: { information: string }) => {

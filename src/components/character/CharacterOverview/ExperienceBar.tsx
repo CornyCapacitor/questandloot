@@ -2,10 +2,10 @@ import { config } from '@/app/config'
 import { useSocket } from '@/app/middleware/SocketContext'
 import { playerAtom } from '@/app/state/atoms'
 import { Attributes, Player, Profession } from '@/app/types'
+import { Progress } from '@/components/ui/progress'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
-import { Progress } from '../ui/progress'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
 export const ExperienceBar = () => {
   const [player] = useAtom<Player | null>(playerAtom)

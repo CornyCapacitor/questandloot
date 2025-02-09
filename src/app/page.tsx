@@ -1,6 +1,6 @@
 'use client'
 
-import { Tailspin } from "@/components/layout/Tailspin";
+import { Tailspin } from "@/components/ui/Tailspin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";

@@ -46,6 +46,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       })
 
       ws.on('success', (data: Player) => {
+        console.log('Saving player:', data)
         setPlayer(data as Player)
       })
 
@@ -55,9 +56,10 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const updatePlayer = (data: Player) => {
+  const updatePlayer = async (data: Player): Promise<void> => {
     if (!socket) return
 
+    console.log('Update requested:', data)
     socket.emit('update', data)
   }
 

@@ -1,4 +1,4 @@
-import IconSpinner from '@/components/layout/IconSpinner'
+import IconSpinner from '@/components/ui/IconSpinner'
 import { Button } from '@/components/ui/button'
 import { useAtom } from 'jotai'
 import Link from 'next/link'

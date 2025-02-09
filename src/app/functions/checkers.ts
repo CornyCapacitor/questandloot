@@ -1,4 +1,4 @@
-import { Armor, Items, Jewelery, Material, Potion, Shield, Weapon } from "../types"
+import { Armor, DungeonKey, Items, Jewelery, Material, Potion, Shield, Weapon } from "../types"
 
 export const isPotion = (item: Items): item is Potion => {
   return item.type === 'potion'
@@ -22,4 +22,12 @@ export const isWeapon = (item: Items): item is Weapon => {
 
 export const isShield = (item: Items): item is Shield => {
   return item.type === 'shield'
+}
+
+export const isDungeonKey = (key: DungeonKey | 'journey'): key is DungeonKey => {
+  return ["dungeon1", "dungeon2", "dungeon3", "dungeon4", "dungeon5", "dungeon6", "dungeon7", "dungeon8", "dungeon9", "dungeon10"].includes(key as DungeonKey);
+};
+
+export const isJourney = (key: DungeonKey | 'journey'): key is 'journey' => {
+  return key === 'journey'
 }

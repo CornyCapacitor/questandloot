@@ -2,18 +2,19 @@
 
 import { config } from "@/app/config"
 import { useSocket } from "@/app/middleware/SocketContext"
-import { combatReadyAtom, playerAtom } from "@/app/state/atoms"
+import { combatTypeAtom, playerAtom } from "@/app/state/atoms"
 import { Journey, Player, Zone } from "@/app/types"
+import { JourneyCard } from "@/components/journey/JourneyCard"
+import { JourneyDisplay } from "@/components/journey/JourneyWindow"
 import { pendingToast, successToast } from "@/components/ui/toasts"
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { JourneyCard, JourneyDisplay } from "./JourneyComponents"
 
 const JourneyPage = () => {
   const [player] = useAtom<Player | null>(playerAtom)
   const { updatePlayer } = useSocket()
-  const [, setIsCombatReady] = useAtom(combatReadyAtom)
+  const [, setCombatType] = useAtom(combatTypeAtom)
   const [remainingTime, setRemainingTime] = useState<number | null>(null)
   const zones: { name: string, image: string }[] = [
     {
@@ -50,7 +51,7 @@ const JourneyPage = () => {
         if (timeLeft === 0) {
           clearInterval(interval);
           setRemainingTime(null);
-          setIsCombatReady(true)
+          setCombatType('journey')
           // Testing alert
           pendingToast({ text: 'Starting combat...' })
           router.push('/game/journey/combat')
@@ -65,7 +66,7 @@ const JourneyPage = () => {
     return () => {
       if (timer) clearInterval(timer);
     }
-  }, [player, router, setIsCombatReady]);
+  }, [player, router]);
 
   const startJourney = (zone: Zone, time: number) => {
     if (!player) return

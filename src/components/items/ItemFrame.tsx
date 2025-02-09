@@ -1,4 +1,4 @@
-import { isArmor, isJewelery, isMaterial, isPotion, isShield, isWeapon } from '@/app/functions/itemCheckers'
+import { isArmor, isJewelery, isMaterial, isPotion, isShield, isWeapon } from '@/app/functions/checkers'
 import { addGold, addItem, applyPotion, removeGold, removeItem, removeShopItem } from '@/app/functions/manageItems'
 import { formatTime } from '@/app/functions/time'
 import { useSocket } from '@/app/middleware/SocketContext'
@@ -7,11 +7,11 @@ import { Armor, ArmorSlot, Items, Jewelery, JewelerySlot, Material, Potion, Shie
 import { useAtom } from 'jotai'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
+import DynamicItemFrame from '../items/DynamicItemFrame'
 import { questionAlert } from '../ui/alerts'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { errorToast, successToast } from '../ui/toasts'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
-import DynamicItemFrame from './DynamicItemFrame'
 
 export const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, height }: { itemData: Items, isClickable: boolean, isEquipped: boolean, shop?: Shops, width: number, height: number }) => {
   const [player] = useAtom(playerAtom)
@@ -86,7 +86,6 @@ export const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, heig
     if (!player) return
 
     const buyPrice = itemData.sellPrice * 4
-    console.log(`Buying item: ${itemData.name} for ${buyPrice}`)
     if (buyPrice > player.gold) {
       errorToast({ text: 'Not enough gold' })
       return
@@ -179,7 +178,7 @@ export const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, heig
                 <PopoverTrigger>
                   <DynamicItemFrame itemData={itemData} player={player} width={width} height={height} />
                 </PopoverTrigger>
-                <PopoverContent>
+                <PopoverContent >
                   <PopoverComponent shop={shop} itemData={itemData} isEquipped={isEquipped} onAction={() => setPopoverOpen(false)} />
                 </PopoverContent>
               </Popover>

@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { Player } from "../types";
+import { DungeonKey, Player } from "../types";
 
 export const playerAtom = atom<Player | null>(null)
-export const combatReadyAtom = atom<boolean>(false)
+export const combatTypeAtom = atom<DungeonKey | 'journey' | null>(null)

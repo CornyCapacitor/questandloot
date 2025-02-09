@@ -1,23 +1,24 @@
 'use client'
 
-import { Shops } from "@/app/types"
-import { TabButton } from "@/components/layout/TabButton"
+import { playerAtom } from "@/app/state/atoms"
+import { Overview } from "@/components/character/CharacterOverview/Overview"
+import { Shop } from "@/components/shop/Shop"
+import { Tabs } from "@/components/shop/Tabs"
+import { useAtom } from "jotai"
 import { useState } from "react"
-import { CharacterEquipmentSection } from "../character/characterComponents"
-import Shop from "./shopComponents"
+
+export type ShopTabs = 'blacksmith' | 'alchemist'
 
 const ShopPage = () => {
-  const [shop, setShop] = useState<Shops>('blacksmith')
+  const [player] = useAtom(playerAtom)
+  const [currentTab, setCurrentTab] = useState<ShopTabs>('blacksmith')
 
-  return (
+  if (player) return (
     <div className="w-full h-full flex">
-      <CharacterEquipmentSection className="h-full flex flex-col flex-shrink-0 border-r border-slate-700" />
+      <Overview player={player} />
       <div className="flex flex-col h-full flex-grow">
-        <div className="w-full flex gap-2 px-4 pt-2 border-b border-slate-700">
-          <TabButton tabName="blacksmith" currentTab={shop} onClick={() => setShop('blacksmith')} />
-          <TabButton tabName="alchemist" currentTab={shop} onClick={() => setShop('alchemist')} />
-        </div>
-        <Shop shop={shop} />
+        <Tabs setCurrentTab={setCurrentTab} currentTab={currentTab} />
+        <Shop shop={currentTab} player={player} />
       </div>
     </div>
   )

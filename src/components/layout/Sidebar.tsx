@@ -4,7 +4,7 @@ import { playerAtom } from "@/app/state/atoms"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import Link from "next/link"
-import GameButton from "./GameButton"
+import GameButton from "../ui/GameButton"
 import LogoutButton from "./LogoutButton"
 
 const Sidebar = () => {

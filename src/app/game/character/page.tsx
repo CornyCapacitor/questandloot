@@ -2,9 +2,10 @@
 
 import { playerAtom } from "@/app/state/atoms"
 import { Player } from "@/app/types"
-import IconSpinner from "@/components/layout/IconSpinner"
+import { Overview } from "@/components/character/CharacterOverview/Overview"
+import { Inventory } from "@/components/character/InventoryManagement/Inventory"
+import IconSpinner from "@/components/ui/IconSpinner"
 import { useAtom } from "jotai"
-import { CharacterEquipmentSection, CharacterTabs } from "./characterComponents"
 
 const CharacterPage = () => {
   const [player] = useAtom<Player | null>(playerAtom)
@@ -19,8 +20,8 @@ const CharacterPage = () => {
 
   return (
     <div className="w-full h-full flex">
-      <CharacterEquipmentSection className="h-full flex flex-col flex-shrink-0 border-r border-slate-700" />
-      <CharacterTabs />
+      <Overview player={player} />
+      <Inventory player={player} />
     </div>
   )
 }

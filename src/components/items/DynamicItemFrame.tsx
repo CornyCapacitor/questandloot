@@ -1,4 +1,4 @@
-import { isArmor, isJewelery, isMaterial, isPotion, isShield, isWeapon } from '@/app/functions/itemCheckers'
+import { isArmor, isJewelery, isMaterial, isPotion, isShield, isWeapon } from '@/app/functions/checkers'
 import { Items, Player } from '@/app/types'
 import Image from 'next/image'
 

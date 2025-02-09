@@ -236,6 +236,8 @@ export const config = {
       thirdFromEnd: 9,
       secondFromEnd: 12,
       last: 15
-    }
+    },
+    refreshTime: 0.5, // Minutes
+    combatMultiplier: 1.2,
   }
 }
