@@ -2,8 +2,6 @@ import Swal from "sweetalert2";
 
 const Toast = Swal.mixin({
   toast: true,
-
-  // Not sure if I want it dark or bright
   background: '#0f172a',
   color: '#ffffff',
   hideClass: {

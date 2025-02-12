@@ -15,6 +15,9 @@ import { playerAtom } from "./state/atoms";
 import { Profession } from "./types";
 
 export default function Home() {
+  const [player] = useAtom(playerAtom)
+  const { socket, connectSocket } = useSocket()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passwordRepeat, setPasswordRepeat] = useState('')
@@ -22,8 +25,6 @@ export default function Home() {
   const [profession, setProfession] = useState<Profession | null>(null)
   const [signup, setSignup] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [player] = useAtom(playerAtom)
-  const { socket, connectSocket } = useSocket()
 
   const availableProfessions: Profession[] = ['warrior', 'hunter', 'mage']
 
@@ -56,7 +57,7 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
-      });
+      })
 
       if (!response.ok) {
         const data = await response.json()
