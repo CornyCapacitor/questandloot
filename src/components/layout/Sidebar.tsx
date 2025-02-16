@@ -19,6 +19,7 @@ const Sidebar = () => {
         <GameButton path="/game/shop" className="flex items-center justify-between px-8 py-2">Merchants <Image src="/assets/sidebar/merchants.png" height={40} width={40} alt="merchants icon" /></GameButton>
         <GameButton path="/game/crafting" className="flex items-center justify-between px-8 py-2">Crafting <Image src="/assets/sidebar/crafting.png" height={40} width={40} alt="character icon" /></GameButton>
         <GameButton path="/game/dungeon" className="flex items-center justify-between px-8 py-2">Dungeon <Image src="/assets/sidebar/dungeon.png" height={40} width={40} alt="character icon" /></GameButton>
+        <GameButton path="/game/leaderboards" className="flex items-center justify-between px-8 py-2">Leaderboards</GameButton>
       </div>
       <div className=" flex gap-4 w-[90%]">
         <Link href="/game/settings" className="bg-black rounded-md hover:bg-gray-700 cursor-pointer w-full flex items-center justify-center py-2">
