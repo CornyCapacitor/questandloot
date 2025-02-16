@@ -17,6 +17,7 @@ import { Profession } from "./types";
 export default function Home() {
   const [player] = useAtom(playerAtom)
   const { socket, connectSocket } = useSocket()
+  const SERVER_URI = process.env.NEXT_PUBLIC_SERVER_REST
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -51,7 +52,7 @@ export default function Home() {
     }
 
     try {
-      const response = await fetch('http://localhost:3333/api/login/', {
+      const response = await fetch(`${SERVER_URI}/api/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -131,7 +132,7 @@ export default function Home() {
     }
 
     try {
-      const response = await fetch('http://localhost:3333/api/signup/', {
+      const response = await fetch(`${SERVER_URI}/api/signup/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

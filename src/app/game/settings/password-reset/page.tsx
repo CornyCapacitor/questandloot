@@ -12,18 +12,19 @@ import Swal from "sweetalert2"
 const PasswordReset = () => {
   const { disconnectSocket } = useSocket()
   const router = useRouter()
+  const SERVER_URI = process.env.NEXT_PUBLIC_SERVER_REST
 
   const [newPassword, setNewPassword] = useState('')
   const [repeatNewPassword, setRepeatNewPassword] = useState('')
 
-  const handleLogout = () => {
-    successToast({ text: 'Password changed succesfully! Please log in again', position: 'top' })
+  const handleLogout = async () => {
     disconnectSocket()
+    successToast({ text: 'Password changed succesfully! Please log in again', position: 'top' })
     router.push('/')
   }
 
   const authorize = async (username: string, password: string) => {
-    const response = await fetch('http://localhost:3333/api/login/', {
+    const response = await fetch(`${SERVER_URI}/api/login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ const PasswordReset = () => {
     if (!response.ok) {
       const data = await response.json()
       Swal.showValidationMessage(data.error)
-      return false
+      return
     }
 
     const data = await response.json()
@@ -62,19 +63,19 @@ const PasswordReset = () => {
 
         if (!username || !password) {
           Swal.showValidationMessage('Please enter both username and password')
-          return false
+          return
         }
 
         if (password === newPassword) {
           Swal.showValidationMessage('New password must be different')
-          return false
+          return
         }
 
         try {
           const token = await authorize(username, password)
 
           try {
-            const response = await fetch('http://localhost:3333/api/users/', {
+            const response = await fetch(`${SERVER_URI}/api/users/`, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',
@@ -86,13 +87,6 @@ const PasswordReset = () => {
             if (!response.ok) {
               const data = await response.json()
               Swal.showValidationMessage(data.error)
-              return false
-            }
-
-            const data = await response.json()
-
-            if (!data.success) {
-              Swal.showValidationMessage(data)
               return false
             }
 

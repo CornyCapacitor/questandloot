@@ -32,7 +32,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const connectSocket = (token: string) => {
     disconnectSocket()
 
-    const ws = io('ws://localhost:3334', { query: { token } });
+    const ws = io(process.env.NEXT_PUBLIC_SERVER_WS, { query: { token } });
 
     setSocket(ws);
 
