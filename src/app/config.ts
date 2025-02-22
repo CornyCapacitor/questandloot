@@ -239,5 +239,10 @@ export const config = {
     },
     refreshTime: 0.5, // Minutes
     combatMultiplier: 1.2,
+  },
+
+  // Leaderboards
+  leaderboards: {
+    limit: 5,
   }
 }

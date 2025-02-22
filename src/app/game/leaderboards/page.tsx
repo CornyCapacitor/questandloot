@@ -1,10 +1,12 @@
 'use client'
 
+import { config } from "@/app/config"
 import { Profession } from "@/app/types"
 import { Tabs } from "@/components/leaderboards/Tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { errorToast } from "@/components/ui/toasts"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 
 type CharacterRecord = {
@@ -27,13 +29,12 @@ const LeaderboardsPage = () => {
   const [characters, setCharacters] = useState<CharacterRecord[]>([])
   const [totalPages, setTotalPages] = useState<number | null>(null)
   const [totalCharacters, setTotalCharacters] = useState<number | null>(null)
+  const [limit] = useState(config.leaderboards.limit)
   const [page, setPage] = useState(1)
 
   const SERVER_URI = process.env.NEXT_PUBLIC_SERVER_REST
 
   const getCharacters = async (page: number) => {
-    const limit = 1
-
     try {
       const response = await fetch(`${SERVER_URI}/api/characters?page=${page}&limit=${limit}`, {
         method: 'GET',
@@ -72,7 +73,10 @@ const LeaderboardsPage = () => {
 
   if (characters && totalPages) return (
     <div className="w-full h-full flex flex-col flex-wrap justify-start items-center py-2 overflow-y-auto">
-      <span className="text-start flex w-full px-4 pb-1 text-sm">Total players: {totalCharacters}</span>
+      <div className="flex justify-between w-full">
+        <span className="flex px-4 pb-1 text-sm">Total players: {totalCharacters}</span>
+        <span className="flex px-4 pb-1 text-sm">Players per page: {limit}</span>
+      </div>
       <Tabs setCurrentPage={setPage} currentPage={page} totalPages={totalPages} />
       <Table>
         <TableHeader>
@@ -94,7 +98,7 @@ const LeaderboardsPage = () => {
               <TableCell className="min-w-[150px] flex-1">
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger>Img</TooltipTrigger>
+                    <TooltipTrigger className="absolute"><Image src="/description.svg" width="25" height="25" alt="Description image" /></TooltipTrigger>
                     <TooltipContent className="max-w-[350px]">{character.description || 'This player has no description set yet'}</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
