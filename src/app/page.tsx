@@ -187,23 +187,22 @@ export default function Home() {
 
   return (
     <div className="flex items-center justify-start h-screen">
-      <section className="h-full p-10 min-w-[350px] max-w-[600px] flex flex-col gap-2 items-center justify-center border-r bg-slate-800 border-slate-700">
+      <section className="h-full w-full p-10 lg:max-w-[600px] flex flex-col gap-2 items-center justify-center border-r bg-slate-800 border-slate-700">
         {/* Tu trzeba ponaprawiać dużo, bo brzydko się skaluje to wszystko */}
         {signup ? (
           <>
-            <h1>Welcome to Quest & Loot!</h1>
             <h2 className="w-full">Username and character name are different properties. You will use your username only to log into the game.</h2>
             <label htmlFor="username" className="self-start text-sm text-slate-200">Username</label>
-            <Input id="username" autoFocus placeholder="Username" className="w-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
+            <Input id="username" autoFocus placeholder="Username" className="w-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-blue-500" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
             <label htmlFor="password" className="self-start text-sm text-slate-200">Password</label>
-            <Input id="password" type="password" placeholder="Password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
+            <Input id="password" type="password" placeholder="Password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-blue-500" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
             <label htmlFor="passwordRepeat" className="self-start text-sm text-slate-200">Repeat password</label>
-            <Input id="passwordRepeat" type="password" placeholder="Repeat password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={passwordRepeat} disabled={loading} onChange={(e) => setPasswordRepeat(e.target.value)} />
+            <Input id="passwordRepeat" type="password" placeholder="Repeat password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-blue-500" value={passwordRepeat} disabled={loading} onChange={(e) => setPasswordRepeat(e.target.value)} />
             <label htmlFor="characterName" className="self-start text-sm text-slate-200">Character name</label>
-            <Input id="characterName" placeholder="Character name" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={characterName} disabled={loading} onChange={(e) => setCharacterName(e.target.value)} />
+            <Input id="characterName" placeholder="Character name" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-blue-500" value={characterName} disabled={loading} onChange={(e) => setCharacterName(e.target.value)} />
             <label htmlFor="profession" className="self-start text-sm text-slate-200">Profession</label>
             <Select disabled={loading} onValueChange={(value) => setProfession(value as Profession)}>
-              <SelectTrigger className="w-full border border-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-400 hover:bg-gray-700 transition" >
+              <SelectTrigger className="w-full border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-gray-700 transition" >
                 <SelectValue placeholder="Select profession" />
               </SelectTrigger>
               <SelectContent>
@@ -212,26 +211,26 @@ export default function Home() {
                 ))}
               </SelectContent>
             </Select>
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white" disabled={loading} onClick={() => handleSignup(username, password, passwordRepeat, characterName, profession)}>{loading ? (<Tailspin size={30} />) : 'Signup'}</Button>
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white" disabled={loading} onClick={() => handleChange()}>{loading ? (<Tailspin size={30} />) : 'Back to login'}</Button>
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white w-full" disabled={loading} onClick={() => handleSignup(username, password, passwordRepeat, characterName, profession)}>{loading ? (<Tailspin size={30} />) : 'Signup'}</Button>
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white w-full" disabled={loading} onClick={() => handleChange()}>{loading ? (<Tailspin size={30} />) : 'Back to login'}</Button>
           </>
         ) : (
           <>
             <h1>Welcome to Quest & Loot!</h1>
             <h2 className="w-full">In order to access the game you need to be logged in. (login and password are credentials)</h2>
             <label htmlFor="username" className="self-start text-sm text-slate-200">Username</label>
-            <Input id="username" autoFocus placeholder="Username" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
+            <Input id="username" autoFocus placeholder="Username" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-blue-500" value={username} disabled={loading} onChange={(e) => setUsername(e.target.value)} />
             <label htmlFor="password" className="self-start text-sm text-slate-200">Password</label>
-            <Input id="password" type="password" placeholder="Password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-orange-400" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white" disabled={loading} onClick={() => handleConnect(username, password)}>{loading ? (<Tailspin size={30} />) : 'Login'}</Button>
+            <Input id="password" type="password" placeholder="Password" className="-full border border-slate-600 rounded-md hover:bg-gray-700 transition focus-visible:ring-blue-500" value={password} disabled={loading} onChange={(e) => setPassword(e.target.value)} />
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white w-full" disabled={loading} onClick={() => handleConnect(username, password)}>{loading ? (<Tailspin size={30} />) : 'Login'}</Button>
             <span>No account? Create one right now!</span>
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white" disabled={loading} onClick={() => handleChange()}>{loading ? (<Tailspin size={30} />) : 'Signup'}</Button>
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white w-full" disabled={loading} onClick={() => handleChange()}>{loading ? (<Tailspin size={30} />) : 'Signup'}</Button>
           </>
         )
         }
       </section >
-      <section className="h-full p-2 flex flex-grow items-center justify-center">
-        <Image src="/logo_enlarged.png" width={700} height={700} alt="Quest & Loot logo" unoptimized />
+      <section className="h-full p-2 flex-grow items-center justify-center relative hidden lg:flex">
+        <Image src="/logo_enlarged.png" fill className="object-contain" alt="Game logo" unoptimized />
       </section>
     </div >
   );
