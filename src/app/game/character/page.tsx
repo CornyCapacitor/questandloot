@@ -19,7 +19,7 @@ const CharacterPage = () => {
   }
 
   return (
-    <div className="w-full h-full flex">
+    <div className="w-full h-full flex flex-col md:flex-row">
       <Overview player={player} />
       <Inventory player={player} />
     </div>

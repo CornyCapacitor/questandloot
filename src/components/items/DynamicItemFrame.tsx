@@ -4,8 +4,13 @@ import Image from 'next/image'
 
 const DynamicItemFrame = ({ itemData, player, width, height }: { itemData: Items, player: Player, width: number, height: number }) => {
   const BaseImage = ({ src }: { src: string }) => {
+    console.log(`Item: ${itemData.name}, width: ${width}, height: ${height}`)
+    if (!height || !width) return (
+      <Image src={src} alt={itemData.name || "item"} fill className={`border-2 ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} unoptimized />
+    )
+
     return (
-      <Image src={src} alt={itemData.name || "item"} width={width} height={height} className={`border ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} unoptimized />
+      <Image src={src} alt={itemData.name || "item"} width={width} height={height} className={`border-2 ${itemData.quality === 'uncommon' ? 'border-green-500' : itemData.quality === 'rare' ? 'border-blue-500' : itemData.quality === 'epic' ? 'border-purple-500' : 'border-slate-700'} rounded-md`} unoptimized />
     )
   }
 

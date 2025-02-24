@@ -4,7 +4,7 @@ import { Information } from "./Information"
 
 export const Overview = ({ player }: { player: Player }) => {
   return (
-    <section className="h-full flex flex-col flex-shrink-0 border-r border-slate-700">
+    <section className="h-full md:w-[500px] flex flex-col flex-shrink-0 border-r border-slate-700">
       <Equipment player={player} />
       <Information player={player} />
     </section>

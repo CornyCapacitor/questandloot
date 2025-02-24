@@ -169,7 +169,8 @@ export const ItemFrame = ({ itemData, isClickable, isEquipped, shop, width, heig
   }
 
   if (player) return (
-    <div ref={itemFrameRef} className="relative">
+
+    <div ref={itemFrameRef} className={`relative ${width === 0 && height === 0 && 'h-full'}`}>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>

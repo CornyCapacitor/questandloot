@@ -7,7 +7,7 @@ import RequireAuth from "../middleware/RequireAuth";
 const GameLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <RequireAuth>
-      <div className="w-full h-screen">
+      <div className="w-full h-screen overflow-x-hidden">
         <div className="flex h-full flex-col xl:flex-row">
           <Navigation />
           <main className="flex flex-grow">

@@ -18,8 +18,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      {/* Overflow hidden there is at the tests actually */}
-      <body className="antialiased dark w-full h-screen max-h-screen max-w-screen overflow-hidden">
+      <body className="antialiased dark w-screen h-screen max-h-screen max-w-screen">
         <SocketProvider>
           {children}
         </SocketProvider>

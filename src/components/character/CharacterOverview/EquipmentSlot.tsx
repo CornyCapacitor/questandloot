@@ -2,13 +2,13 @@ import { Equipment, Player } from "@/app/types";
 import { ItemFrame } from "@/components/items/ItemFrame";
 import Image from "next/image";
 
-export const EquipmentSlot = ({ player, slot }: { player: Player, slot: keyof Equipment }) => {
+export const EquipmentSlot = ({ player, slot, className }: { player: Player, slot: keyof Equipment, className?: string }) => {
   return (
-    <div className="w-[100px] h-[100px] rounded-md relative">
+    <div className={`relative ${className}`}>
       {player.equipment[slot] ? (
-        <ItemFrame itemData={player.equipment[slot]} isClickable={true} isEquipped={true} width={100} height={100} />
+        <ItemFrame itemData={player.equipment[slot]} isClickable={true} isEquipped={true} width={0} height={0} />
       ) : (
-        <Image src={`/assets/equipment/slots/${slot}.svg`} layout="fill" alt="Head slot" objectFit="cover" className="grayscale border border-slate-700 rounded-md" unoptimized />
+        <Image src={`/assets/equipment/slots/${slot}.svg`} fill alt={`${slot} slot`} className="p-2 grayscale border-slate-700" />
       )}
     </div>
   )
