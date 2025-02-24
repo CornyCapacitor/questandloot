@@ -23,7 +23,7 @@ export const Equipment = ({ player }: { player: Player }) => {
             {player.name}
           </span>
           <Avatar player={player} className="relative flex-grow" />
-          <ExperienceBar className="bg-blue-400" />
+          <ExperienceBar className="flex bg-blue-400" />
         </div>
 
         {/* Down */}
