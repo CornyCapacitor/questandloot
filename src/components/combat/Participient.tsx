@@ -5,13 +5,13 @@ import { HealthBar } from "./HealthBar"
 
 type CombatLog = LogEntry[]
 
-export const Participient = ({ participient, combatLog, turn }: { participient: Player | Monster, combatLog: CombatLog, turn: number }) => {
+export const Participient = ({ participient, combatLog, turn, className }: { participient: Player | Monster, combatLog: CombatLog, turn: number, className?: string }) => {
   const isMonster = (participient: Player | Monster): participient is Monster => {
     return "loot" in participient
   }
 
   return (
-    <section className="w-full flex items-center flex-col p-2 max-w-[300px] border">
+    <section className={`${className} w-full items-center flex-col p-2 max-w-[300px]`}>
       <div className="relative w-full h-auto aspect-square border">
         <Image src={`/assets/portraits/${isMonster(participient) ? `${getFolderName(participient.image)}/${participient.image}` : `${participient.image}`}`} alt={isMonster(participient) ? 'Monster image' : 'Player image'} fill className={`object-cover ${isMonster(participient) ? 'invertX' : ''}`} unoptimized />
       </div>

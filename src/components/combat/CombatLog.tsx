@@ -10,7 +10,7 @@ export const CombatLog = ({ combatLog, turn, gold, experience, loot }: { combatL
   if (parsedCombatLog) return (
     <>
       {log.map((entry, index) => (
-        <Entry key={index} turn={turn} entry={entry} />
+        <Entry key={index} turn={index} entry={entry} />
       ))}
       {turn === combatLog.length - 1 && (
         <Result gold={gold} experience={experience} loot={loot} />
