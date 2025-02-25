@@ -40,7 +40,7 @@ const Navigation = () => {
         <Drawer.Root open={open} onOpenChange={setOpen} direction="right">
           <Drawer.Overlay className="fixed inset-0 bg-black/75 z-[1000]" />
           <Drawer.Portal>
-            <Drawer.Content className="fixed right-0 top-0 h-full w-[350px] bg-slate-800 border-slate-700 shadow-lg transition-transform duration-300 ease-in-out z-[1001]">
+            <Drawer.Content className="fixed right-0 top-0 h-full w-[350px] bg-slate-800 border-slate-700 shadow-lg transition-transform duration-300 ease-in-out z-[1001] overflow-y-auto overflow-x-hidden">
               <div className="flex h-full flex-col w-full px-2 py-4 items-center justify-between border-l gap-4">
                 <div className="flex flex-col gap-4 w-full">
                   <GameButton path="/game/character" className="flex items-center justify-between px-8 py-2">Character <Image src={`/assets/portraits/${player.image}`} height={40} width={40} alt="character icon" /></GameButton>
