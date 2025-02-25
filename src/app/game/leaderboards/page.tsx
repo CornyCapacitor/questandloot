@@ -78,7 +78,7 @@ const LeaderboardsPage = () => {
         <span className="flex px-4 pb-1 text-sm">Players per page: {limit}</span>
       </div>
       <Tabs setCurrentPage={setPage} currentPage={page} totalPages={totalPages} />
-      <Table>
+      <Table className="overflow-y-auto">
         <TableHeader>
           <TableRow className="flex w-full">
             <TableHead className="min-w-[150px] flex-1 items-center flex">Name</TableHead>

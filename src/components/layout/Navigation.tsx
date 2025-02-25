@@ -15,7 +15,7 @@ const Navigation = () => {
 
   if (player) return (
     <>
-      <aside className="w-full lg:max-w-[300px] h-full hidden xl:flex flex-col gap-4 px-2 py-4 items-center justify-between border-r bg-slate-800 border-slate-700">
+      <aside className="w-full lg:max-w-[300px] h-full hidden xl:flex flex-col gap-4 px-2 py-4 items-center justify-between border-r bg-slate-800 border-slate-700 overflow-y-auto">
         <div className="flex flex-col gap-4 w-[90%]">
           <h1 className="flex gap-1 justify-center">Gold: {player.gold} <Image width={20} height={20} src="/coin.svg" alt="Gold coin" unoptimized /></h1>
           <GameButton path="/game/character" className="flex items-center justify-between px-8 py-2">Character <Image src={`/assets/portraits/${player.image}`} height={40} width={40} alt="character icon" /></GameButton>

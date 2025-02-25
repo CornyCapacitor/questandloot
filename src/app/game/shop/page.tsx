@@ -15,7 +15,7 @@ const ShopPage = () => {
 
   if (player) return (
     <div className="w-full h-full flex">
-      <Overview player={player} />
+      <Overview player={player} className="hidden lg:flex" />
       <div className="flex flex-col h-full flex-grow">
         <Tabs setCurrentTab={setCurrentTab} currentTab={currentTab} />
         <Shop shop={currentTab} player={player} />

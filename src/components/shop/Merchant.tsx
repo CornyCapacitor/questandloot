@@ -33,7 +33,7 @@ export const Merchant = ({ player, shop }: { player: Player, shop: Shops }) => {
   }, [player, shop])
 
   return (
-    <>
+    <div className="overflow-y-auto w-full h-full flex flex-col items-center justify-center">
       <Image src={`/assets/merchants/${shop}.png`} width={256} height={256} alt="Merchant" unoptimized />
       <div className="grid gap-5 grid-cols-3 p-2">
         {player.shop[shop].items.map((item, index) =>
@@ -45,6 +45,6 @@ export const Merchant = ({ player, shop }: { player: Player, shop: Shops }) => {
         )}
       </div>
       <RefreshButton updatePlayer={updatePlayer} player={player} shop={shop} />
-    </>
+    </div>
   )
 }
