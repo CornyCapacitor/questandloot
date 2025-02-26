@@ -38,6 +38,7 @@ export const ActivePotion = ({ player }: { player: Player }) => {
     const intervalId = setInterval(updateRemainingTime, 1000);
 
     return () => clearInterval(intervalId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.activePotion]);
 
   const handleRemovePotion = () => {

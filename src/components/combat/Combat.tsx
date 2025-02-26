@@ -67,6 +67,7 @@ export const Combat = () => {
 
     setCombatType(null)
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [character1, character2, combatType])
 
   // Set character1

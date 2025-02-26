@@ -30,6 +30,7 @@ export const Merchant = ({ player, shop }: { player: Player, shop: Shops }) => {
       refreshShop(updatePlayer, player, shop)
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player, shop])
 
   return (

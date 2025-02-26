@@ -58,6 +58,7 @@ export const ExperienceBar = ({ className }: { className?: string }) => {
     if (player.experience >= newExperienceRequired) {
       handleLevelUp();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player]);
 
   if (!player) return (

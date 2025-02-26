@@ -125,6 +125,7 @@ export const DungeonCard = ({ dungeon }: { dungeon: { name: string, image: strin
     return () => {
       if (timer) clearInterval(timer)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player])
 
   const startDungeon = (bossLevel: number) => {

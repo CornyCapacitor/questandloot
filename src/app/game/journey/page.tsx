@@ -66,7 +66,8 @@ const JourneyPage = () => {
     return () => {
       if (timer) clearInterval(timer);
     }
-  }, [player, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [player]);
 
   const startJourney = (zone: Zone, time: number) => {
     if (!player) return
