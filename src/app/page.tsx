@@ -213,6 +213,7 @@ export default function Home() {
             </Select>
             <Button className="bg-blue-500 hover:bg-blue-600 text-white w-full" disabled={loading} onClick={() => handleSignup(username, password, passwordRepeat, characterName, profession)}>{loading ? (<Tailspin size={30} />) : 'Signup'}</Button>
             <Button className="bg-blue-500 hover:bg-blue-600 text-white w-full" disabled={loading} onClick={() => handleChange()}>{loading ? (<Tailspin size={30} />) : 'Back to login'}</Button>
+            {loading && <span className="text-center">Game server is currently hosted on a popular platform using a free plan, which may cause higher latency than usual. I constantly try to do my best to keep everything running smoothly, but please be patient while using the app. Thank you for testing and support!</span>}
           </>
         ) : (
           <>
@@ -225,6 +226,7 @@ export default function Home() {
             <Button className="bg-blue-500 hover:bg-blue-600 text-white w-full" disabled={loading} onClick={() => handleConnect(username, password)}>{loading ? (<Tailspin size={30} />) : 'Login'}</Button>
             <span>No account? Create one right now!</span>
             <Button className="bg-blue-500 hover:bg-blue-600 text-white w-full" disabled={loading} onClick={() => handleChange()}>{loading ? (<Tailspin size={30} />) : 'Signup'}</Button>
+            {loading && <span className="text-center">Game server is currently hosted on a popular platform using a free plan, which may cause higher latency than usual. I constantly try to do my best to keep everything running smoothly, but please be patient while using the app. Thank you for testing and support!</span>}
           </>
         )
         }
