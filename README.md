@@ -15,7 +15,7 @@ Throughout development, I tackled several key challenges, including configuring 
 - *Backend*: Express.js, MongoDB, Mongoose, Socket.io
 
 ### Visit it yourself 
-[External link to Taskingo website](https://taskingo-next.vercel.app/){target:"_blank"}
+[External link to Taskingo website](https://taskingo-next.vercel.app/)
 
 ### If you're interested, check out the backend side
-[Backend on GitHub]([https://](https://github.com/CornyCapacitor/questandloot-server){target:"_blank"}
+[Backend on GitHub](https://github.com/CornyCapacitor/questandloot-server)
